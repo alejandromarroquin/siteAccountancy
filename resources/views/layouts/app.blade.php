@@ -23,7 +23,7 @@
 
     <link href="{{ asset('vendor/font-awesome/fonts/familyNunito.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">->
+    <link href="{{ asset('vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">
     <link href="{{ asset('vendor/morrisjs/morris.css')}}" rel="stylesheet">
     <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
@@ -86,7 +86,7 @@
         <div id="app">
 
             <!--main class="py-4"-->
-            @if($v==0)
+            @if(Auth::check())
               <div class="d-md-flex">
                 <div class="sidebar" role="navigation">
                   <div class="sidebar-nav collapse navbar-collapse show" id="side-menu-wrapper">
