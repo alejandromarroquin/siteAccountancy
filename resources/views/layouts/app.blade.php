@@ -19,6 +19,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    <link href="{{ asset('vendor/font-awesome/fonts/familyNunito.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">->
+    <link href="{{ asset('vendor/morrisjs/morris.css')}}" rel="stylesheet">
+    <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}">
+        <link href="{{ asset('dist/css/sb-admin-2.css')}}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -70,7 +80,104 @@
                 </div>
             </div>
         </nav>
+        <?php
+        $v=1;
+         ?>
+        <div id="app">
 
+            <!--main class="py-4"-->
+            @if($v==0)
+              <div class="d-md-flex">
+                <div class="sidebar" role="navigation">
+                  <div class="sidebar-nav collapse navbar-collapse show" id="side-menu-wrapper">
+                    <ul class="nav navbar-nav navbar-collapse flex-column side-nav list-group" id="side-menu">
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fa fa-cubes"></i> Almacén</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fa fa-th-list"></i> Categorías</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fa fa-fax"></i> Punto de venta</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fa fa-money"></i> Ventas<span class="fa arrow"></span></a>
+                            <ul class="nav-second-level list-group nested">
+                                <li class="list-group-item">
+                                    <a href="#">Gestión de ventas</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#">Ventas semanales</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#">Devoluciones</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="sales"><i class="fa fa-users"></i> Clientes<span class="fa arrow"></span></a>
+                            <ul class="nav-second-level list-group nested">
+                                <li class="list-group-item">
+                                    <a href="#">Cartera de clientes</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#">Importación de clientes</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="sales"><i class="fa fa-credit-card"></i> Abonos<span class="fa arrow"></span></a>
+                            <ul class="nav-second-level list-group nested">
+                                <li class="list-group-item">
+                                    <a href="#">Gestión de Abonos</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#">Abonos Cancelados</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#">Ver deudas actuales</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fa fa-file-text"></i> Proveedores<span class="fa arrow"></span></a>
+                            <ul class="nav-second-level list-group nested">
+                                <li class="list-group-item">
+                                    <a href="#">Gestión de proveedores</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#">Deudas a proveedores</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fa fa-cart-arrow-down"></i> Compras<span class="fa arrow"></span></a>
+                            <ul class="nav-second-level list-group nested">
+                                <li class="list-group-item">
+                                    <a href="#"> Compras</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#"> Gestión de compras</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            <!--/main-->
+            @endif
+        </div>
         <main class="py-4">
             @yield('content')
         </main>
