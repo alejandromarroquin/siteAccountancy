@@ -1,0 +1,17 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar{
+  background-color: #EEEEEE;
+  height: 30%;
+}
+
+#app{
+  position:fixed;
+}
+
+.d-md-flex{
+  background-color: #EEEEEE;
+}

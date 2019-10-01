@@ -1,0 +1,10 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+#content{
+  max-width: 70%;
+  max-height: 90%;
+  margin-left: 25em;
+}

@@ -14,6 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/facturar',function(){
+  return view('cfdi/newcfdi');
+});
+Route::get('/registrarempresa',function(){
+  return view('users/registercompany');
+});
+Route::get('/registrarusuario',function(){
+  return view('users/registeruser');
+});
 
 Auth::routes();
 

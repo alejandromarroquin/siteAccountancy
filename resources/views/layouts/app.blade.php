@@ -22,7 +22,9 @@
     <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('dist/css/select2.css')}}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/nv-sb.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}">
+    <link href="{{ asset('css/content.css')}}" rel="stylesheet">
 
 </head>
 <body>
@@ -30,7 +32,7 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
           <div class="container">
               <a class="navbar-brand" href="{{ url('/') }}">
-                  {{ config('app.name', 'Laravel') }}
+                  Contabilidad
               </a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                   <span class="navbar-toggler-icon"></span>
@@ -85,45 +87,67 @@
                 <ul class="nav navbar-nav navbar-collapse flex-column side-nav list-group" id="side-menu">
 
                     <li class="list-group-item">
-                        <a href="#"><i class="fa fa-cubes"></i>Usuarios</a>
+                        <a href="#">Usuarios<span class="fa arrow"></a>
                         <ul class="nav-second-level list-group nested">
                             <li class="list-group-item">
-                                <a href="#">Gestión de Almacén</a>
+                                <a href="#"></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Gestión de Salidas</a>
+                                <a href="/registrarempresa">Registrar empresa</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Registrar Salidas</a>
+                                <a href="#">Registrar usuario</a>
                             </li>
                         </ul>
                     </li>
 
                     <li class="list-group-item">
-                        <a href="#"><i class="fa fa-th-list"></i> Categorías</a>
-                    </li>
-
-                    <li class="list-group-item">
-                        <a href="#"><i class="fa fa-fax"></i> Punto de venta</a>
-                    </li>
-
-                    <li class="list-group-item">
-                        <a href="#"><i class="fa fa-money"></i> Ventas<span class="fa arrow"></span></a>
+                        <a href="#">Facturación<span class="fa arrow"></a>
                         <ul class="nav-second-level list-group nested">
                             <li class="list-group-item">
-                                <a href="#">Gestión de ventas</a>
+                                <a href="#"></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Ventas semanales</a>
+                                <a href="/facturar">Nueva factura</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Devoluciones</a>
+                                <a href="#">Enviar facturas</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Recepción de facturas</a>
                             </li>
                         </ul>
                     </li>
 
                     <li class="list-group-item">
-                        <a href="#"><i class="fa fa-users"></i> Clientes<span class="fa arrow"></span></a>
+                        <a href="#">Contabilidad<span class="fa arrow"></span></a>
+                        <ul class="nav-second-level list-group nested">
+                            <li class="list-group-item">
+                                <a href="#">Presupuesto general</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cátalogo de cuentas</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Solicitudes de compra</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Movimientos de capital</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Balanza de comprobación</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Pólizas de periodo</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Auxiliares</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="#">Reportes contables<span class="fa arrow"></span></a>
                         <ul class="nav-second-level list-group nested">
                             <li class="list-group-item">
                                 <a href="#">Cartera de clientes</a>
@@ -134,44 +158,6 @@
                         </ul>
                     </li>
 
-                    <li class="list-group-item">
-                        <a href="#"><i class="fa fa-credit-card"></i> Abonos<span class="fa arrow"></span></a>
-                        <ul class="nav-second-level list-group nested">
-                            <li class="list-group-item">
-                                <a href="#">Gestión de Abonos</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Abonos Cancelados</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Ver deudas actuales</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="list-group-item">
-                        <a href="#"><i class="fa fa-file-text"></i> Proveedores<span class="fa arrow"></span></a>
-                        <ul class="nav-second-level list-group nested">
-                            <li class="list-group-item">
-                                <a href="#">Gestión de proveedores</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Deudas a proveedores</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="list-group-item">
-                        <a href="#"><i class="fa fa-cart-arrow-down"></i> Compras<span class="fa arrow"></span></a>
-                        <ul class="nav-second-level list-group nested">
-                            <li class="list-group-item">
-                                <a href="#"> Compras</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#"> Gestión de compras</a>
-                            </li>
-                        </ul>
-                    </li>
 
                 </ul>
               </div>
@@ -180,8 +166,11 @@
           </div>
         <!--/main-->
         @endif
-        @yield('content')
+
     </div>
+    <main>
+      @yield('content')
+    </main>
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery/jquery.validate.min.js') }}"></script>
@@ -191,14 +180,13 @@
     <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{ asset('vendor/datatables-responsive/dataTables.responsive.js')}}" type="text/javascript"></script>
-    <script  src="{{ asset('vendor/datatables-responsive/responsive.bootstrap4.js')}}"type="text/javascript"></script>
+    <script src="{{ asset('vendor/datatables-responsive/responsive.bootstrap4.js')}}"type="text/javascript"></script>
     <script src="{{ asset('dist/js/sb-admin-2.js') }}"></script>
-    <script src="{{ asset('js/sb-admin-2.js') }}"></script>
     <script src="{{ asset('dist/js/select2.js') }}"></script>
     <script src="{{ asset('dist/js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/js.js') }}" defer></script>
-    <script src="{{ asset('js/chartSales.js') }}" defer></script>
+
 
     @yield('scripts')
+
 </body>
 </html>
