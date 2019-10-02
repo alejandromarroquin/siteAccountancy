@@ -96,7 +96,7 @@
                                 <a href="/registrarempresa">Registrar empresa</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Registrar usuario</a>
+                                <a href="/registrarusuario">Registrar usuario</a>
                             </li>
                         </ul>
                     </li>
@@ -184,6 +184,7 @@
     <script src="{{ asset('dist/js/sb-admin-2.js') }}"></script>
     <script src="{{ asset('dist/js/select2.js') }}"></script>
     <script src="{{ asset('dist/js/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/view_registercompany.js') }}"></script>
 
 
     @yield('scripts')

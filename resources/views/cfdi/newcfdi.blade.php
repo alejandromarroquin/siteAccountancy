@@ -5,11 +5,13 @@
   <script src="{{ asset('js/view-customer/view-customer.js') }}" defer></script>
 
   <div id="page-wrapper" class="p-4">
-    <div class="row">
-        <div class="col-lg-12 col-xl-12">
-          <h1 class="page-header">Nueva factura</h1>
-        </div>
-      </div>
+
+      <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12 col-xl-12">
+              <h1 class="page-header">Nueva factura</h1>
+            </div>
+          </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
           <form action="" method="POST">
@@ -73,6 +75,7 @@
           </form>
         </div>
       </div>
+    </div>
     </div>
 </div>
 @endsection
