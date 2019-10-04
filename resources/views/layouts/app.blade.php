@@ -87,16 +87,16 @@
                 <ul class="nav navbar-nav navbar-collapse flex-column side-nav list-group" id="side-menu">
 
                     <li class="list-group-item">
-                        <a href="#">Usuarios<span class="fa arrow"></a>
+                        <a href="#">Acceso<span class="fa arrow"></a>
                         <ul class="nav-second-level list-group nested">
                             <li class="list-group-item">
                                 <a href="#"></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/registrarempresa">Registrar empresa</a>
+                                <a href="/empresas">Empresas</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/registrarusuario">Registrar usuario</a>
+                                <a href="/registrarusuario">Usuarios</a>
                             </li>
                         </ul>
                     </li>

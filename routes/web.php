@@ -14,21 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/facturar',function(){
-  return view('cfdi/newcfdi');
-});
-Route::get('/registrarempresa',function(){
-  return view('users/registercompany');
-});
-Route::get('/registrarusuario',function(){
-  return view('users/registeruser');
-});
-Route::get('/presupuesto',function(){
-  return view('accountancy/budget/assignbudget');
-});
-Route::get('/movimientos',function(){
-  return view('accountancy/capitalmovements/registermovement');
-});
+
+Route::get('/empresas','CompanieController@index');
 
 Auth::routes();
 
