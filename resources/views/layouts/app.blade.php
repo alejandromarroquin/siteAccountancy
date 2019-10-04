@@ -123,7 +123,7 @@
                         <a href="#">Contabilidad<span class="fa arrow"></span></a>
                         <ul class="nav-second-level list-group nested">
                             <li class="list-group-item">
-                                <a href="#">Presupuesto general</a>
+                                <a href="/presupuesto">Presupuesto general</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#">Cátalogo de cuentas</a>
@@ -132,7 +132,7 @@
                                 <a href="#">Solicitudes de compra</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Movimientos de capital</a>
+                                <a href="/movimientos">Movimientos de capital</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#">Balanza de comprobación</a>
@@ -157,16 +157,12 @@
                             </li>
                         </ul>
                     </li>
-
-
                 </ul>
               </div>
             </div>
-
           </div>
         <!--/main-->
         @endif
-
     </div>
     <main>
       @yield('content')
@@ -185,7 +181,6 @@
     <script src="{{ asset('dist/js/select2.js') }}"></script>
     <script src="{{ asset('dist/js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/view_registercompany.js') }}"></script>
-
 
     @yield('scripts')
 
