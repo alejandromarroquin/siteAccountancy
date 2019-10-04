@@ -58,22 +58,20 @@
                     <label>Producto o servicio:</label>
                     <input type="text" class="form-control">
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <label>Descripción:</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="row">
                   <div class="col">
                     <label>Cantidad:</label>
-                    <input type="text" class="form-control">
+                    <input type="number" class="form-control" min="1" value="1">
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
                     <label>Cantidad con letra:</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label>Descripción:</label>
                     <input type="text" class="form-control">
                   </div>
                 </div>
