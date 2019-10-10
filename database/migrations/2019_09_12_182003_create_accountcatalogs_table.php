@@ -15,9 +15,13 @@ class CreateAccountcatalogsTable extends Migration
     {
         Schema::create('accountcatalogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('gruperCode',6);
-            $table->integer('level');
-            $table->string('accountName',100);
+
+            $table->integer('idgrouperaccount')->unsigned();
+            $table->foreign('idgrouperaccount')->references('groupcode')->on('accounts')->onDelete('cascade');
+
+            $table->integer('level')->nullable();
+            $table->string('code',6);
+            $table->string('accountName',250);
 
             $table->timestamps();
         });

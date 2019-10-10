@@ -15,10 +15,14 @@ class CreatePersonalinformationsTable extends Migration
     {
         Schema::create('personalinformations', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('idUser')->unsigned()->unique();
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
+
             $table->string('name',50);
             $table->string('lastname',20);
             $table->string('motherssurname',20);
-            
+
             $table->timestamps();
         });
     }

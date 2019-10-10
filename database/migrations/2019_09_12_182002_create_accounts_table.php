@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUnitmeasurementsTable extends Migration
+class CreateAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateUnitmeasurementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('unitmeasurements', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('code',3);
-            $table->string('description',45);
+        Schema::create('accounts', function (Blueprint $table) {
+            $table->integer('groupcode')->unsigned()->primary();
+            $table->integer('level')->nullable();
+            $table->string('accountname',250);
+
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateUnitmeasurementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unitmeasurements');
+        Schema::dropIfExists('accounts');
     }
 }

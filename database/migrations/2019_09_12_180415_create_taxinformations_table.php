@@ -16,15 +16,12 @@ class CreateTaxinformationsTable extends Migration
         Schema::create('taxinformations', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('idGeneralInformation')->unsigned();
-            $table->foreign('idGeneralInformation')->references('id')->on('generalinformations')->onDelete('cascade');
-
-            $table->integer('idEmails')->unsigned();
-            $table->foreign('idEmails')->references('id')->on('emails')->onDelete('cascade');
+            $table->integer('idtaxinformation')->unsigned();
+            $table->foreign('idtaxinformation')->references('id')->on('contactlocations')->onDelete('cascade');
 
             $table->string('rfc',13);
-            $table->string('businessname',80);
-            $table->string('taxRegime',60);
+            $table->string('businessname',250);
+            $table->string('taxRegime',6);
 
             $table->timestamps();
         });

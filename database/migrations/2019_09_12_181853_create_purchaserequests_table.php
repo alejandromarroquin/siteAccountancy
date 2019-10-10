@@ -19,12 +19,15 @@ class CreatePurchaserequestsTable extends Migration
             $table->integer('idAccountancy')->unsigned();
             $table->foreign('idAccountancy')->references('id')->on('accountancies')->onDelete('cascade');
 
-            $table->integer('idApplicant')->unsigned();
-            $table->foreign('idApplicant')->references('id')->on('personalinformations')->onDelete('cascade');
+            $table->integer('idPersonCheck')->unsigned();
+            $table->foreign('idPersonCheck')->references('id')->on('personalinformations')->onDelete('cascade');
 
             $table->date('date');
             $table->string('concept',100);
             $table->integer('quantity');
+            $table->double('subtotal',10,2);
+            $table->double('iva',10,2);
+            $table->double('total',10,2);
             $table->integer('status');
 
             $table->timestamps();
