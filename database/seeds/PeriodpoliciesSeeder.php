@@ -14,7 +14,7 @@ class PeriodpoliciesSeeder extends Seeder
       DB::table('periodpolicies')->insert([
         'idAccountancyCatalog'=>'1',
         'account'=>'1',
-        'subaccount'=>'345.99',
+        'subaccount'=>'34',
         'name'=>'938.48',
         'partial'=>'786.83',
         'debit'=>'557.38',
@@ -24,7 +24,7 @@ class PeriodpoliciesSeeder extends Seeder
       DB::table('periodpolicies')->insert([
         'idAccountancyCatalog'=>'1',
         'account'=>'1',
-        'subaccount'=>'345.99',
+        'subaccount'=>'34',
         'name'=>'392.48',
         'partial'=>'372.83',
         'debit'=>'557.38',
@@ -34,7 +34,7 @@ class PeriodpoliciesSeeder extends Seeder
       DB::table('periodpolicies')->insert([
         'idAccountancyCatalog'=>'1',
         'account'=>'1',
-        'subaccount'=>'283.99',
+        'subaccount'=>'28',
         'name'=>'637.48',
         'partial'=>'992.83',
         'debit'=>'233.38',

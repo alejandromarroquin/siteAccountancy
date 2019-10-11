@@ -29,6 +29,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitmeasurementSeeder::class);
         $this->call(MethodpaymentSeeder::class);
         $this->call(ProviderSeeder::class);
+        $this->call(StatementresultSeeder::class);
+        $this->call(BalancesheetSeeder::class);
+        $this->call(PeriodpoliciesSeeder::class);
+        $this->call(CheckbalanceSeeder::class);
 
     }
 }
