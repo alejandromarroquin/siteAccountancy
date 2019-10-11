@@ -21,8 +21,8 @@ class CreateCheckbalancesTable extends Migration
 
             $table->double('beginningBalance',10,2);
             $table->double('charge',10,2);
-            $table->double('payment');
-            $table->double('finalBalance');
+            $table->double('payment',10,2);
+            $table->double('finalBalance',10,2);
 
             $table->timestamps();
         });
