@@ -14,14 +14,6 @@ class CreatePersonalinformationsTable extends Migration
     public function up()
     {
         Schema::create('personalinformations', function (Blueprint $table) {
-<<<<<<< HEAD:database/migrations/2019_09_27_144448_create_personalinformations_table.php
-          $table->increments('id');
-          $table->string('name',50);
-          $table->string('lastname',20);
-          $table->string('motherssurname',20);
-
-          $table->timestamps();
-=======
             $table->increments('id');
 
             $table->integer('idUser')->unsigned()->unique();
@@ -32,7 +24,6 @@ class CreatePersonalinformationsTable extends Migration
             $table->string('motherssurname',20);
 
             $table->timestamps();
->>>>>>> seeds:database/migrations/2019_09_12_180622_create_personalinformations_table.php
         });
     }
 

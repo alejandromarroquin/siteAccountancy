@@ -14,6 +14,7 @@ class CreateAddressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
+<<<<<<< HEAD:database/migrations/2019_09_27_144405_create_addresses_table.php
           $table->increments('id');
           $table->string('type',1);
           $table->string('street',30);
@@ -27,6 +28,20 @@ class CreateAddressesTable extends Migration
           $table->string('country',60);
 
           $table->timestamps();
+=======
+            $table->increments('id');
+            $table->string('street',30);
+            $table->string('colony',30);
+            $table->string('state',45);
+            $table->string('city',30);
+            $table->string('numExt',4);
+            $table->string('numInt',3);
+            $table->string('postalCode',5);
+            $table->string('reference',200);
+            $table->string('country',60);
+
+            $table->timestamps();
+>>>>>>> seeds:database/migrations/2019_09_12_180214_create_addresses_table.php
         });
     }
 
