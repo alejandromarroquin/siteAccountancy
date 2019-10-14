@@ -14,8 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/phones','PhonesController@index');
 
-Route::get('/empresas','CompanieController@index');
+Route::post('/Phonescreate','PhonesController@store');
 
 Auth::routes();
 

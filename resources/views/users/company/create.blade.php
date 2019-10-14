@@ -5,13 +5,14 @@
   <div class="row mt-4" style="margin-left:20rem;">
     <div class="card-body">
       <div class="row">
-          <div class="col-lg-12 col-xl-12">
-            <h1 class="page-header">Registrar Empresa</h1>
-          </div>
+        <div class="col-lg-12 col-xl-12">
+          <h1 class="page-header">Registrar Empresa</h1>
         </div>
-        <div class="row">
+      </div>
+      <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="" method="POST">
+          <form action="Phonescreate" method="POST" role="form">
+            {{ csrf_field() }}
             <div class="card-header">{{ __('Datos fiscales') }}</div>
             <div class="row">
               <div class="col">

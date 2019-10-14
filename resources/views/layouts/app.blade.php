@@ -25,6 +25,7 @@
     <link href="{{ asset('css/nv-sb.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}">
     <link href="{{ asset('css/content.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/layout.css')}}" rel="stylesheet">
 
 </head>
 <body>
