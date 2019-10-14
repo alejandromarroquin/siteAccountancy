@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\companie;
+use App\Phone;
+use App\taxinformation;
+use App\addresse;
 use Illuminate\Http\Request;
 
 class CompanieController extends Controller
