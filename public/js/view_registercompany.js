@@ -1,9 +1,36 @@
 function completeGeneralInformation(){
-  if($('input[name="checkcomplete"]').prop('checked')){
+  if($('input[name="checkcompletetel"]').prop('checked')){
 
     $("#phoneffice").prop('disabled', true);
     $("#extension").prop('disabled', true);
     $("#cellphone").prop('disabled', true);
+
+    $("#phoneffice").val($('input[name="phoneofficet"]').val());
+    $("#extension").val($('input[name="extensiont"]').val());
+    $("#cellphone").val($('input[name="cellphonet"]').val());
+
+  }else{
+    $("#phoneffice").prop('disabled', false);
+    $("#extension").prop('disabled', false);
+    $("#cellphone").prop('disabled', false);
+
+    $("#phoneffice").val("");
+    $("#extension").val("");
+    $("#cellphone").val("");
+
+  }
+
+  if($('input[name="checkcompletemail"]').prop('checked')){
+    $("#email").prop('disabled', true);
+    $("#email").val($('input[name="emailt"]').val());
+
+  }else{
+    $("#email").prop('disabled', false);
+    $("#email").val("");
+
+  }
+
+  if($('input[name="checkcompletedir"]').prop('checked')){
     $("#street").prop('disabled', true);
     $("#numint").prop('disabled', true);
     $("#numext").prop('disabled', true);
@@ -13,9 +40,6 @@ function completeGeneralInformation(){
     $("#country").prop('disabled', true);
     $("#postalcode").prop('disabled', true);
 
-    $("#phoneffice").val($('input[name="phoneofficet"]').val());
-    $("#extension").val($('input[name="extensiont"]').val());
-    $("#cellphone").val($('input[name="cellphonet"]').val());
     $("#street").val($('input[name="streett"]').val());
     $("#numint").val($('input[name="numintt"]').val());
     $("#numext").val($('input[name="numextt"]').val());
@@ -26,9 +50,6 @@ function completeGeneralInformation(){
     $("#postalcode").val($('input[name="postalcodet"]').val());
 
   }else{
-    $("#phoneffice").prop('disabled', false);
-    $("#extension").prop('disabled', false);
-    $("#cellphone").prop('disabled', false);
     $("#street").prop('disabled', false);
     $("#numint").prop('disabled', false);
     $("#numext").prop('disabled', false);
@@ -38,9 +59,6 @@ function completeGeneralInformation(){
     $("#country").prop('disabled', false);
     $("#postalcode").prop('disabled', false);
 
-    $("#phoneffice").val("");
-    $("#extension").val("");
-    $("#cellphone").val("");
     $("#street").val("");
     $("#numint").val("");
     $("#numext").val("");
@@ -49,6 +67,5 @@ function completeGeneralInformation(){
     $("#estate").val("");
     $("#country").val("");
     $("#postalcode").val("");
-
   }
 }

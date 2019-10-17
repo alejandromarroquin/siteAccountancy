@@ -11,23 +11,23 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="Phonescreate" method="POST" role="form">
+          <form action="empresacreate" method="POST" role="form">
             {{ csrf_field() }}
             <div class="card-header">{{ __('Datos fiscales') }}</div>
             <div class="row">
               <div class="col">
                 <label>Razón social:</label>
-                <input type="text" class="form-control" name="businessname">
+                <input type="text" class="form-control" name="businessname" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>RCF:</label>
-                <input type="text" class="form-control" name="rfc">
+                <input type="text" class="form-control" name="rfc" required/>
               </div>
               <div class="col">
                 <label>Régimen fiscal:</label>
-                <select class="form-control" name="taxregime">
+                <select class="form-control" name="taxregime" required/>
                   <option>Fisica</option>
                   <option>Moral</option>
                 </select>
@@ -36,7 +36,7 @@
             <div class="row">
               <div class="col">
                 <label>Télefono de oficina:</label>
-                <input type="text" class="form-control" name="phoneofficet">
+                <input type="text" class="form-control" name="phoneofficet" required/>
               </div>
               <div class="col">
                 <label>Extención:</label>
@@ -49,8 +49,14 @@
             </div>
             <div class="row">
               <div class="col">
+                <label>Email:</label>
+                <input type="text" class="form-control" name="emailt" required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
                 <label>Calle:</label>
-                <input type="text" class="form-control" name="streett">
+                <input type="text" class="form-control" name="streett" required/>
               </div>
               <div class="col">
                 <label>Número interior:</label>
@@ -58,39 +64,39 @@
               </div>
               <div class="col">
                 <label>Número exterior:</label>
-                <input type="text" class="form-control" name="numextt">
+                <input type="text" class="form-control" name="numextt" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Colonia:</label>
-                <input type="text" class="form-control" name="colonyt">
+                <input type="text" class="form-control" name="colonyt" required/>
               </div>
               <div class="col">
                 <label>Municipio:</label>
-                <input type="text" class="form-control" name="cityt">
+                <input type="text" class="form-control" name="cityt" required/>
               </div>
               <div class="col">
                 <label>Estado:</label>
-                <input type="text" class="form-control" name="estatet">
+                <input type="text" class="form-control" name="estatet" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Pais:</label>
-                <input type="text" class="form-control" name="contryt">
+                <input type="text" class="form-control" name="contryt" required/>
               </div>
               <div class="col">
                 <label>Cóigo postal:</label>
-                <input type="text" class="form-control" name="postalcodet">
+                <input type="text" class="form-control" name="postalcodet" required/>
               </div>
             </div>
             <div class="card-header">{{ __('Datos generales') }}</div>
             <div class="card" style="width: 17rem; margin-top:2em;">
               <div class="col">
-                <label class="col-form-label-sm"><strong>Utilizar datos fiscales: </strong></label>
+                <label class="col-form-label-sm"><strong>Utilizar télefono fiscales: </strong></label>
                 <label class="switch float-right">
-                  <input class="publish0" type="checkbox" name="checkcomplete" onclick="completeGeneralInformation();">
+                  <input class="publish0" type="checkbox" name="checkcompletetel" onclick="completeGeneralInformation();">
                   <span class="slider round"></span>
                 </label>
               </div>
@@ -108,6 +114,30 @@
                 <div class="col">
                   <label>Celular:</label>
                   <input type="text" class="form-control" id="cellphone" name="cellphone">
+                </div>
+              </div>
+              <div class="card" style="width: 17rem; margin-top:2em;">
+                <div class="col">
+                  <label class="col-form-label-sm"><strong>Utilizar email fiscal: </strong></label>
+                  <label class="switch float-right">
+                    <input class="publish0" type="checkbox" name="checkcompletemail" onclick="completeGeneralInformation();">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Email:</label>
+                  <input type="text" class="form-control" id="email" name="email">
+                </div>
+              </div>
+              <div class="card" style="width: 17rem; margin-top:2em;">
+                <div class="col">
+                  <label class="col-form-label-sm"><strong>Utilizar direccón fiscal: </strong></label>
+                  <label class="switch float-right">
+                    <input class="publish0" type="checkbox" name="checkcompletedir" onclick="completeGeneralInformation();">
+                    <span class="slider round"></span>
+                  </label>
                 </div>
               </div>
               <div class="row">
