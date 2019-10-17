@@ -19,18 +19,11 @@ class CreateCheckbalancesTable extends Migration
           $table->integer('idAccountancyCatalog')->unsigned();
           $table->foreign('idAccountancyCatalog')->references('id')->on('accountancycatalogs')->onDelete('cascade');
 
-<<<<<<< HEAD:database/migrations/2019_09_27_174840_create_checkbalances_table.php
           $table->double('beginningBalance',10,2);
           $table->double('charge',10,2);
-          $table->double('payment');
-          $table->double('finalBalance');
-=======
-            $table->double('beginningBalance',10,2);
-            $table->double('charge',10,2);
-            $table->double('payment',10,2);
-            $table->double('finalBalance',10,2);
->>>>>>> seeds:database/migrations/2019_09_12_182314_create_checkbalances_table.php
-
+          $table->double('payment',10,2);
+          $table->double('finalBalance',10,2);
+          
           $table->timestamps();
         });
     }

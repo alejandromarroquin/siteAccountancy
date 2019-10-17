@@ -19,14 +19,11 @@ class CreateCompaniesTable extends Migration
           $table->integer('idTaxInformation')->unsigned();
           $table->foreign('idTaxInformation')->references('id')->on('taxinformations')->onDelete('cascade');
 
-<<<<<<< HEAD:database/migrations/2019_09_27_173733_create_companies_table.php
-          $table->timestamps();
-=======
-            $table->integer('idGeneralInformation')->unsigned();
-            $table->foreign('idGeneralInformation')->references('id')->on('contactlocations')->onDelete('cascade');
+          $table->integer('idGeneralInformation')->unsigned();
+          $table->foreign('idGeneralInformation')->references('id')->on('contactlocations')->onDelete('cascade');
 
-            $table->timestamps();
->>>>>>> seeds:database/migrations/2019_09_12_180620_create_companies_table.php
+          $table->timestamps();
+
         });
     }
 

@@ -14,12 +14,6 @@ class CreateAccountcatalogsTable extends Migration
     public function up()
     {
         Schema::create('accountcatalogs', function (Blueprint $table) {
-<<<<<<< HEAD:database/migrations/2019_09_27_174347_create_accountcatalogs_table.php
-          $table->increments('id');
-          $table->string('gruperCode',6);
-          $table->integer('level');
-          $table->string('accountName',100);
-=======
             $table->increments('id');
 
             $table->integer('idgrouperaccount')->unsigned();
@@ -28,7 +22,6 @@ class CreateAccountcatalogsTable extends Migration
             $table->integer('level')->nullable();
             $table->string('code',6);
             $table->string('accountName',250);
->>>>>>> seeds:database/migrations/2019_09_12_182003_create_accountcatalogs_table.php
 
           $table->timestamps();
         });
