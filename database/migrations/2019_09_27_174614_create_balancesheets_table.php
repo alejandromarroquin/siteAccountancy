@@ -17,6 +17,8 @@ class CreateBalancesheetsTable extends Migration
           $table->increments('id');
 
           $table->integer('idAccountancyCatalog')->unsigned();
+          $table->foreign('idAccountancyCatalog')->references('id')->on('accountancycatalogs')->onDelete('cascade');
+
           $table->integer('type');
           $table->double('amount',10,2);
           $table->double('totalAssets',10,2);

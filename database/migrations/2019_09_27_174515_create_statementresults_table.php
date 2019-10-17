@@ -16,11 +16,12 @@ class CreateStatementresultsTable extends Migration
         Schema::create('statementresults', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('idAccountancy')->unsigned();
-            $table->foreign('idAccountancy')->references('id')->on('accountancies')->onDelete('cascade');
+            $table->integer('idAccountancyCatalog')->unsigned();
+            $table->foreign('idAccountancyCatalog')->references('id')->on('accountancycatalogs')->onDelete('cascade');
 
-            $table->integer('CodeAccount')->unsigned();
-            $table->foreign('CodeAccount')->references('id')->on('accountcatalogs')->onDelete('cascade');
+            $table->date('date');
+            $table->double('amount');
+            $table->double('porcent');
 
             $table->timestamps();
         });
