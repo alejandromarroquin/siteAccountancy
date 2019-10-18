@@ -21,6 +21,9 @@ Route::post('/empresacreate','CompanieController@store');
 Route::get('/usuarios','UserController@create');
 Route::post('/usercreate','UserController@store');
 
+Route::get('/budget','BudgetsController@create');
+Route::post('/budgetcreate','BudgetsController@store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

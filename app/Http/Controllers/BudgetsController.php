@@ -24,7 +24,7 @@ class BudgetsController extends Controller
      */
     public function create()
     {
-        //
+        return view('accountancy.budget.create');
     }
 
     /**

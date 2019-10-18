@@ -11,7 +11,7 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="empresacreate" method="POST" role="form">
+          <form action="/empresacreate" method="POST" role="form">
             {{ csrf_field() }}
             <div class="card-header">{{ __('Datos fiscales') }}</div>
             <div class="row">
@@ -191,4 +191,5 @@
       </div>
     </div>
   </div>
+</div>
 @endsection

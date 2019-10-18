@@ -9,6 +9,7 @@ use App\taxinformation;
 use App\addresse;
 use App\emails;
 use App\contactlocation;
+use App\accountancie;
 use Illuminate\Http\Request;
 
 class CompanieController extends Controller
@@ -129,9 +130,14 @@ class CompanieController extends Controller
           $company=new companie;
           $company->idTaxInformation=$taxinf->id;
           $company->idGeneralInformation=$contacloc->id;
-          if($company->save()){
+          $company->save();
+
+          $accountancy=new accountancie;
+          $accountancy->idCompany=$company->id;
+
+          if($accountancy->save()){
             echo"<script type='text/javascript'>alert('Registro exitoso!')</script>";
-            return redirect("/empresas");
+            echo "Llego aqui";
           }
           DB::commit();
         } catch (\PDOException $e) {
