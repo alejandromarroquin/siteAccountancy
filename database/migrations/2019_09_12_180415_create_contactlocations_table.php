@@ -16,14 +16,14 @@ class CreateContactlocationsTable extends Migration
         Schema::create('contactlocations', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('idaddress')->unsigned();
-            $table->foreign('idaddress')->references('id')->on('addresses')->onDelete('cascade');
+            $table->integer('idAddress')->unsigned();
+            $table->foreign('idAddress')->references('id')->on('addresses')->onDelete('cascade');
 
-            $table->integer('idphone')->unsigned();
-            $table->foreign('idphone')->references('id')->on('phones')->onDelete('cascade');
+            $table->integer('idPhone')->unsigned();
+            $table->foreign('idPhone')->references('id')->on('phones')->onDelete('cascade');
 
-            $table->integer('idemail')->unsigned();
-            $table->foreign('idemail')->references('id')->on('emails')->onDelete('cascade');
+            $table->integer('idEmail')->unsigned();
+            $table->foreign('idEmail')->references('id')->on('emails')->onDelete('cascade');
 
             $table->timestamps();
         });

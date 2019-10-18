@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\taxinformation;
+use App\User;
 
 class UserController extends Controller
 {
@@ -36,7 +37,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      //
+        $user=new User;
+        $user->idCompany=$request->company;
+        $user->name=$request->name;
+        $user->lastname=$request->lastname;
+        $user->email=$request->email;
+        $user->password=$request->password;
+        $user->save();
+
     }
 
     /**

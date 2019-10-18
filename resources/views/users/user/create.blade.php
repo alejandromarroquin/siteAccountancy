@@ -11,15 +11,15 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="empresacreate" method="POST" role="form">
+          <form action="usercreate" method="POST" role="form">
             {{ csrf_field() }}
             <div class="row">
               <div class="col">
                 <label>Empresa:</label>
-                <select class="form-control">
+                <select class="form-control" name="company" id="company">
                   <option selected hidden>Selecciona una empresa...</option>
                   @foreach($businessnames as $businessname)
-                      <option>{{$businessname->businessname}}</option>
+                      <option value="{{$businessname->id}}">{{$businessname->businessname}}</option>
                   @endforeach
                 </select>
               </div>
