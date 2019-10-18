@@ -182,6 +182,7 @@
     <script src="{{ asset('dist/js/select2.js') }}"></script>
     <script src="{{ asset('dist/js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/view_registercompany.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     @yield('scripts')
 

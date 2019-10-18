@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\companie;
 use App\Phone;
 use App\taxinformation;
@@ -47,82 +48,95 @@ class CompanieController extends Controller
         $contacloc=new contactlocation;
         $taxinf=new taxinformation;
 
-        $phone->office=$request->phoneofficet;
-        $phone->extension=$request->extensiont;
-        $phone->cellphone=$request->cellphonet;
-        $phone->save();
+        DB::beginTransaction();
+        try {
+          $phone->office=$request->phoneofficet;
+          $phone->extension=$request->extensiont;
+          $phone->cellphone=$request->cellphonet;
+          $phone->save();
 
-        $address->street=$request->streett;
-        $address->colony=$request->colonyt;
-        $address->state=$request->estatet;
-        $address->city=$request->cityt;
-        $address->numExt=$request->numextt;
-        $address->numInt=$request->numintt;
-        $address->postalCode=$request->postalcodet;
-        $address->country=$request->contryt;
-        $address->save();
 
-        $email->email=$request->emailt;
-        $email->save();
+          $phone->office=$request->phoneofficet;
+          $phone->extension=$request->extensiont;
+          $phone->cellphone=$request->cellphonet;
+          $phone->save();
 
-        $contacloc->idaddress=$address->id;
-        $contacloc->idphone=$phone->id;
-        $contacloc->idemail=$email->id;
-        $contacloc->save();
+          $address->street=$request->streett;
+          $address->colony=$request->colonyt;
+          $address->state=$request->estatet;
+          $address->city=$request->cityt;
+          $address->numExt=$request->numextt;
+          $address->numInt=$request->numintt;
+          $address->postalCode=$request->postalcodet;
+          $address->country=$request->contryt;
+          $address->save();
 
-        $taxinf->idtaxinformation=$contacloc->id;
-        $taxinf->rfc=$request->rfc;
-        $taxinf->businessname=$request->businessname;
-        $taxinf->taxRegime=$request->taxregime;
-        $taxinf->save();
+          $email->email=$request->emailt;
+          $email->save();
 
-        if(!$request->checkcompletetel){
-          $phone=new Phone;
-          $phone->office=$request->phoneffice;
-          $phone->extension=$request->extension;
-          $phone->cellphone=$request->cellphone;
-          if($phone->save()){
-              $flag=1;
-          }
-        }
-
-        if(!$request->checkcompletemail){
-          $email=new emails;
-          $email->email=$request->email;
-          if($email->save()){
-              $flag=1;
-          }
-        }
-
-        if(!$request->checkcompletedir){
-          $address=new addresse;
-          $address->street=$request->street;
-          $address->colony=$request->colony;
-          $address->state=$request->estate;
-          $address->city=$request->city;
-          $address->numExt=$request->numext;
-          $address->numInt=$request->numint;
-          $address->postalCode=$request->postalcode;
-          $address->country=$request->contry;
-          if($address->save()){
-              $flag=1;
-          }
-        }
-
-        if($flag==1){
-          $contacloc=new contactlocation;
           $contacloc->idaddress=$address->id;
           $contacloc->idphone=$phone->id;
           $contacloc->idemail=$email->id;
           $contacloc->save();
+
+          $taxinf->idtaxinformation=$contacloc->id;
+          $taxinf->rfc=$request->rfc;
+          $taxinf->businessname=$request->businessname;
+          $taxinf->taxRegime=$request->taxregime;
+          $taxinf->save();
+
+          if(!$request->checkcompletetel){
+            $phone=new Phone;
+            $phone->office=$request->phoneffice;
+            $phone->extension=$request->extension;
+            $phone->cellphone=$request->cellphone;
+            if($phone->save()){
+                $flag=1;
+            }
+          }
+
+          if(!$request->checkcompletemail){
+            $email=new emails;
+            $email->email=$request->email;
+            if($email->save()){
+                $flag=1;
+            }
+          }
+
+          if(!$request->checkcompletedir){
+            $address=new addresse;
+            $address->street=$request->street;
+            $address->colony=$request->colony;
+            $address->state=$request->estate;
+            $address->city=$request->city;
+            $address->numExt=$request->numext;
+            $address->numInt=$request->numint;
+            $address->postalCode=$request->postalcode;
+            $address->country=$request->contry;
+            if($address->save()){
+                $flag=1;
+            }
+          }
+
+          if($flag==1){
+            $contacloc=new contactlocation;
+            $contacloc->idaddress=$address->id;
+            $contacloc->idphone=$phone->id;
+            $contacloc->idemail=$email->id;
+            $contacloc->save();
+          }
+
+          $company=new companie;
+          $company->idTaxInformation=$taxinf->id;
+          $company->idGeneralInformation=$contacloc->id;
+          if($company->save()){
+            echo"<script type='text/javascript'>alert('Registro exitoso!')</script>";
+            return redirect("/empresas");
+          }
+          DB::commit();
+        } catch (\PDOException $e) {
+          DB::rollBack();
         }
-
-        $company=new companie;
-        $company->idTaxInformation=$taxinf->id;
-        $company->idGeneralInformation=$contacloc->id;
-        $company->save();
-
-        echo($company->id);
 
     }
 
