@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\taxinformation;
 use App\User;
+Use DB;
 
 class UserController extends Controller
 {
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $businessnames=taxinformation::all();
+        $businessnames=DB::table('taxinformations')->join('companies','taxinformations.id','=','companies.id')->select('businessname','companies.id')->get();
         return view('users.user.create',compact("businessnames"));
     }
 
