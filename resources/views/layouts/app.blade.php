@@ -97,7 +97,7 @@
                                 <a href="/empresas">Empresas</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/registrarusuario">Usuarios</a>
+                                <a href="/usuarios">Usuarios</a>
                             </li>
                         </ul>
                     </li>

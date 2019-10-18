@@ -1,3 +1,4 @@
+//Función para habilitar e inhabilitar los input de información general
 function completeGeneralInformation(){
   if($('input[name="checkcompletetel"]').prop('checked')){
 
@@ -5,6 +6,7 @@ function completeGeneralInformation(){
     $("#extension").prop('disabled', true);
     $("#cellphone").prop('disabled', true);
 
+    //Asignar valores de datos fiscales a datos generales
     $("#phoneffice").val($('input[name="phoneofficet"]').val());
     $("#extension").val($('input[name="extensiont"]').val());
     $("#cellphone").val($('input[name="cellphonet"]').val());
@@ -22,6 +24,8 @@ function completeGeneralInformation(){
 
   if($('input[name="checkcompletemail"]').prop('checked')){
     $("#email").prop('disabled', true);
+
+    //Asignar valores de datos fiscales a datos generales
     $("#email").val($('input[name="emailt"]').val());
 
   }else{
@@ -40,6 +44,7 @@ function completeGeneralInformation(){
     $("#country").prop('disabled', true);
     $("#postalcode").prop('disabled', true);
 
+    //Asignar valores de datos fiscales a datos generales
     $("#street").val($('input[name="streett"]').val());
     $("#numint").val($('input[name="numintt"]').val());
     $("#numext").val($('input[name="numextt"]').val());
@@ -70,6 +75,7 @@ function completeGeneralInformation(){
   }
 }
 
+//Función para validad el RFC
 function rfcValido(rfc) {
     const re       = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
     var   validado = rfc.match(re);
@@ -103,6 +109,7 @@ function rfcValido(rfc) {
     return rfcSinDigito + digitoVerificador;
 }
 
+//Mostrar si el RFC es incorrecto
 function validarInput(input) {
     var rfc         = input.value.trim().toUpperCase(),
         resultado   = document.getElementById("resultado"),
@@ -115,6 +122,8 @@ function validarInput(input) {
     }
 }
 
+
+//Función para pasar a mayúsculas las letras ingresadas en un input
 function aMayusculas(obj,id){
     obj = obj.toUpperCase();
     document.getElementById(id).value = obj;

@@ -14,9 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/empresas','CompanieController@create');
 
+Route::get('/empresas','CompanieController@create');
 Route::post('/empresacreate','CompanieController@store');
+
+Route::get('/usuarios','UserController@create');
+Route::post('/usercreate','UserController@store');
 
 Auth::routes();
 
