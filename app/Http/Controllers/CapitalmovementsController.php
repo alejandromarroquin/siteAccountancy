@@ -24,7 +24,7 @@ class CapitalmovementsController extends Controller
      */
     public function create()
     {
-        //
+        return view('accountancy.capitalmovements.create');
     }
 
     /**
@@ -35,7 +35,8 @@ class CapitalmovementsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $movements=new capitalmovements;
+        
     }
 
     /**

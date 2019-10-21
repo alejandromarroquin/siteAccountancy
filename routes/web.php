@@ -24,6 +24,12 @@ Route::post('/usercreate','UserController@store');
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
 
+Route::get('/movimientos','CapitalmovementsController@create');
+Route::post('/movementscreate','CapitalmovementsController@store');
+
+Route::get('/compras','PurchaserequestsController@create');
+Route::post('/purchasecreate','PurchaserequestsController@store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

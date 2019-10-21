@@ -19,7 +19,7 @@ class CreatePurchaserequestsTable extends Migration
             $table->integer('idAccountancy')->unsigned();
             $table->foreign('idAccountancy')->references('id')->on('accountancies')->onDelete('cascade');
 
-            $table->integer('idPersonCheck')->unsigned();
+            $table->integer('idPersonCheck')->unsigned()->nullable();
             $table->foreign('idPersonCheck')->references('id')->on('personalinformations')->onDelete('cascade');
 
             $table->date('date');

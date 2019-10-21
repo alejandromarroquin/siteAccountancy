@@ -8,9 +8,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title></title>
+    <title>Contabilidad</title>
 
-    <!-- Scripts -->
+    <!-- icon -->
+    <link rel="icon" type="image/png" href="img/icon.png" />
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/font-awesome/fonts/familyNunito.css') }}" rel="stylesheet">
@@ -124,13 +125,13 @@
                         <a href="#">Contabilidad<span class="fa arrow"></span></a>
                         <ul class="nav-second-level list-group nested">
                             <li class="list-group-item">
-                                <a href="/presupuesto">Presupuesto general</a>
+                                <a href="/budget">Presupuesto general</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#">Cátalogo de cuentas</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Solicitudes de compra</a>
+                                <a href="/compras">Solicitudes de compra</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="/movimientos">Movimientos de capital</a>
@@ -148,25 +149,26 @@
                     </li>
 
                     <li class="list-group-item">
-                        <a href="#">Reportes contables<span class="fa arrow"></span></a>
-                        <ul class="nav-second-level list-group nested">
-                            <li class="list-group-item">
-                                <a href="#">Cartera de clientes</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Importación de clientes</a>
-                            </li>
-                        </ul>
+                      <a href="#">Reportes contables<span class="fa arrow"></span></a>
+                      <ul class="nav-second-level list-group nested">
+                          <li class="list-group-item">
+                              <a href="#">Cartera de clientes</a>
+                          </li>
+                          <li class="list-group-item">
+                              <a href="#">Importación de clientes</a>
+                          </li>
+                      </ul>
                     </li>
-                </ul>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
         <!--/main-->
         @endif
     </div>
     <main>
       @yield('content')
+      <div>Icons made by <a href="https://www.flaticon.es/autores/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.es/"             title="Flaticon">www.flaticon.com</a></div>
     </main>
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -181,7 +183,6 @@
     <script src="{{ asset('dist/js/sb-admin-2.js') }}"></script>
     <script src="{{ asset('dist/js/select2.js') }}"></script>
     <script src="{{ asset('dist/js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/view_registercompany.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     @yield('scripts')

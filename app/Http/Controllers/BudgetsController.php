@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\budgets;
+use App\companie;
+use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BudgetsController extends Controller
@@ -35,7 +38,17 @@ class BudgetsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+          $budgets=new budgets;
+          DB::beginTransaction();
+          try{
+            $budgets->idAccountancy=1;
+            $budgets->concept=$request->concept;
+            $budgets->amount=$request->amount;
+            $budgets->save();
+            DB::commit();
+          }catch(\PDOException $e){
+            DB::rollBack();
+          }
     }
 
     /**
