@@ -16,7 +16,7 @@
             <div class="row">
               <div class="col-2">
                 <label>Fecha:</label>
-                <input type="text" class="form-control" name="date" value="{{$currentdate}}" disabled required/>
+                <input type="text" class="form-control" name="date" value="{{$currentdate}}" readonly required/>
               </div>
             </div>
             <div class="row">
@@ -40,7 +40,7 @@
             <div class="row">
               <div class="col-5">
                 <label>Subtotal:</label>
-                <input type="text" class="form-control" id="subtotal" name="subtotal" disabled required/>
+                <input type="text" class="form-control" id="subtotal" name="subtotal" readonly required/>
               </div>
             </div>
             <div class="row" style="padding-top:1em;">
@@ -55,13 +55,13 @@
             <div class="row">
               <div class="col-5">
                 <label>IVA:</label>
-                <input type="text" class="form-control" id="iva" name="iva" disabled/>
+                <input type="text" class="form-control" id="iva" name="iva" readonly/>
               </div>
             </div>
             <div class="row">
               <div class="col-5">
                 <label>Total:</label>
-                <input type="text" class="form-control" id="total" name="total" disabled required/>
+                <input type="text" class="form-control" id="total" name="total" readonly required/>
               </div>
             </div>
             <input class="btn btn-primary" type="submit" value="Registrar">

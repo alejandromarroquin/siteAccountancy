@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\purchaserequests;
+use DB;
 use Illuminate\Http\Request;
 
 class PurchaserequestsController extends Controller
@@ -24,7 +25,7 @@ class PurchaserequestsController extends Controller
      */
     public function create()
     {
-        $currentdate=date("d/m/Y");
+        $currentdate=date("Y-m-d");
         return view('purchases.create',compact("currentdate"));
     }
 
@@ -36,8 +37,24 @@ class PurchaserequestsController extends Controller
      */
     public function store(Request $request)
     {
-        $purchase=new purchaserequests;
-        echo($request->quantity);
+        DB::beginTransaction();
+        try {
+          $purchase=new purchaserequests;
+          $purchase->idAccountancy=1;
+          $purchase->idPersonCheck=1;
+          $purchase->date=$request->date;
+          $purchase->concept=$request->concept;
+          $purchase->priceunit=$request->unitcost;
+          $purchase->quantity=$request->quantity;
+          $purchase->subtotal=$request->subtotal;
+          $purchase->iva=$request->iva;
+          $purchase->total=$request->total;
+          $purchase->status=0;
+          $purchase->save();
+          DB::commit();
+        } catch (\PDOException $e) {
+          DB::rollBack();
+        }
     }
 
     /**

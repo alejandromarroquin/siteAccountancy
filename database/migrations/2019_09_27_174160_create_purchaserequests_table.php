@@ -24,9 +24,10 @@ class CreatePurchaserequestsTable extends Migration
 
             $table->date('date');
             $table->string('concept',100);
+            $table->double('priceunit',10,2);
             $table->integer('quantity');
             $table->double('subtotal',10,2);
-            $table->double('iva',10,2);
+            $table->double('iva',10,2)->nullable();
             $table->double('total',10,2);
             $table->integer('status');
 
