@@ -24,7 +24,8 @@ class PurchaserequestsController extends Controller
      */
     public function create()
     {
-        return view('purchases.create');
+        $currentdate=date("d/m/Y");
+        return view('purchases.create',compact("currentdate"));
     }
 
     /**
@@ -35,7 +36,8 @@ class PurchaserequestsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $purchase=new purchaserequests;
+        echo($request->quantity);
     }
 
     /**
