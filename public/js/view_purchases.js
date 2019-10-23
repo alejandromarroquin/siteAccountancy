@@ -1,6 +1,6 @@
 //Calcular el iva
 function ivavalidate(){
-  if($('input[name="checkiva"]').prop('checked')){
+  if($('input[name="checkiva"]').prop('checked') && $('#unitcost').val()!=''){
     $('#iva').val(round($('#subtotal').val()*0.16,2));
     setTotal();
   }else{
@@ -20,15 +20,17 @@ function setSubtotal(){
 
 //Función para calcular el total de la compra
 function setTotal(){
-  if($('input[name="checkiva"]').prop('checked')){
-    $('#total').val(round(parseFloat($('#subtotal').val())+parseFloat($('#iva').val()),2));
-    if($("#total").val().indexOf('.',0)<0){
-      $("#total").val($("#total").val().concat(".00"));
-    }
-  }else{
-    $('#total').val(parseFloat($('#subtotal').val()));
-    if($("#total").val().indexOf('.',0)<0){
-      $("#total").val($("#total").val().concat(".00"));
+  if($('#unitcost').val()!=''){
+    if($('input[name="checkiva"]').prop('checked')){
+      $('#total').val(round(parseFloat($('#subtotal').val())+parseFloat($('#iva').val()),2));
+      if($("#total").val().indexOf('.',0)<0){
+        $("#total").val($("#total").val().concat(".00"));
+      }
+    }else{
+      $('#total').val(parseFloat($('#subtotal').val()));
+      if($("#total").val().indexOf('.',0)<0){
+        $("#total").val($("#total").val().concat(".00"));
+      }
     }
   }
 }
