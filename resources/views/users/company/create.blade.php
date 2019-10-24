@@ -78,13 +78,13 @@
               </div>
               <div class="col">
                 <label>Estado:</label>
-                <input type="text" class="form-control" id="estatet" name="estatet" onchange="changeEstate();" required/>
+                <input type="text" class="form-control" id="estatet" name="estatet" onchange="changeEstate();" onkeypress="return soloLetras(event);" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Pais:</label>
-                <input type="text" class="form-control" id="contryt" name="contryt" onchange="changeCountry();" required/>
+                <input type="text" class="form-control" id="contryt" name="contryt" onchange="changeCountry();" onkeypress="return soloLetras(event);" required/>
               </div>
               <div class="col">
                 <label>Cóigo postal:</label>
