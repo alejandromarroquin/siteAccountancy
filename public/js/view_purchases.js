@@ -1,11 +1,13 @@
 //Calcular el iva
 function ivavalidate(){
-  if($('input[name="checkiva"]').prop('checked')){
-    $('#iva').val(round($('#subtotal').val()*0.16,2));
-    setTotal();
-  }else{
-    $('#iva').val(null);
-    setTotal();
+  if($('#unitcost').val()!=''){
+    if($('input[name="checkiva"]').prop('checked')){
+      $('#iva').val(round($('#subtotal').val()*0.16,2));
+      setTotal();
+    }else{
+      $('#iva').val(null);
+      setTotal();
+    }
   }
 }
 

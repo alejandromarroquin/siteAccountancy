@@ -75,6 +75,78 @@ function completeGeneralInformation(){
   }
 }
 
+function changePhone(){
+  if($('input[name="checkcompletetel"]').prop('checked')){
+    $("#phoneffice").val($('input[name="phoneofficet"]').val());
+  }
+}
+
+function changeExtension(){
+  if($('input[name="checkcompletetel"]').prop('checked')){
+    $("#extension").val($('input[name="extensiont"]').val());
+  }
+}
+
+function changeCellphone(){
+  if($('input[name="checkcompletetel"]').prop('checked')){
+    $("#cellphone").val($('input[name="cellphonet"]').val());
+  }
+}
+
+function changeEmail(){
+  if($('input[name="checkcompletemail"]').prop('checked')){
+    $("#email").val($('input[name="emailt"]').val());
+  }
+}
+
+function changeStreet(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#street").val($('input[name="streett"]').val());
+  }
+}
+
+function changeNumint(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#numint").val($('input[name="numintt"]').val());
+  }
+}
+
+function changeNumext(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#numext").val($('input[name="numextt"]').val());
+  }
+}
+
+function changeColony(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#colony").val($('input[name="colonyt"]').val());
+  }
+}
+
+function changeCity(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#city").val($('input[name="cityt"]').val());
+  }
+}
+
+function changeEstate(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#estate").val($('input[name="estatet"]').val());
+  }
+}
+
+function changeCountry(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#country").val($('input[name="contryt"]').val());
+  }
+}
+
+function changePostalcode(){
+  if($('input[name="checkcompletedir"]').prop('checked')){
+    $("#postalcode").val($('input[name="postalcodet"]').val());
+  }
+}
+
 //Función para validad el RFC
 function rfcValido(rfc) {
     const re       = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
@@ -119,6 +191,7 @@ function validarInput(input) {
 
     if (!rfcCorrecto) {
     	alert("Formato RFC incorrecto");
+      input.value=null;
     }
 }
 
