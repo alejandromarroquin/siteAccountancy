@@ -17,7 +17,7 @@
             <div class="row">
               <div class="col">
                 <label>Razón social:</label>
-                <input type="text" class="form-control" name="businessname" required/>
+                <input type="text" class="form-control" name="businessname" placeholder="Ej. Empresa S.A. DE C.V." required/>
               </div>
             </div>
             <div class="row">
@@ -36,59 +36,59 @@
             <div class="row">
               <div class="col">
                 <label>Télefono de oficina:</label>
-                <input type="text" class="form-control" name="phoneofficet" required/>
+                <input type="text" class="form-control" id="phoneofficet" name="phoneofficet" minlength="10" maxlength="10" placeholder="10 digitos" onchange="changePhone();" onkeypress="return soloNumeros(event);" required/>
               </div>
               <div class="col">
                 <label>Extención:</label>
-                <input type="text" class="form-control" name="extensiont">
+                <input type="text" class="form-control" id="extensiont" name="extensiont"  maxlength="4" placeholder="Máximo 4 digitos" onchange="changeExtension();" onkeypress="return soloNumeros(event);">
               </div>
               <div class="col">
                 <label>Celular:</label>
-                <input type="text" class="form-control" name="cellphonet">
+                <input type="text" class="form-control" id="cellphonet" name="cellphonet" minlength="10" maxlength="10" placeholder="10 digitos" onchange="changeCellphone();">
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Email:</label>
-                <input type="text" class="form-control" name="emailt" required/>
+                <input type="text" class="form-control" id="emailt" name="emailt" placeholder="Ej. nombre@tuempresa.com" onchange="changeEmail();" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Calle:</label>
-                <input type="text" class="form-control" name="streett" required/>
+                <input type="text" class="form-control" id="streett" name="streett" onchange="changeStreet();" required/>
               </div>
               <div class="col">
                 <label>Número interior:</label>
-                <input type="text" class="form-control" name="numintt">
+                <input type="text" class="form-control" id="numintt" name="numintt" maxlength="3" onchange="changeNumint();">
               </div>
               <div class="col">
                 <label>Número exterior:</label>
-                <input type="text" class="form-control" name="numextt" required/>
+                <input type="text" class="form-control" id="numextt" name="numextt" maxlength="4" onchange="changeNumext();" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Colonia:</label>
-                <input type="text" class="form-control" name="colonyt" required/>
+                <input type="text" class="form-control" id="colonyt" name="colonyt" onchange="changeColony();" required/>
               </div>
               <div class="col">
                 <label>Municipio:</label>
-                <input type="text" class="form-control" name="cityt" required/>
+                <input type="text" class="form-control" id="cityt" name="cityt" onchange="changeCity();" required/>
               </div>
               <div class="col">
                 <label>Estado:</label>
-                <input type="text" class="form-control" name="estatet" required/>
+                <input type="text" class="form-control" id="estatet" name="estatet" onchange="changeEstate();" onkeypress="return soloLetras(event);" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Pais:</label>
-                <input type="text" class="form-control" name="contryt" required/>
+                <input type="text" class="form-control" id="contryt" name="contryt" onchange="changeCountry();" onkeypress="return soloLetras(event);" required/>
               </div>
               <div class="col">
                 <label>Cóigo postal:</label>
-                <input type="text" class="form-control" name="postalcodet" required/>
+                <input type="text" class="form-control" id="postalcodet" name="postalcodet"minlength="5" maxlength="5" onchange="changePostalcode();" onkeypress="return soloNumeros(event);" required/>
               </div>
             </div>
             <div class="card-header">{{ __('Datos generales') }}</div>
@@ -105,15 +105,15 @@
               <div class="row">
                 <div class="col">
                   <label>Télefono de oficina:</label>
-                  <input type="text" class="form-control" id="phoneffice" name="phoneffice">
+                  <input type="text" class="form-control" id="phoneffice" name="phoneffice" minlength="10" maxlength="10" placeholder="10 digitos" onkeypress="return soloNumeros(event);">
                 </div>
                 <div class="col">
                   <label>Extención:</label>
-                  <input type="text" class="form-control" id="extension" name="extension">
+                  <input type="text" class="form-control" id="extension" name="extension" maxlength="4" placeholder="Máximo 4 digitos" onkeypress="return soloNumeros(event);">
                 </div>
                 <div class="col">
                   <label>Celular:</label>
-                  <input type="text" class="form-control" id="cellphone" name="cellphone">
+                  <input type="text" class="form-control" id="cellphone" name="cellphone" minlength="10" maxlength="10" placeholder="10 digitos" onkeypress="return soloNumeros(event);">
                 </div>
               </div>
               <div class="card" style="width: 17rem; margin-top:2em;">
@@ -147,11 +147,11 @@
                 </div>
                 <div class="col">
                   <label>Número interior:</label>
-                  <input type="text" class="form-control" id="numint" name="numint">
+                  <input type="text" class="form-control" id="numint" name="numint" maxlength="3">
                 </div>
                 <div class="col">
                   <label>Número exterior:</label>
-                  <input type="text" class="form-control" id="numext" name="numext">
+                  <input type="text" class="form-control" id="numext" name="numext" maxlength="4">
                 </div>
               </div>
               <div class="row">
@@ -175,7 +175,7 @@
                 </div>
                 <div class="col">
                   <label>Cóigo postal:</label>
-                  <input type="text" class="form-control" id="postalcode" name="postalcode">
+                  <input type="text" class="form-control" id="postalcode" name="postalcode" onkeypress="return soloNumeros(event);">
                 </div>
               </div>
               <div class="row">

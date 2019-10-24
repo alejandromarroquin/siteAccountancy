@@ -27,11 +27,11 @@
             <div class="row">
               <div class="col">
                 <label>Nombre:</label>
-                <input type="text" class="form-control" id="name" name="name" required/>
+                <input type="text" class="form-control" id="name" name="name" onkeypress="return soloLetras(event);" required/>
               </div>
               <div class="col">
                 <label>Apellido:</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" required/>
+                <input type="text" class="form-control" id="lastname" name="lastname" onkeypress="return soloLetras(event);" required/>
               </div>
             </div>
             <div class="row">
