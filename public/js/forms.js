@@ -55,13 +55,20 @@ function filter(__val__){
     }
 }
 
-function addDecimal(nid1,nid2,nid3,nid4,input){
+function addDecimal(nid1,nid2,nid3,nid4,nid5,input){
    var value=input.value.trim();
    var val=document.getElementById(nid4).value;
    var yup=parseFloat(value)*parseFloat(val);
+   var check='#'+nid5;
    if(value.indexOf('.',0)<0){
      document.getElementById(nid1).value=value.concat(".00");
      document.getElementById(nid2).value=yup+".00";
-     document.getElementById(nid3).value=yup+".00";
+     if($('"'+check+'"').prop('checked')){
+       document.getElementById(nid3).value=(parseFloat(yup)*2)+".00";
+     }else{
+       alert("66666");
+       document.getElementById(nid3).value=yup+".00";
+     }
+
    }
 }

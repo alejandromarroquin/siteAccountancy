@@ -28,7 +28,7 @@
             <div class="row">
               <div class="col-5">
                 <label>Precio unitario:</label>
-                  <input type="text" class="form-control" id="unitcost" name="unitcost" onchange="setSubtotal();ivavalidate();addDecimal('unitcost','subtotal','total','quantity',this);" onkeypress="return filterFloat(event,this);" required/>
+                  <input type="text" class="form-control" id="unitcost" name="unitcost" onchange="setSubtotal();ivavalidate();addDecimal('unitcost','subtotal','total','quantity','checkiva',this);" onkeypress="return filterFloat(event,this);" required/>
               </div>
             </div>
             <div class="row">
