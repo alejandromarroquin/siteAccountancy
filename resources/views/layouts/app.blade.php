@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}">
     <link href="{{ asset('css/content.css')}}" rel="stylesheet">
     <link href="{{ asset('css/layout.css')}}" rel="stylesheet">
+    @yield('styles')
 
 </head>
 <body>
@@ -128,7 +129,7 @@
                                 <a href="/budget">Presupuesto general</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Cátalogo de cuentas</a>
+                                <a href="/cuentas">Catálogo de cuentas</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="/compras">Solicitudes de compra</a>
@@ -152,10 +153,7 @@
                       <a href="#">Reportes contables<span class="fa arrow"></span></a>
                       <ul class="nav-second-level list-group nested">
                           <li class="list-group-item">
-                              <a href="#">Cartera de clientes</a>
-                          </li>
-                          <li class="list-group-item">
-                              <a href="#">Importación de clientes</a>
+                              <a href="#">Consultar reportes</a>
                           </li>
                       </ul>
                     </li>

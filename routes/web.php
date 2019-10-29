@@ -21,6 +21,9 @@ Route::post('/empresacreate','CompanieController@store');
 Route::get('/usuarios','UserController@create');
 Route::post('/usercreate','UserController@store');
 
+Route::get('/factura','CfdiController@create');
+Route::post('/cfdicreate','CfdiController@store');
+
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
 
@@ -29,6 +32,11 @@ Route::post('/movementscreate','CapitalmovementsController@store');
 
 Route::get('/compras','PurchaserequestsController@create');
 Route::post('/purchasecreate','PurchaserequestsController@store');
+
+Route::get('/cuentas','AccountcatalogsController@create');
+Route::get('/accountscreate','AccountcatalogsController@store');
+Route::get('/accountsdelete','AccountcatalogsController@destroy');
+Route::get('/getaccount','AccountcatalogsController@consultSubaccount');
 
 Auth::routes();
 
