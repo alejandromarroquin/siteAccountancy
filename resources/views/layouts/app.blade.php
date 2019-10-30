@@ -111,7 +111,7 @@
                                 <a href="#"></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/facturar">Nueva factura</a>
+                                <a href="/factura">Nueva factura</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#">Enviar facturas</a>
@@ -152,6 +152,9 @@
                     <li class="list-group-item">
                       <a href="#">Reportes contables<span class="fa arrow"></span></a>
                       <ul class="nav-second-level list-group nested">
+                          <li class="list-group-item">
+                              <a href="#">Generar reportes</a>
+                          </li>
                           <li class="list-group-item">
                               <a href="#">Consultar reportes</a>
                           </li>

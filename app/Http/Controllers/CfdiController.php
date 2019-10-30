@@ -24,7 +24,7 @@ class CfdiController extends Controller
      */
     public function create()
     {
-        //
+        return view('cfdi.create');
     }
 
     /**
