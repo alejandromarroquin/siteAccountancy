@@ -21,7 +21,8 @@ class CompanieController extends Controller
      */
     public function index()
     {
-        //
+        $companies=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->select('taxinformations.rfc','taxinformations.businessName','emails.email','phones.office')->get();
+        return view('users.company.index',compact('companies'));
     }
 
     /**
@@ -177,17 +178,23 @@ class CompanieController extends Controller
      */
     public function update(Request $request, companie $companie)
     {
-        //
+        return $request->elegido;
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\companie  $companie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(companie $companie)
+    public function destroy(Request $request,companie $companie)
     {
-        //
+      if(companie::join('taxinformations','companies.id','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
+        return 1;
+      }else{
+        return 0;
+      }
+
     }
 }

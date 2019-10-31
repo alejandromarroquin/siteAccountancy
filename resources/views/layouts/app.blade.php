@@ -96,10 +96,16 @@
                                 <a href="#"></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/empresas">Empresas</a>
+                                <a href="/empresa_registrar">Registrar empresa</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/usuarios">Usuarios</a>
+                                <a href="/empresas_consultar">Consultar empresas</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="/usuario_registrar">Registrar usuario</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="/usuarios_consultar">Consultar usuarios</a>
                             </li>
                         </ul>
                     </li>

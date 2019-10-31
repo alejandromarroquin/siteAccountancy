@@ -15,10 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/empresas','CompanieController@create');
+Route::get('/empresas_consultar','CompanieController@index');
+Route::get('/empresa_registrar','CompanieController@create');
 Route::post('/empresacreate','CompanieController@store');
+Route::get('/empresadelete','CompanieController@destroy');
+Route::get('/empresaupdate','CompanieController@update');
 
-Route::get('/usuarios','UserController@create');
+Route::get('/usuarios_consultar','UserController@index');
+Route::get('/usuario_registrar','UserController@create');
 Route::post('/usercreate','UserController@store');
 
 Route::get('/factura','CfdiController@create');

@@ -84,6 +84,5 @@
 @section('scripts')
   <script src="{{ asset('js/view_accounts.js') }}"></script>
 
-<!--===============================================================================================-->
 	<script src="table/js/main.js"></script>
 @endsection
