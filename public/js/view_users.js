@@ -1,8 +1,7 @@
 $(function () {
   $(document).on('click', '.delete', function (event) {
-    event.preventDefault();
     elegido=$(this).val();
-    $.get("/empresadelete", { elegido: elegido }, function(data){
+    $.get("/userdelete", { elegido: elegido }, function(data){
       alert(data);
     });
   });
@@ -11,7 +10,7 @@ $(function () {
 $(function () {
   $(document).on('click', '.edit', function (event) {
     elegido=$(this).val();
-    $.get("/empresaupdate", { elegido: elegido }, function(data){
+    $.get("/userupdate", { elegido: elegido }, function(data){
       alert(data);
     });
   });

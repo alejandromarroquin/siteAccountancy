@@ -16,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users=User::join('companies','users.id','=','companies.id')->select('name','lastname','email')->where('idCompany',1)->get();
+        return view('users.user.index',compact('users'));
     }
 
     /**
@@ -67,7 +68,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users=User::join('companies','users.id','=','companies.id')->select('name','lastname','email')->where('idCompany',1)->get();
+        return 1;
     }
 
     /**
@@ -85,11 +87,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\companie  $companie
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,User $user)
     {
-        //
+        echo ":v";
     }
 }

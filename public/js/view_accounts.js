@@ -24,7 +24,7 @@ $(function () {
     $(document).on('click', '.borrar', function (event) {
         elegido=$(this).val();
         $.get("/accountsdelete", { elegido: elegido }, function(data){
-
+          alert(data);
         });
         event.preventDefault();
         $(this).closest('tr').remove();

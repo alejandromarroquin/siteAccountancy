@@ -42,7 +42,7 @@
                     <td class="cell100 column2">{{$companie->businessName}}</td>
                     <td class="cell100 column3">{{$companie->email}}</td>
                     <td class="cell100 column4">{{$companie->office}}</td>
-                    <td class="cell100 column5"><button type="button" class="btn btn-warning edit" value="{{$companie->rfc}}">Editar</button></td>
+                    <td class="cell100 column5"><a href="/empresaupdate/{{$companie->rfc}}" class="btn btn-warning">Editar</a></td>
                     <td class="cell100 column6"><button type="button" class="btn btn-danger delete" value="{{$companie->rfc}}">Eliminar</button></td>
                   </tr>
                 @endforeach

@@ -21,7 +21,7 @@ class CompanieController extends Controller
      */
     public function index()
     {
-        $companies=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->select('taxinformations.rfc','taxinformations.businessName','emails.email','phones.office')->get();
+        $companies=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->select('taxinformations.rfc','taxinformations.businessName','emails.email','phones.office')->where('companies.id','!=','1')->get();
         return view('users.company.index',compact('companies'));
     }
 
@@ -164,9 +164,28 @@ class CompanieController extends Controller
      * @param  \App\companie  $companie
      * @return \Illuminate\Http\Response
      */
-    public function edit(companie $companie)
+    public function edit($companie)
     {
-        //
+        $datacompanie=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->join('addresses','contactlocations.id','=','addresses.id')->select('rfc','businessName','taxRegime','email','office','extension','cellphone','street','colony','state','city','numExt','numInt','postalCode','reference','country')->where('taxinformations.rfc',$companie)->get();
+        foreach ($datacompanie as $data) {
+          $rfc=$data->rfc;
+          $businessName=$data->businessName;
+          $taxRegime=$data->taxRegime;
+          $email=$data->email;
+          $office=$data->office;
+          $extension=$data->extension;
+          $cellphone=$data->cellphone;
+          $street=$data->street;
+          $colony=$data->colony;
+          $state=$data->state;
+          $city=$data->city;
+          $numExt=$data->numExt;
+          $numInt=$data->numInt;
+          $postalCode=$data->postalCode;
+          $reference=$data->reference;
+          $country=$data->country;
+        }
+        return view('users.company.edit',compact('rfc','businessName','taxRegime','email','office','extension','cellphone','street','colony','state','city','numExt','numInt','postalCode','reference','country'));
     }
 
     /**
@@ -178,7 +197,7 @@ class CompanieController extends Controller
      */
     public function update(Request $request, companie $companie)
     {
-        return $request->elegido;
+        //
     }
 
     /**
@@ -190,6 +209,7 @@ class CompanieController extends Controller
      */
     public function destroy(Request $request,companie $companie)
     {
+
       if(companie::join('taxinformations','companies.id','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
         return 1;
       }else{
