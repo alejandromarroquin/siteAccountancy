@@ -68,8 +68,16 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $users=User::join('companies','users.id','=','companies.id')->select('name','lastname','email')->where('idCompany',1)->get();
-        return 1;
+        $user=User::join('companies','users.id','=','companies.id')->join('taxinformations','companies.id','=','taxinformations.id')->select('taxinformations.businessName','users.id','users.name','users.lastname','users.email','users.password')->where('users.email',$id)->get();
+        foreach ($user as $data) {
+          $user=$data->id;
+          $company=$data->businessName;
+          $name=$data->name;
+          $lastname=$data->lastname;
+          $email=$data->email;
+          $passw=$data->password;
+        }
+        return view('users.user.edit',compact('company','name','lastname','email','passw','user'));
     }
 
     /**
@@ -81,7 +89,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo "bien";
     }
 
     /**
@@ -93,6 +101,10 @@ class UserController extends Controller
      */
     public function destroy(Request $request,User $user)
     {
-        echo ":v";
+        if(User::join('companies','users.id','=','companies.id')->where('users.email',$request->elegido)->delete()){
+          return 1;
+        }else{
+          return 0;
+        }
     }
 }

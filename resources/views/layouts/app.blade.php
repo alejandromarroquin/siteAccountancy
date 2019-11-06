@@ -138,10 +138,13 @@
                                 <a href="/cuentas">Catálogo de cuentas</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/compras">Solicitudes de compra</a>
+                                <a href="/compras">Solicitar compra</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/movimientos">Movimientos de capital</a>
+                                <a href="/compras_consultar">Solicitudes de compra</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="/movimientos">Flujo de capital</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#">Balanza de comprobación</a>

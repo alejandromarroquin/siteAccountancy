@@ -19,13 +19,15 @@ Route::get('/empresas_consultar','CompanieController@index');
 Route::get('/empresa_registrar','CompanieController@create');
 Route::post('/empresacreate','CompanieController@store');
 Route::get('/empresadelete','CompanieController@destroy');
-Route::get('/empresaupdate/{id}','CompanieController@edit');
+Route::get('/empresaedit/{id}','CompanieController@edit');
+Route::post('/empresaupdate','CompanieController@update');
 
 Route::get('/usuarios_consultar','UserController@index');
 Route::get('/usuario_registrar','UserController@create');
 Route::post('/usercreate','UserController@store');
 Route::get('/userdelete','UserController@destroy');
-Route::get('/userupdate/{id}','UserController@edit');
+Route::get('/useredit/{id}','UserController@edit');
+Route::post('/userupdate/{id}','CompanieController@update');
 
 Route::get('/factura','CfdiController@create');
 Route::post('/cfdicreate','CfdiController@store');
@@ -36,13 +38,19 @@ Route::post('/budgetcreate','BudgetsController@store');
 Route::get('/movimientos','CapitalmovementsController@create');
 Route::post('/movementscreate','CapitalmovementsController@store');
 
+Route::get('/compras_consultar','PurchaserequestsController@index');
 Route::get('/compras','PurchaserequestsController@create');
 Route::post('/purchasecreate','PurchaserequestsController@store');
+Route::post('/purchaseupdate','PurchaserequestsController@update');
 
 Route::get('/cuentas','AccountcatalogsController@create');
 Route::get('/accountscreate','AccountcatalogsController@store');
 Route::get('/accountsdelete','AccountcatalogsController@destroy');
 Route::get('/getaccount','AccountcatalogsController@consultSubaccount');
+
+Route::get('/balanza_conaultar','BalancesheetsController@index');
+Route::get('/balanza','BalancesheetsController@create');
+Route::get('/balancecreate','BalancesheetsController@store');
 
 Auth::routes();
 

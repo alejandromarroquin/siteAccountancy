@@ -6,14 +6,18 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-12 col-xl-12">
-          <h1 class="page-header">Registrar Empresa</h1>
+          <h1 class="page-header">Actualizar Empresa</h1>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="/empresacreate" method="POST" role="form">
+          <form action="/empresaupdate" method="POST" role="form">
             {{ csrf_field() }}
             <div class="card-header">{{ __('Datos fiscales') }}</div>
+            <input type="text" name="taxid" value="{{$taxid}}" hidden>
+            <input type="text" name="emailid" value="{{$emailid}}" hidden>
+            <input type="text" name="addressid" value="{{$addressid}}" hidden>
+            <input type="text" name="phoneid" value="{{$phoneid}}" hidden>
             <div class="row">
               <div class="col">
                 <label>Razón social:</label>
@@ -23,6 +27,7 @@
             <div class="row">
               <div class="col">
                 <label>RCF:</label>
+                <input type="text" name="rfcoriginal" value="{{$rfc}}" hidden>
                 <input type="text" class="form-control" id="rfc" name="rfc" value="{{$rfc}}" onchange="validarInput(this)" onInput="aMayusculas(this.value,this.id)" minlength="12" maxlength="13" required/>
               </div>
               <div class="col">
@@ -186,7 +191,7 @@
                 </div>
               </div>
             </div>
-            <input class="btn btn-primary" type="submit" value="Registrar">
+            <input class="btn btn-primary" type="submit" value="Actualizar">
           </form>
         </div>
       </div>

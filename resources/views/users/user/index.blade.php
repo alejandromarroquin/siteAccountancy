@@ -40,8 +40,8 @@
                     <td class="cell100 column1">{{$user->name." "}}{{$user->lastname}}</td>
                     <td class="cell100 column2">{{$user->email}}</td>
                     <td class="cell100 column3"></td>
-                    <td class="cell100 column4"><a href="/empresaupdate" class="btn btn-warning">Editar</a></td>
-                    <td class="cell100 column5"><a href="/empresadelete" class="btn btn-danger delete" value="1">Eliminar</a></td>
+                    <td class="cell100 column4"><a href="/useredit/{{$user->email}}" class="btn btn-warning">Editar</a></td>
+                    <td class="cell100 column5"><button type="button" class="btn btn-danger delete" value="{{$user->email}}">Eliminar</button></td>
                   </tr>
                 @endforeach
               </tbody>

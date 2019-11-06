@@ -166,15 +166,19 @@ class CompanieController extends Controller
      */
     public function edit($companie)
     {
-        $datacompanie=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->join('addresses','contactlocations.id','=','addresses.id')->select('rfc','businessName','taxRegime','email','office','extension','cellphone','street','colony','state','city','numExt','numInt','postalCode','reference','country')->where('taxinformations.rfc',$companie)->get();
+        $datacompanie=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->join('addresses','contactlocations.id','=','addresses.id')->select('taxinformations.id as taxid','rfc','businessName','taxRegime','emails.id as emailid','email','phones.id as phoneid','office','extension','cellphone','addresses.id as addressid','street','colony','state','city','numExt','numInt','postalCode','reference','country')->where('taxinformations.rfc',$companie)->get();
         foreach ($datacompanie as $data) {
+          $taxid=$data->taxid;
           $rfc=$data->rfc;
           $businessName=$data->businessName;
           $taxRegime=$data->taxRegime;
+          $emailid=$data->emailid;
           $email=$data->email;
+          $phoneid=$data->phoneid;
           $office=$data->office;
           $extension=$data->extension;
           $cellphone=$data->cellphone;
+          $addressid=$data->addressid;
           $street=$data->street;
           $colony=$data->colony;
           $state=$data->state;
@@ -185,7 +189,7 @@ class CompanieController extends Controller
           $reference=$data->reference;
           $country=$data->country;
         }
-        return view('users.company.edit',compact('rfc','businessName','taxRegime','email','office','extension','cellphone','street','colony','state','city','numExt','numInt','postalCode','reference','country'));
+        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegime','emailid','email','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','reference','country'));
     }
 
     /**
@@ -195,9 +199,32 @@ class CompanieController extends Controller
      * @param  \App\companie  $companie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, companie $companie)
+    public function update(Request $request)
     {
-        //
+      $taxinf=taxinformation::find($request->taxid);
+      $email=emails::find($request->emailid);
+      $address=addresse::find($request->addressid);
+      $phone=Phone::find($request->phoneid);
+      DB::beginTransaction();
+      try {
+        $taxinf->rfc=$request->rfc;
+        $taxinf->businessName=$request->businessname;
+        $taxinf->taxRegime=$request->taxr;
+        $taxinf->save();
+
+        $email->email=$request->emailt;
+        $email->save();
+
+        $phone->office=$request->phoneofficet;
+        $phone->extension=$request->extensiont;
+        $phone->cellphone=$request->cellphonet;
+        $phone->save();
+
+        DB::commit();
+      } catch (\PDOException $e) {
+        DB::rollBack();
+      }
+      return $request->extensiont;
     }
 
     /**

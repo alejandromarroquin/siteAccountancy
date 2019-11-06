@@ -5,14 +5,26 @@ $(function () {
     $.get("/empresadelete", { elegido: elegido }, function(data){
       alert(data);
     });
+    $(this).closest('tr').remove();
   });
 });
 
-$(function () {
-  $(document).on('click', '.edit', function (event) {
-    elegido=$(this).val();
-    $.get("/empresaupdate", { elegido: elegido }, function(data){
-      alert(data);
+$(document).ready(function(){
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
     });
-  });
+    $(".edit").click(function(e){
+        e.preventDefault();
+        var rfc = $(this).val();
+        $.ajax({
+           type:'POST',
+           url:'/empresaupdate',
+           data:{rfc:rfc},
+           success:function(data){
+              alert(data);
+           }
+        });
+    });
 });

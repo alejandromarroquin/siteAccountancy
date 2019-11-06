@@ -15,7 +15,8 @@ class PurchaserequestsController extends Controller
      */
     public function index()
     {
-        //
+      $purchases=purchaserequests::all()->where('status',0);
+      return view('purchases.index',compact('purchases'));
     }
 
     /**
@@ -55,6 +56,8 @@ class PurchaserequestsController extends Controller
         } catch (\PDOException $e) {
           DB::rollBack();
         }
+
+        return redirect('/compras')->with('message','Guardado Satisfactoriamente !');
     }
 
     /**
@@ -86,9 +89,17 @@ class PurchaserequestsController extends Controller
      * @param  \App\purchaserequests  $purchaserequests
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, purchaserequests $purchaserequests)
+    public function update(Request $request)
     {
-        //
+        $purchase=purchaserequests::find($request->id);
+        DB::beginTransaction();
+        try {
+          $purchase->status=$request->status;
+          $purchase->save();
+          DB::commit();
+        } catch (\PDOException $e) {
+          DB::rollBack();
+        }
     }
 
     /**

@@ -4,7 +4,7 @@
   <link href="{{ asset('css/view_accounts.css')}}" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" href="table/vendor/perfect-scrollbar/perfect-scrollbar.css">
-	<link rel="stylesheet" type="text/css" href="table/css/util.css">
+	<link rel="stylesheet" type="text/css" href="table/css/table.css">
 	<link rel="stylesheet" type="text/css" href="table/css/table_companies.css">
 @endsection
 
@@ -42,7 +42,7 @@
                     <td class="cell100 column2">{{$companie->businessName}}</td>
                     <td class="cell100 column3">{{$companie->email}}</td>
                     <td class="cell100 column4">{{$companie->office}}</td>
-                    <td class="cell100 column5"><a href="/empresaupdate/{{$companie->rfc}}" class="btn btn-warning">Editar</a></td>
+                    <td class="cell100 column5"><a href="/empresaedit/{{$companie->rfc}}" class="btn btn-warning">Editar</a></td>
                     <td class="cell100 column6"><button type="button" class="btn btn-danger delete" value="{{$companie->rfc}}">Eliminar</button></td>
                   </tr>
                 @endforeach
