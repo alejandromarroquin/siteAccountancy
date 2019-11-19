@@ -26,7 +26,7 @@
                   <th class="cell100 column3">Subtotal</th>
                   <th class="cell100 column4">Iva</th>
                   <th class="cell100 column5">Total</th>
-                  <th class="cell100 column6">Validar</th>
+                  <th class="cell100 column6" colspan="2">Validar</th>
                 </tr>
               </thead>
             </table>
@@ -41,7 +41,8 @@
                     <td class="cell100 column3">{{$purchase->subtotal}}</td>
                     <td class="cell100 column4">{{$purchase->iva}}</td>
                     <td class="cell100 column5">{{$purchase->total}}</td>
-                    <td class="cell100 column5"><button class="btn btn-success Ok" value="{{$purchase->id}}">Aprobar</button><button class="btn btn-danger noOk" value="{{$purchase->id}}">Rechazar</button></td>
+                    <td class="cell100 column6"><button class="btn btn-success Ok" value="{{$purchase->id}}">Aprobar</button></td>
+                    <td class="cell100 column6"><button class="btn btn-danger noOk" value="{{$purchase->id}}">Rechazar</button></td>
                   </tr>
                 @endforeach
               </tbody>
