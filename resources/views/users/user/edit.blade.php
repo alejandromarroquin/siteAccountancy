@@ -15,7 +15,8 @@
             {{ csrf_field() }}
             <div class="row">
               <div class="col">
-                <input name="user" value="{{$user}}" hidden>
+                <input name="idcompany" value="{{$idcompany}}" hidden/>
+                <input name="iduser" value="{{$iduser}}" hidden/>
                 <label>Empresa:</label>
                 <select class="form-control" name="company" id="company" readonly>
                   <option selected>{{$company}}</option>

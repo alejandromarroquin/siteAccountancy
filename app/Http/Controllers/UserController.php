@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\taxinformation;
 use App\User;
+use App\companie;
 Use DB;
 
 class UserController extends Controller
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::join('companies','users.id','=','companies.id')->select('name','lastname','email')->where('idCompany',1)->get();
+        $users=User::join('companies','users.id','=','companies.id')->select('name','lastname','email')->get();
         return view('users.user.index',compact('users'));
     }
 
@@ -68,16 +69,17 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user=User::join('companies','users.id','=','companies.id')->join('taxinformations','companies.id','=','taxinformations.id')->select('taxinformations.businessName','users.id','users.name','users.lastname','users.email','users.password')->where('users.email',$id)->get();
+        $user=User::join('companies','users.id','=','companies.id')->join('taxinformations','companies.id','=','taxinformations.id')->select('taxinformations.businessName','users.idCompany as idcompany','users.id as iduser','users.name','users.lastname','users.email','users.password')->where('users.email',$id)->get();
         foreach ($user as $data) {
-          $user=$data->id;
+          $idcompany=$data->idcompany;
+          $iduser=$data->iduser;
           $company=$data->businessName;
           $name=$data->name;
           $lastname=$data->lastname;
           $email=$data->email;
           $passw=$data->password;
         }
-        return view('users.user.edit',compact('company','name','lastname','email','passw','user'));
+        return view('users.user.edit',compact('company','name','lastname','email','passw','idcompany','iduser'));
     }
 
     /**
@@ -87,9 +89,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        echo "bien";
+      $user=User::find($request->iduser);
+      DB::beginTransaction();
+      try {
+        $user->idCompany=$request->idcompany;
+        $user->name=$request->name;
+        $user->lastname=$request->lastname;
+        $user->email=$request->email;
+        $user->password=$request->password;
+        $user->save();
+        DB::commit();
+      } catch (\PDOException $e) {
+        DB::rollBack();
+      }
+      $url = asset('/usuarios_consultar');
+      return redirect($url);
     }
 
     /**

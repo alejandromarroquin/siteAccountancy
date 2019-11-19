@@ -27,7 +27,7 @@ Route::get('/usuario_registrar','UserController@create');
 Route::post('/usercreate','UserController@store');
 Route::get('/userdelete','UserController@destroy');
 Route::get('/useredit/{id}','UserController@edit');
-Route::post('/userupdate/{id}','CompanieController@update');
+Route::post('/userupdate','UserController@update');
 
 Route::get('/factura','CfdiController@create');
 Route::post('/cfdicreate','CfdiController@store');

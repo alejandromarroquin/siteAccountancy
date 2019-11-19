@@ -11,7 +11,7 @@
     <title>Contabilidad</title>
 
     <!-- icon -->
-    <link rel="icon" type="image/png" href="img/icon.png" />
+    <link rel="icon" type="image/png" href="{{asset('img/icon.png')}}" />
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/font-awesome/fonts/familyNunito.css') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
     <link href="{{ asset('dist/css/select2.css')}}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <link href="{{ asset('css/nv-sb.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}">
+    <link href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
     <link href="{{ asset('css/content.css')}}" rel="stylesheet">
     <link href="{{ asset('css/layout.css')}}" rel="stylesheet">
     @yield('styles')
