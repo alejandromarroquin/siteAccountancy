@@ -220,11 +220,22 @@ class CompanieController extends Controller
         $phone->cellphone=$request->cellphonet;
         $phone->save();
 
+        $address->street=$request->streett;
+        $address->colony=$request->colonyt;
+        $address->state=$request->estatet;
+        $address->city=$request->cityt;
+        $address->numExt=$request->numextt;
+        $address->numInt=$request->numintt;
+        $address->postalCode=$request->postalcodet;
+        $address->country=$request->contryt;
+        $address->save();
+
         DB::commit();
       } catch (\PDOException $e) {
         DB::rollBack();
       }
-      return $request->extensiont;
+      $url = asset('/empresas_consultar');
+      return redirect($url);
     }
 
     /**

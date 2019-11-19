@@ -46,7 +46,7 @@
               </div>
               <div class="col">
                 <label>Extención:</label>
-                <input type="text" class="form-control" id="extensiont" name="extensiont" value="{{$extension}}"  maxlength="4" placeholder="Máximo 4 digitos" onchange="changeExtension();" onkeypress="return soloNumeros(event);">
+                <input type="text" class="form-control" id="extensiont" name="extensiont" value="{{$extension}}"  maxlength="3" placeholder="Máximo 3 digitos" onchange="changeExtension();" onkeypress="return soloNumeros(event);">
               </div>
               <div class="col">
                 <label>Celular:</label>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="col">
                   <label>Extención:</label>
-                  <input type="text" class="form-control" id="extension" name="extension" maxlength="4" placeholder="Máximo 4 digitos" onkeypress="return soloNumeros(event);">
+                  <input type="text" class="form-control" id="extension" name="extension" maxlength="3" placeholder="Máximo 3 digitos" onkeypress="return soloNumeros(event);">
                 </div>
                 <div class="col">
                   <label>Celular:</label>
