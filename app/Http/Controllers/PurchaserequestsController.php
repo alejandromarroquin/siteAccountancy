@@ -15,8 +15,38 @@ class PurchaserequestsController extends Controller
      */
     public function index()
     {
-      $purchases=purchaserequests::all()->where('status',0);
-      return view('purchases.index',compact('purchases'));
+      $status0=purchaserequests::all()->where('status',0);
+      return view('purchases.index',compact('status0'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function consultPurchases(Request $request){
+      $requestspurchases=purchaserequests::all()->where('status','!=',0);
+      foreach ($requestspurchases as $purchase) {
+        if($purchase->status==1){
+          echo '<tr class="row100 body rowshistorial">
+          <td class="cell100 column1">'.$purchase->date.'</td>
+          <td class="cell100 column2">'.$purchase->concept.'</td>
+          <td class="cell100 column3">'.$purchase->subtotal.'</td>
+          <td class="cell100 column4">'.$purchase->iva.'</td>
+          <td class="cell100 column5">'.$purchase->total.'</td>
+          <td class="cell100 column5" style="color:green;">Aprobada</td></tr>';
+        }else{
+          echo '<tr class="row100 body rowshistorial">
+          <td class="cell100 column1">'.$purchase->date.'</td>
+          <td class="cell100 column2">'.$purchase->concept.'</td>
+          <td class="cell100 column3">'.$purchase->subtotal.'</td>
+          <td class="cell100 column4">'.$purchase->iva.'</td>
+          <td class="cell100 column5">'.$purchase->total.'</td>
+          <td class="cell100 column5" style="color:red;">Rechazada</td></tr>';
+        }
+
+      }
     }
 
     /**
