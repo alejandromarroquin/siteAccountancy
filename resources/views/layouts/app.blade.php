@@ -162,10 +162,10 @@
                       <a href="#">Reportes contables<span class="fa arrow"></span></a>
                       <ul class="nav-second-level list-group nested">
                           <li class="list-group-item">
-                              <a href="#">Generar reportes</a>
+                              <a href="/generar_reportes">Generar reportes</a>
                           </li>
                           <li class="list-group-item">
-                              <a href="#">Consultar reportes</a>
+                              <a href="/consultar_reportes">Consultar reportes</a>
                           </li>
                       </ul>
                     </li>
@@ -178,9 +178,11 @@
     </div>
     <main>
       @yield('content')
-      <div>Icons made by <a href="https://www.flaticon.es/autores/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.es/"             title="Flaticon">www.flaticon.com</a></div>
     </main>
-
+    <footer>
+      <div>Icons made by <a href="https://www.flaticon.es/autores/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.com</a></div>
+      @yield('flaticonautor')
+    </footer>
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>

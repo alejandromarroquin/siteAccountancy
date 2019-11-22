@@ -52,6 +52,10 @@ Route::get('/balanza_conaultar','BalancesheetsController@index');
 Route::get('/balanza','BalancesheetsController@create');
 Route::get('/balancecreate','BalancesheetsController@store');
 
+Route::get('/generar_reportes','ReportsController@indexGenerateReports');
+Route::get('/consultar_reportes','ReportsController@indexConsultReports');
+Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
