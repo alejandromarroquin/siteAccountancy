@@ -15,7 +15,6 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <input type="text" name="typereport" id="typereport" hidden/>
           <div class="row">
             <div class="col-2">
               <div class="div-img">
@@ -27,7 +26,7 @@
             </div>
             <div class="col-2">
               <div class="div-img">
-                <a href="" class="linkreport">
+                <a href="" class="linkreport" id="statementresult" data-toggle="modal" data-target="#exampleModalCenter">
                   <img src="{{asset('img/icondoc2.png')}}" class="img-fluid img">
                   <label class="namereport">Estado de resultados</label>
                 </a>
@@ -49,7 +48,7 @@
                       La fecha de inicio no puede ser mayor a la final
                     </div>
                   </div>
-                  <form action="" method="POST" role="form">
+                  <form action="" method="POST" role="form" id="dates">
                     {{ csrf_field() }}
                     <div class="row">
                       <div class="col">
@@ -61,12 +60,12 @@
                         <input type="date" class="form-control" id="fin" name="" required/>
                       </div>
                     </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="button" class="btn btn-primary" id="generate">Siguiente</button>
-                </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" id="generate">Siguiente</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

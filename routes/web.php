@@ -55,6 +55,8 @@ Route::get('/balancecreate','BalancesheetsController@store');
 Route::get('/generar_reportes','ReportsController@indexGenerateReports');
 Route::get('/consultar_reportes','ReportsController@indexConsultReports');
 Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
+Route::post('/generatestatementresult','ReportsController@generateStatementresult');
+
 
 Auth::routes();
 

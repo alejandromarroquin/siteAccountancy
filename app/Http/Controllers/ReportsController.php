@@ -44,7 +44,14 @@ class ReportsController extends Controller
      */
     public function generateBalancesheet(Request $request)
     {
-        echo "bien";
+
+        return view('reports/balancesheet');
+    }
+
+    public function generateStatementresult(Request $request)
+    {
+
+        return view('reports/statementresult');
     }
 
     /**
