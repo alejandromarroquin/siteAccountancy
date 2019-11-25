@@ -42,6 +42,7 @@ Route::get('/compras_consultar','PurchaserequestsController@index');
 Route::get('/compras','PurchaserequestsController@create');
 Route::post('/purchasecreate','PurchaserequestsController@store');
 Route::post('/purchaseupdate','PurchaserequestsController@update');
+Route::get('/purchasesrequest','PurchaserequestsController@consultPurchases');
 
 Route::get('/cuentas','AccountcatalogsController@create');
 Route::get('/accountscreate','AccountcatalogsController@store');

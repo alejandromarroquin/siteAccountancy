@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\capitalmovements;
 use Illuminate\Http\Request;
+use App\accounts;
 
 class CapitalmovementsController extends Controller
 {
@@ -24,7 +25,8 @@ class CapitalmovementsController extends Controller
      */
     public function create()
     {
-        return view('accountancy.capitalmovements.create');
+        $accounts=accounts::select('groupcode','accountname')->get();
+        return view('accountancy.capitalmovements.create',compact('accounts'));
     }
 
     /**
@@ -36,7 +38,7 @@ class CapitalmovementsController extends Controller
     public function store(Request $request)
     {
         $movements=new capitalmovements;
-        
+
     }
 
     /**

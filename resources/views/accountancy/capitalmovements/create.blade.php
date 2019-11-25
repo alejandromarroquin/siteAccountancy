@@ -25,15 +25,18 @@
                 <div class="row">
                   <div class="col-6">
                     <label>Cuenta:</label>
-                    <select class="form-control">
+                    <select class="form-control" name="account" id="account">
                       <option selected hidden>Selecciona una cuenta...</option>
+                      @foreach($accounts as $account)
+                          <option value="{{$account->groupcode}}">{{$account->accountname}}</option>
+                      @endforeach
                     </select>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-6">
                     <label>Subcuenta:</label>
-                    <select class="form-control">
+                    <select class="form-control" name="subaccount" id="subaccount">
                       <option selected hidden>Selecciona una subcuenta...</option>
                     </select>
                   </div>
@@ -44,12 +47,48 @@
                     <input class="form-control" name="concept">
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-6">
+                    <label>Método de pago:</label>
+                    <select class="form-control">
+                      <option>Efectivo</option>
+                      <option>Tarjeta de crédito</option>
+                      <option>Tarjeta de débito</option>
+                      <option>Cheque</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <label>Cantidad monetaria:</label>
+                    <input class="form-control" name="amount" id="amount">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <label>Confirmar cantidad monetaria:</label>
+                    <input class="form-control" name="confirmamount" id="confirmamount">
+                  </div>
+                </div>
               </div>
               <div class="tab-pane fade" id="egresos" role="tabpanel" aria-labelledby="egresos-tab">
                 <div class="row">
-                  <div class="col">
-                    <label>v:</label>
-                    <input type="text" class="form-control" id="rfc" name="rfc" onchange="validarInput(this)" onInput="aMayusculas(this.value,this.id)" minlength="12" maxlength="13" required/>
+                  <div class="col-6">
+                    <label>Cuenta:</label>
+                    <select class="form-control" name="account" id="account">
+                      <option selected hidden>Selecciona una cuenta...</option>
+                      @foreach($accounts as $account)
+                          <option value="{{$account->groupcode}}">{{$account->accountname}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <label>Subcuenta:</label>
+                    <select class="form-control" name="subaccount" id="subaccount">
+                      <option selected hidden>Selecciona una subcuenta...</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -60,4 +99,8 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('scripts')
+  <script src="{{ asset('js/view_cashflow.js') }}"></script>
 @endsection
