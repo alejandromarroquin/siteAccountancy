@@ -71,14 +71,14 @@
                       <th class="cell100 column3">Subtotal</th>
                       <th class="cell100 column4">Iva</th>
                       <th class="cell100 column5">Total</th>
-                      <th class="cell100 column6" colspan="2">Validar</th>
+                      <th class="cell100 column6" colspan="2">Estado</th>
                     </tr>
                   </thead>
                 </table>
               </div>
               <div class="table100-body js-pscroll">
                 <table>
-                  <tbody id="tbodyh">  
+                  <tbody id="tbodyh">
                     <tr class="row100 body rowshistorial">
 
                     </tr>
