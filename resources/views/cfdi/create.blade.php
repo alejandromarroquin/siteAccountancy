@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-  <link href="{{ asset('css/view_accounts.css')}}" rel="stylesheet">
-
-	<link rel="stylesheet" type="text/css" href="table/vendor/perfect-scrollbar/perfect-scrollbar.css">
-	<link rel="stylesheet" type="text/css" href="table/css/util.css">
-	<link rel="stylesheet" type="text/css" href="table/css/main.css">
+  <link href="{{asset('css/newcfdi.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -17,30 +13,71 @@
           <h1 class="page-header">Facturación</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-8 col-xl-12">
-          <form action="" method="" role="form">
-            {{ csrf_field() }}
+      <div class="row margin">
+        <form action="/cfdicreate" method="POST" role="form">
+          {{ csrf_field() }}
+          <div class="col-lg-8 col-xl-12">
             <div class="row">
-              <div class="col">
-                <label>Cuenta:</label>
-                <select class="form-control" name="account" id="account">
-                  <option selected hidden>Selecciona una cuenta...</option>
-
-                </select>
+              <div class="col-3">
+                <img class="img-fluid" src="{{asset('img/logoempresa.png')}}">
+              </div>
+              <div class="col-3 expeditiondate">
+                <label>Fecha y hora de emisión:</label>
+                <input type="text" class="form-control" name="date" value="{{$expeditiondate}}" readonly required/>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <label>Subcuenta:</label>
-                <select class="form-control" name="subaccount" id="subaccount">
-                  <option selected hidden>Selecciona una subcuenta...</option>
-                </select>
+            <div class="capa">
+              <div class="container table">
+                <div class="row">
+                  <div class="col-2">
+                    <label>Cantidad</label>
+                  </div>
+                  <div class="col">
+                    <label>Unidad de medida</label>
+                  </div>
+                  <div class="col">
+                    <label>Concepto</label>
+                  </div>
+                  <div class="col">
+                    <label>Precio unitario</label>
+                  </div>
+                  <div class="col">
+                    <label>Importe</label>
+                  </div>
+                </div>
+                <div class="row" id="inputs">
+                  <input type="text" name="cont" value="2" id="cont" hidden/>
+                  <div class="col-2">
+                    <input class="form-control" name="quantity[]" id="quantity1" onchange="inputChange(this);" onkeypress="return soloNumeros(event);" required/>
+                  </div>
+                  <div class="col">
+                    <select class="form-control" name="unit[]" id="unit1" required/>
+                      <option selected hidden>Selecciona unidad...</option>
+                      @foreach($units as $unit)
+                        <option>{{$unit->description}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="col">
+                    <input class="form-control" name="concept[]" id="concept1" required/>
+                  </div>
+                  <div class="col">
+                    <input class="form-control" name="unitprice[]" id="unitprice1" onchange="inputChange(this);addDecimal(this);" onkeypress="return filterFloat(event,this);" required/>
+                  </div>
+                  <div class="col">
+                    <input class="form-control" name="importe[]" id="importe1" onchange="addDecimal(this);" readonly required/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button type="button" class="btn btn-secondary add">+</button>
+                </div>
               </div>
             </div>
-            <input class="btn btn-primary" type="button" value="Agregar" id="agregar">
-          </form>
-        </div>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Generar factura">
+        </form>
       </div>
     </div>
   </div>
@@ -48,8 +85,5 @@
 @endsection
 
 @section('scripts')
-  <script src="{{ asset('js/view_accounts.js') }}"></script>
-
-<!--===============================================================================================-->
-	<script src="table/js/main.js"></script>
+  <script src="{{ asset('js/view_newcfdi.js') }}"></script>
 @endsection

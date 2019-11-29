@@ -27,6 +27,7 @@
     <link href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
     <link href="{{ asset('css/content.css')}}" rel="stylesheet">
     <link href="{{ asset('css/layout.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/forms.css')}}" rel="stylesheet">
     @yield('styles')
 
 </head>

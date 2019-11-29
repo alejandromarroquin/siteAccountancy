@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,11 +21,15 @@ class CreateCfdisTable extends Migration
           $table->integer('idMethodPayment')->unsigned();
           $table->foreign('idMethodPayment')->references('id')->on('methodpayments')->onDelete('cascade');
 
+          $table->integer('unitMeasurement')->unsigned();
+          $table->foreign('unitMeasurement')->references('id')->on('unitmeasurements')->onDelete('cascade');
+
           $table->integer('expeditionPlace')->unsigned();
           $table->foreign('expeditionPlace')->references('id')->on('addresses')->onDelete('cascade');
 
+          $table->integer('cfdinumber')->unique();
           $table->date('expeditionDate');
-          $table->double('iva');
+          $table->double('iva',10,2);
           $table->integer('typePayment');
           $table->string('customsNumber',10);
           $table->date('customsDate');
@@ -35,6 +38,8 @@ class CreateCfdisTable extends Migration
 
           $table->timestamps();
         });
+        DB::statement("ALTER TABLE  `cfdis` AUTO_INCREMENT = 1;");
+        DB::statement("ALTER TABLE  `cfdis` CHANGE  `cfdinumber`  `cfdinumber` INT( 8 ) UNSIGNED ZEROFILL NOT NULL DEFAULT '1';");
     }
 
     /**

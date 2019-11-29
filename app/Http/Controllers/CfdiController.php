@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\cfdi;
+use App\taxinformation;
+use App\unitmeasurements;
 use Illuminate\Http\Request;
+use DB;
 
 class CfdiController extends Controller
 {
+
+    public function __construct()
+    {
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +32,11 @@ class CfdiController extends Controller
      */
     public function create()
     {
-        return view('cfdi.create');
+        date_default_timezone_set("UTC");
+        $expeditiondate=date("Y-m-d H:i:s");
+        $bisinessname=taxinformation::join('companies','taxinformations.id','=','companies.id')->join('contactlocations','taxinformations.id','=','contactlocations.id');
+        $units=unitmeasurements::all();
+        return view('cfdi.create',compact('expeditiondate','units'));
     }
 
     /**
@@ -35,7 +47,27 @@ class CfdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $cfdi=new cfdi;
+      DB::beginTransaction();
+      try {
+        $cfdi->idCompany=1;
+        $cfdi->idMethodPayment=1;
+        $cfdi->expeditionPlace=1;
+        $cfdi->expeditionDate=date("Y-m-d");
+        $cfdi->iva=67.39;
+        $cfdi->typePayment=1;
+        $cfdi->customsNumber=1;
+        $cfdi->customsDate=date("Y-m-d");
+        $cfdi->digitalStamp="";
+        $cfdi->codeqr="";
+        $cfdi->save();
+        DB::commit();
+      } catch (\PDOException $e) {
+        DB::rollBack();
+      }
+        foreach ($request->quantity as $k) {
+          echo ($k);
+        }
     }
 
     /**

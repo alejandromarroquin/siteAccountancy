@@ -22,9 +22,6 @@ class CreateSaledetailsTable extends Migration
           $table->integer('idProduct')->unsigned();
           $table->foreign('idProduct')->references('id')->on('products')->onDelete('cascade');
 
-          $table->integer('unitMeasurement')->unsigned();
-          $table->foreign('unitMeasurement')->references('id')->on('unitmeasurements')->onDelete('cascade');
-
           $table->integer('quantity');
           $table->string('description',100);
           $table->double('unitValue',10,2);
