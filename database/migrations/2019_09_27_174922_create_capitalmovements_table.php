@@ -19,10 +19,9 @@ class CreateCapitalmovementsTable extends Migration
           $table->integer('idAccountancyCatalog')->unsigned();
           $table->foreign('idAccountancyCatalog')->references('id')->on('accountancycatalogs')->onDelete('cascade');
 
+          $table->string('concep');
           $table->double('debit',10,2);
           $table->double('have',10,2);
-          $table->double('totalDebit',10,2);
-          $table->double('totalHave',10,2);
 
           $table->timestamps();
         });

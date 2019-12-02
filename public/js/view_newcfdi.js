@@ -56,7 +56,6 @@ $(document).ready(function(){
       'id':'importe'+cont
     });
     $('#cont').val(parseInt(cont)+1);
-    $("input[name=unit[]]").find('option');
     $('.table').append(divrow);
     divrow.append(divcol1);
     divrow.append(divcol2);
