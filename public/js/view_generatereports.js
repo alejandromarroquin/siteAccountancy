@@ -8,6 +8,11 @@ $(document).ready(function(){
     var url=url='/generatestatementresult';
     $('#dates').attr('action', url);
   });
+
+  $('#trialbalance').on('click',function(){
+    var url=url='/generatetrialbalance';
+    $('#dates').attr('action', url);
+  });
 });
 
 $(document).ready(function(){

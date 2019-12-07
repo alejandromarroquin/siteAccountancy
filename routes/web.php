@@ -49,15 +49,11 @@ Route::get('/accountscreate','AccountcatalogsController@store');
 Route::get('/accountsdelete','AccountcatalogsController@destroy');
 Route::get('/getaccount','AccountcatalogsController@consultSubaccount');
 
-Route::get('/balanza_conaultar','BalancesheetsController@index');
-Route::get('/balanza','BalancesheetsController@create');
-Route::get('/balancecreate','BalancesheetsController@store');
-
 Route::get('/generar_reportes','ReportsController@indexGenerateReports');
 Route::get('/consultar_reportes','ReportsController@indexConsultReports');
 Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
 Route::post('/generatestatementresult','ReportsController@generateStatementresult');
-
+Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
 
 Auth::routes();
 

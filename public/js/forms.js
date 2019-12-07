@@ -1,3 +1,21 @@
+$(document).ready(function(){
+  if($('#date')){
+    var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    var date=new Date();
+    $('#date').text(date.getDate() + " de " + meses[date.getMonth()] + " de " + date.getFullYear());
+  }
+
+  if($('#datetype2')){
+    var date = new Date();
+    $('#datetype2').val(date.getFullYear() + "/" + (date.getMonth() +1) + "/" + date.getDate());
+  }
+
+  if($('#datetype3')){
+    var date = new Date();
+    $('#datetype3').val(date.getFullYear() + "/" + (date.getMonth() +1) + "/" + date.getDate()  + "  " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+  }
+});
+
 function soloNumeros(e){
     tecla = (document.all) ? e.keyCode : e.which;
     if (tecla==8){

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\capitalmovements;
 use Illuminate\Http\Request;
 use App\accountancycatalogs;
+use App\debits;
+use App\credits;
+use DB;
 
 class CapitalmovementsController extends Controller
 {
@@ -25,7 +28,7 @@ class CapitalmovementsController extends Controller
      */
     public function create()
     {
-        $accounts=accountancycatalogs::join('accountcatalogs','accountancycatalogs.id','=','accountcatalogs.id')->join('accountancies','accountancycatalogs.idAccountancy','=','accountancies.id')->select('accountcatalogs.accountname','accountancycatalogs.id')->where('accountancies.idCompany',1)->get();
+        $accounts=accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->join('accountancies','accountancycatalogs.idAccountancy','=','accountancies.id')->select('accountcatalogs.accountname','accountancycatalogs.id')->where('accountancies.idCompany',1)->get();
         return view('accountancy.capitalmovements.create',compact('accounts'));
     }
 
@@ -38,18 +41,26 @@ class CapitalmovementsController extends Controller
     public function store(Request $request)
     {
         $cashflow=new capitalmovements;
-        if($request->flag==1){
-          $debe=$request->amount;
-          $haber=null;
-        }else{
-          $haber=$request->amount;
-          $debe=null;
-        }
+        $credit=new credits;
+        $debit=new debits;
+        DB::beginTransaction();
+        try {
+          $credit->idAccountancyCatalog=$request->accountcredit;
+          $credit->amount=$request->amount;
+          $credit->save();
 
-        $cashflow->idAccountancyCatalog=$request->account;
-        $cashflow->concep=$request->concept;
-        $cashflow->debit=$debe;
-        $cashflow->have=$haber;
+          $debit->idAccountancyCatalog=$request->accountdebit;
+          $debit->amount=$request->amount;
+          $debit->save();
+
+          $cashflow->idcredit=$credit->id;
+          $cashflow->iddebit=$debit->id;
+          $cashflow->concept=$request->concept;
+          $cashflow->save();
+          DB::commit();
+        } catch (\PDOException $e) {
+          DB::rollBack();
+        }
     }
 
     /**

@@ -44,7 +44,7 @@
               </div>
               <div class="col">
                 <label>Celular:</label>
-                <input type="text" class="form-control" id="cellphonet" name="cellphonet" minlength="10" maxlength="10" placeholder="10 digitos" onchange="changeCellphone();">
+                <input type="text" class="form-control" id="cellphonet" name="cellphonet" minlength="10" maxlength="10" placeholder="10 digitos" onchange="changeCellphone();" onkeypress="return soloNumeros(event);">
               </div>
             </div>
             <div class="row">

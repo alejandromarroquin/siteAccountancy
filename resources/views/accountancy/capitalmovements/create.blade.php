@@ -25,8 +25,19 @@
                   <input type="text" value="1" name="flag" readonly hidden/>
                   <div class="row">
                     <div class="col-6">
-                      <label>Cuenta:</label>
-                      <select class="form-control" name="account" id="account">
+                      <label>Cuenta acredor:</label>
+                      <select class="form-control" name="accountdebit" id="account">
+                        <option selected hidden>Selecciona una cuenta...</option>
+                        @foreach($accounts as $account)
+                            <option value="{{$account->id}}">{{$account->accountname}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Cuenta deudor:</label>
+                      <select class="form-control" name="accountcredit" id="account">
                         <option selected hidden>Selecciona una cuenta...</option>
                         @foreach($accounts as $account)
                             <option value="{{$account->id}}">{{$account->accountname}}</option>
@@ -61,8 +72,19 @@
                   <input type="text" value="1" name="flag" readonly hidden/>
                   <div class="row">
                     <div class="col-6">
-                      <label>Cuenta:</label>
-                      <select class="form-control" name="account" id="account">
+                      <label>Cuenta deudor:</label>
+                      <select class="form-control" name="accountcredit" id="account">
+                        <option selected hidden>Selecciona una cuenta...</option>
+                        @foreach($accounts as $account)
+                            <option value="{{$account->id}}">{{$account->accountname}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Cuenta acredor:</label>
+                      <select class="form-control" name="accountdebit" id="account">
                         <option selected hidden>Selecciona una cuenta...</option>
                         @foreach($accounts as $account)
                             <option value="{{$account->id}}">{{$account->accountname}}</option>

@@ -23,7 +23,7 @@
               </div>
               <div class="col-3 expeditiondate">
                 <label>Fecha y hora de emisión:</label>
-                <input type="text" class="form-control" name="date" value="{{$expeditiondate}}" readonly required/>
+                <input type="text" class="form-control" name="date" id="datetype3" readonly required/>
               </div>
             </div>
             <div class="capa">

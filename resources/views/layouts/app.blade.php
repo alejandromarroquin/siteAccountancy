@@ -68,7 +68,12 @@
                                   <a class="dropdown-item" href="{{ route('logout') }}"
                                      onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
-                                      {{ __('Logout') }}
+                                      {{ __('Configuración') }}
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('logout') }}"
+                                     onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                      {{ __('Cerrar sesión') }}
                                   </a>
 
                                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -146,9 +151,6 @@
                             </li>
                             <li class="list-group-item">
                                 <a href="/movimientos">Flujo de capital</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Balanza de comprobación</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#">Pólizas de periodo</a>

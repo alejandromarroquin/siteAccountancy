@@ -1,0 +1,40 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.col-lg-8{
+  border:black 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #AFF08E;
+}
+
+.margin{
+  width: 90%;
+}
+
+.content{
+  margin-top: 50px;
+}
+
+.activo{
+  height: 400px;
+}
+
+.pasivo{
+  height: 200px;
+}
+
+.capital{
+  height: 200px;
+}
+
+.title{
+  font-size: 17px;
+}
+
+.information{
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+}

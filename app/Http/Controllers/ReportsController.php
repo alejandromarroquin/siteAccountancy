@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class ReportsController extends Controller
 {
@@ -44,14 +45,20 @@ class ReportsController extends Controller
      */
     public function generateBalancesheet(Request $request)
     {
-
-        return view('reports/balancesheet');
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        return view('reports/balancesheet',compact('company'));
     }
 
     public function generateStatementresult(Request $request)
     {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        return view('reports/statementresult',compact('company'));
+    }
 
-        return view('reports/statementresult');
+    public function generateTrialbalance(Request $request)
+    {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        return view('reports/trialbalance',compact('company'));
     }
 
     /**

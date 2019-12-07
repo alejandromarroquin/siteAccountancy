@@ -7,9 +7,7 @@ $(document).ready(function(){
       });
     });
   });
-});
 
-$(document).ready(function(){
   $('#agregar').on('click',function(){
     $("#subaccount option:selected").each(function () {
       elegido=$(this).val();
@@ -18,15 +16,23 @@ $(document).ready(function(){
       });
     });
   });
-});
 
-$(function () {
-    $(document).on('click', '.borrar', function (event) {
-        elegido=$(this).val();
-        $.get("/accountsdelete", { elegido: elegido }, function(data){
-          alert(data);
-        });
-        event.preventDefault();
+  $('.borrar').on('click',function(){
+    event.preventDefault();
+    elegido=$(this).val();
+    Swal.fire({
+      title: 'Esta seguro de eliminar la cuenta?',
+      text: "No se podrán revertir los cambios!",
+      type: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Confirmar',
+      showCancelButton: true,
+      cancelButtonColor: '#929292'
+    }).then((result) => {
+      if (result.value) {
+        $.get("/accountsdelete", { elegido: elegido });
         $(this).closest('tr').remove();
+      }
     });
+  });
 });

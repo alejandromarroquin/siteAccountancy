@@ -16,7 +16,7 @@
             <div class="row">
               <div class="col-2">
                 <label>Fecha:</label>
-                <input type="text" class="form-control" name="date" value="{{$currentdate}}" readonly required/>
+                <input type="text" class="form-control" name="date" id="datetype2" readonly required/>
               </div>
             </div>
             <div class="row">

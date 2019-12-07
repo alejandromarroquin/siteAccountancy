@@ -56,8 +56,7 @@ class PurchaserequestsController extends Controller
      */
     public function create()
     {
-        $currentdate=date("Y-m-d");
-        return view('purchases.create',compact("currentdate"));
+        return view('purchases.create');
     }
 
     /**

@@ -29,7 +29,7 @@ class AccountcatalogsController extends Controller
     public function create()
     {
         $accounts=accounts::select('groupcode','accountname')->get();
-        $catalog=accountancycatalogs::select('code','accountName')->join('accountcatalogs','accountancycatalogs.id','=','accountcatalogs.id')->where('idAccountancy',1)->get();
+        $catalog=accountancycatalogs::select('code','accountName')->join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->where('idAccountancy',1)->get();
         return view('accountancy.accountcatalogs.create',compact('accounts','catalog'));
     }
 
@@ -119,7 +119,7 @@ class AccountcatalogsController extends Controller
     public function destroy(Request $request, accountcatalogs $accountcatalogs)
     {
 
-        if(accountancycatalogs::join('accountcatalogs','accountancycatalogs.id','=','accountcatalogs.id')->where('accountcatalogs.code',$request->elegido)->delete()){
+        if(accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->where('accountcatalogs.code',$request->elegido)->delete()){
           return 1;
         }else{
           return 0;
