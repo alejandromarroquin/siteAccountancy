@@ -26,6 +26,17 @@
                 <input type="text" class="form-control" name="date" id="datetype3" readonly required/>
               </div>
             </div>
+            <div class="row senderinfo">
+              <div class="col senderinfo">
+                @foreach($senderdata as $data)
+                  <strong>{{$data->businessname}}</strong><br/>
+                  <strong>R.F.C {{$data->rfc}}</strong><br/>
+                  Domicilio: {{$data->street}} No. {{$data->numExt}}<br/>
+                  Colonia: {{$data->colony}}<br/>
+                  {{$data->city}}, {{$data->state}}.
+                @endforeach
+              </div>
+            </div>
             <div class="capa">
               <div class="container table">
                 <div class="row">

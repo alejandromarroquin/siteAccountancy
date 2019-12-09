@@ -61,6 +61,12 @@ class ReportsController extends Controller
         return view('reports/trialbalance',compact('company'));
     }
 
+    public function generateCashflow(Request $request)
+    {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        return view('reports/cashflow',compact('company'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

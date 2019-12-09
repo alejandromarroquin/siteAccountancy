@@ -29,7 +29,7 @@ class AccountcatalogsController extends Controller
     public function create()
     {
         $accounts=accounts::select('groupcode','accountname')->get();
-        $catalog=accountancycatalogs::select('code','accountName')->join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->where('idAccountancy',1)->get();
+        $catalog=accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->select('code','accountName')->where('accountancycatalogs.idAccountancy',session('idaccountancy'))->get();
         return view('accountancy.accountcatalogs.create',compact('accounts','catalog'));
     }
 
@@ -65,10 +65,10 @@ class AccountcatalogsController extends Controller
         }
         DB::beginTransaction();
         try {
-          $catalog->idAccountancy=1;
+          $catalog->idAccountancy=session('idaccountancy');
           $catalog->CodeAccount=$idaccount;
           $catalog->save();
-          echo '<tr class="row100 body"><td class="cell100 column1">'.$code.'</td><td class="cell100 column2">'.$accountname.'</td row100 body><td class="cell100 column3"><button type="button" class="btn btn-danger borrar" value="'.$code.'">Eliminar</button></td></tr>';
+          echo '<tr class="row100 body"><td class="cell100 column1">'.$code.'</td><td class="cell100 column2">'.$accountname.'</td row100 body><td class="cell100 column3"><button type="button" class="btn btn-danger delete" value="'.$code.'">Eliminar</button></td></tr>';
           DB::commit();
         } catch (\PDOException $e) {
           DB::rollBack();
@@ -118,7 +118,6 @@ class AccountcatalogsController extends Controller
      */
     public function destroy(Request $request, accountcatalogs $accountcatalogs)
     {
-
         if(accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->where('accountcatalogs.code',$request->elegido)->delete()){
           return 1;
         }else{

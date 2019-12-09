@@ -32,11 +32,9 @@ class CfdiController extends Controller
      */
     public function create()
     {
-        date_default_timezone_set("UTC");
-        $expeditiondate=date("Y-m-d H:i:s");
-        $bisinessname=taxinformation::join('companies','taxinformations.id','=','companies.id')->join('contactlocations','taxinformations.id','=','contactlocations.id');
+        $senderdata=taxinformation::join('companies','taxinformations.id','=','companies.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.rfc','taxinformations.businessname','taxinformations.taxRegime','addresses.street','addresses.numExt','addresses.colony','addresses.city','addresses.state')->where('companies.id',session('idcompany'))->get();
         $units=unitmeasurements::all();
-        return view('cfdi.create',compact('expeditiondate','units'));
+        return view('cfdi.create',compact('units','senderdata'));
     }
 
     /**

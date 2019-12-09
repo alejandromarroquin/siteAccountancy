@@ -7,6 +7,7 @@ use App\taxinformation;
 use App\User;
 use App\companie;
 Use DB;
+use Hash;
 
 class UserController extends Controller
 {
@@ -40,14 +41,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user=new User;
+      $user=new User;
+      DB::beginTransaction();
+      try {
         $user->idCompany=$request->company;
+        $user->typeuser=$request->typeuser;
         $user->name=$request->name;
         $user->lastname=$request->lastname;
         $user->email=$request->email;
-        $user->password=$request->password;
+        $user->password=Hash::make($request->password);
         $user->save();
-
+        DB::commit();
+      } catch (\PDOException $e) {
+        DB::rollBack();
+      }
+      
     }
 
     /**

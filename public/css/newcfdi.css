@@ -6,6 +6,8 @@
 .col-lg-8{
   border:black 1px solid;
   border-radius: 10px 10px 10px 10px;
+  max-height: 792px;
+  min-height: 792px;
 }
 
 .margin{
@@ -19,6 +21,7 @@
 
 .capa{
   width: 95%;
+  margin-top: 40px;
 }
 
 .add{
@@ -26,4 +29,8 @@
   float: right;
   margin-top: -2px;
   margin-bottom: 10px;
+}
+
+.senderinfo{
+  margin-left: 0px;
 }

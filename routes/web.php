@@ -34,6 +34,8 @@ Route::post('/cfdicreate','CfdiController@store');
 
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
+Route::get('/getbudgets','BudgetsController@consultBudgets');
+Route::get('/getamount','BudgetsController@consultAmount');
 
 Route::get('/movimientos','CapitalmovementsController@create');
 Route::post('/movementscreate','CapitalmovementsController@store');
@@ -54,6 +56,7 @@ Route::get('/consultar_reportes','ReportsController@indexConsultReports');
 Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
 Route::post('/generatestatementresult','ReportsController@generateStatementresult');
 Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
+Route::post('/generatecashflow','ReportsController@generateCashflow');
 
 Auth::routes();
 

@@ -40,6 +40,14 @@
                 </a>
               </div>
             </div>
+            <div class="col-2">
+              <div class="div-img">
+                <a href="" class="linkreport" id="cashflow" data-toggle="modal" data-target="#exampleModalCenter">
+                  <img src="{{asset('img/icondoc4.png')}}" class="img-fluid img">
+                  <label class="namereport">Estado de flujo de efectivo</label>
+                </a>
+              </div>
+            </div>
           </div>
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -88,6 +96,7 @@
   <div>Icons made by <a href="https://www.flaticon.es/autores/pongsakornred" title="pongsakornRed">pongsakornRed</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
   <div>Iconos diseñados por <a href="https://www.flaticon.es/autores/payungkead" title="Payungkead">Payungkead</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
   <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+  <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 @endsection
 
 @section('scripts')

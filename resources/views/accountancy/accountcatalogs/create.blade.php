@@ -66,7 +66,7 @@
                       <tr class="row100 body">
                         <td class="cell100 column1">'{{$row->code}}'</td>
                         <td class="cell100 column2">'{{$row->accountName}}'</td>
-                        <td class="cell100 column3"><button type="button" class="btn btn-danger borrar" value="{{$row->code}}">Eliminar</button></td>
+                        <td class="cell100 column3"><button type="button" class="btn btn-danger delete" value="{{$row->code}}">Eliminar</button></td>
                       </tr>
                     @endforeach
                   </tbody>

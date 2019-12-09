@@ -17,7 +17,7 @@ $(document).ready(function(){
     });
   });
 
-  $('.borrar').on('click',function(){
+  $('.delete').on('click',function(){
     event.preventDefault();
     elegido=$(this).val();
     Swal.fire({
@@ -26,12 +26,19 @@ $(document).ready(function(){
       type: 'warning',
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
       showCancelButton: true,
+      reverseButtons: true,
       cancelButtonColor: '#929292'
     }).then((result) => {
       if (result.value) {
         $.get("/accountsdelete", { elegido: elegido });
         $(this).closest('tr').remove();
+        Swal.fire(
+          'Eliminado!',
+          'La cuenta se eliminó correctamente.',
+          'success'
+        )
       }
     });
   });

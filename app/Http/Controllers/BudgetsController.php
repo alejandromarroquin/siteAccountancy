@@ -36,20 +36,50 @@ class BudgetsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function consultAmount(Request $request)
+    {
+        $amount=budgets::select('amount')->where('id',$request->elegido)->get();
+        foreach($amount as $data){
+          $amount=$data->amount;
+        }
+        return $amount;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function consultBudgets(Request $request){
+        $budgets=budgets::select('id','concept')->where('idAccountancy',session('idaccountancy'))->get();
+        echo "<option selected hidden>Selecciona una subcuenta...</option>";
+        foreach($budgets as $budget){
+            echo "<option value=".$budget->id.">".$budget->concept."</option>";
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
           $budgets=new budgets;
           $idaccountancy=companie::join('users','companies.id','=','users.id')->join('accountancies','companies.id','=','accountancies.id')->select('accountancies.id');
-          echo($idaccountancy);
           DB::beginTransaction();
           try{
-            $budgets->idAccountancy=1;
+            $budgets->idAccountancy=session('idaccountancy');
             $budgets->concept=$request->concept;
             $budgets->amount=$request->amount;
             $budgets->save();
             DB::commit();
+            return 1;
           }catch(\PDOException $e){
             DB::rollBack();
+            return 0;
           }
     }
 

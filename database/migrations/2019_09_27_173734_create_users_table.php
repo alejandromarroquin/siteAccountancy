@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
 
           $table->integer('idCompany')->unsigned();
           $table->foreign('idCompany')->references('id')->on('companies')->onDelete('cascade');
-
+            
+          $table->integer('typeuser');
           $table->string('name');
           $table->string('lastname');
           $table->string('email')->unique();

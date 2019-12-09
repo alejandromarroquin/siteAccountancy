@@ -13,6 +13,11 @@ $(document).ready(function(){
     var url=url='/generatetrialbalance';
     $('#dates').attr('action', url);
   });
+
+  $('#cashflow').on('click',function(){
+    var url=url='/generatecashflow';
+    $('#dates').attr('action', url);
+  });
 });
 
 $(document).ready(function(){

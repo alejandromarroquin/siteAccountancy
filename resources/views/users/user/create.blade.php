@@ -16,7 +16,7 @@
             <div class="row">
               <div class="col">
                 <label>Empresa:</label>
-                <select class="form-control" name="company" id="company">
+                <select class="form-control" name="company" id="company" required/>
                   <option selected hidden>Selecciona una empresa...</option>
                   @foreach($businessnames as $businessname)
                       <option value="{{$businessname->id}}">{{$businessname->businessname}}</option>
@@ -42,6 +42,20 @@
               <div class="col">
                 <label>Contraseña:</label>
                 <input type="text" class="form-control" id="password" name="password" required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label>Tipo de usuario:</label>
+                <select class="form-control" name="typeuser">
+                  <option selected hidden>Selecciona uno...</option>
+                  <option value="1">Administrador</option>
+                  <option value="2">Facturador</option>
+                  <option value="3">Contador General</option>
+                  <option value="4">Contador</option>
+                  <option value="5">Subcontador</option>
+                  <option value="6">Asistente</option>
+                </select>
               </div>
             </div>
             <input class="btn btn-primary" type="submit" value="Registrar">

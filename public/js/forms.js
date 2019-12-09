@@ -79,3 +79,15 @@ function addDecimal(input){
     $(input).val(value.concat('.00'));
   }
 }
+
+function confirmSenForm(){
+  Swal.fire({
+    title: 'Esta seguro de eliminar la cuenta?',
+    text: "No se podrán revertir los cambios!",
+    type: 'warning',
+    confirmButtonColor: '#3085d6',
+    confirmButtonText: 'Confirmar',
+    showCancelButton: true,
+    cancelButtonColor: '#929292'
+  });
+}

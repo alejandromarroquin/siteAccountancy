@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
           'idCompany'=>'1',
+          'typeuser'=>'1',
           'name'=>'Alejandro',
           'lastname'=>'Marroquin',
           'email'=>'marroquin.alex@hotmail.com',
@@ -22,6 +23,7 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
           'idCompany'=>'1',
+          'typeuser'=>'2',
           'name'=>'Cristina',
           'lastname'=>'Ramírez',
           'email'=>'cristina@gmail.com',
@@ -30,6 +32,7 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
           'idCompany'=>'1',
+          'typeuser'=>'3',
           'name'=>'Viridiana',
           'lastname'=>'Herrera',
           'email'=>'viridiana@gmail.com',
