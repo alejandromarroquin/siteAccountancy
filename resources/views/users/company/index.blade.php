@@ -14,7 +14,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-12 col-xl-12">
-          <h1 class="page-header">Empresas</h1>
+          <h1 class="page-header">Clientes</h1>
         </div>
       </div>
         <div class="col-lg-8 col-xl-12">
@@ -39,7 +39,7 @@
                 @foreach($companies as $companie)
                   <tr class="row100 body">
                     <td class="cell100 column1">{{$companie->rfc}}</td>
-                    <td class="cell100 column2">{{$companie->businessName}}</td>
+                    <td class="cell100 column2">{{$companie->businessname}}</td>
                     <td class="cell100 column3">{{$companie->email}}</td>
                     <td class="cell100 column4">{{$companie->office}}</td>
                     <td class="cell100 column5"><a href="/empresaedit/{{$companie->rfc}}" class="btn btn-warning">Editar</a></td>

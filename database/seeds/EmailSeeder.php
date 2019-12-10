@@ -12,7 +12,7 @@ class EmailSeeder extends Seeder
     public function run()
     {
       DB::table('emails')->insert([
-        'email'=>'emma@gmail.com'
+        'email'=>'soporte.web@dyctech.com'
       ]);
 
       DB::table('emails')->insert([

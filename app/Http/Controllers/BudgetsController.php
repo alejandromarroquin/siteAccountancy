@@ -68,7 +68,6 @@ class BudgetsController extends Controller
     public function store(Request $request)
     {
           $budgets=new budgets;
-          $idaccountancy=companie::join('users','companies.id','=','users.id')->join('accountancies','companies.id','=','accountancies.id')->select('accountancies.id');
           DB::beginTransaction();
           try{
             $budgets->idAccountancy=session('idaccountancy');

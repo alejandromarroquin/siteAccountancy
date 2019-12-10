@@ -12,24 +12,32 @@ class TaxinformationSeeder extends Seeder
     public function run()
     {
       DB::table('taxinformations')->insert([
-        'idtaxinformation'=>'2',
-        'rfc'=>'IAGF961220LF4',
-        'businessname'=>'Fernanda Romero Castro',
-        'taxRegime'=>'Física'
-      ]);
-
-      DB::table('taxinformations')->insert([
         'idtaxinformation'=>'1',
-        'rfc'=>'SATD961220LF4',
-        'businessname'=>'Santiago Nuñez Bahena',
+        'rfc'=>'VIC160316AYA',
+        'businessname'=>'D&C Tech Development and Consulting S.A. de C.V.',
         'taxRegime'=>'Física'
       ]);
 
       DB::table('taxinformations')->insert([
         'idtaxinformation'=>'3',
-        'rfc'=>'RYGD961427LU4',
-        'businessname'=>'Industrias Farmacéuticas de Mexico S.A DE C.V',
+        'rfc'=>'VIC160316AYA',
+        'businessname'=>'VICHISA S.A. DE C.V.',
         'taxRegime'=>'Física'
       ]);
+
+      DB::table('taxinformations')->insert([
+        'idtaxinformation'=>'2',
+        'rfc'=>'FSE920910CC6',
+        'businessname'=>'Coca-Cola FEMSA, S.A.B. de C.V.',
+        'taxRegime'=>'Moral'
+      ]);
+
+      DB::table('taxinformations')->insert([
+        'idtaxinformation'=>'2',
+        'rfc'=>'BIM011108DJ5',
+        'businessname'=>'GRUPO BIMBO, S.A.B. DE C.V.',
+        'taxRegime'=>'Moral'
+      ]);
+
     }
 }

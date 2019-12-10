@@ -52,10 +52,12 @@ class UserController extends Controller
         $user->password=Hash::make($request->password);
         $user->save();
         DB::commit();
+        return 1;
       } catch (\PDOException $e) {
         DB::rollBack();
+        return 0;
       }
-      
+
     }
 
     /**

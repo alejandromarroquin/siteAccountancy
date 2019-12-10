@@ -1,158 +1,112 @@
-//Función para habilitar e inhabilitar los input de información general
-function completeGeneralInformation(){
-  if($('input[name="checkcompletetel"]').prop('checked')){
-
-    $("#phoneffice").prop('disabled', true);
-    $("#extension").prop('disabled', true);
-    $("#cellphone").prop('disabled', true);
-
-    //Asignar valores de datos fiscales a datos generales
-    $("#phoneffice").val($('input[name="phoneofficet"]').val());
-    $("#extension").val($('input[name="extensiont"]').val());
-    $("#cellphone").val($('input[name="cellphonet"]').val());
-
-  }else{
-    $("#phoneffice").prop('disabled', false);
-    $("#extension").prop('disabled', false);
-    $("#cellphone").prop('disabled', false);
-
-    $("#phoneffice").val("");
-    $("#extension").val("");
-    $("#cellphone").val("");
-
-  }
-
-  if($('input[name="checkcompletemail"]').prop('checked')){
-    $("#email").prop('disabled', true);
-
-    //Asignar valores de datos fiscales a datos generales
-    $("#email").val($('input[name="emailt"]').val());
-
-  }else{
-    $("#email").prop('disabled', false);
-    $("#email").val("");
-
-  }
-
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#street").prop('disabled', true);
-    $("#numint").prop('disabled', true);
-    $("#numext").prop('disabled', true);
-    $("#colony").prop('disabled', true);
-    $("#city").prop('disabled', true);
-    $("#estate").prop('disabled', true);
-    $("#country").prop('disabled', true);
-    $("#postalcode").prop('disabled', true);
-
-    //Asignar valores de datos fiscales a datos generales
-    $("#street").val($('input[name="streett"]').val());
-    $("#numint").val($('input[name="numintt"]').val());
-    $("#numext").val($('input[name="numextt"]').val());
-    $("#colony").val($('input[name="colonyt"]').val());
-    $("#city").val($('input[name="cityt"]').val());
-    $("#estate").val($('input[name="estatet"]').val());
-    $("#country").val($('input[name="contryt"]').val());
-    $("#postalcode").val($('input[name="postalcodet"]').val());
-
-  }else{
-    $("#street").prop('disabled', false);
-    $("#numint").prop('disabled', false);
-    $("#numext").prop('disabled', false);
-    $("#colony").prop('disabled', false);
-    $("#city").prop('disabled', false);
-    $("#estate").prop('disabled', false);
-    $("#country").prop('disabled', false);
-    $("#postalcode").prop('disabled', false);
-
-    $("#street").val("");
-    $("#numint").val("");
-    $("#numext").val("");
-    $("#colony").val("");
-    $("#city").val("");
-    $("#estate").val("");
-    $("#country").val("");
-    $("#postalcode").val("");
-  }
-}
-
-function changePhone(){
-  if($('input[name="checkcompletetel"]').prop('checked')){
-    $("#phoneffice").val($('input[name="phoneofficet"]').val());
-  }
-}
-
-function changeExtension(){
-  if($('input[name="checkcompletetel"]').prop('checked')){
-    $("#extension").val($('input[name="extensiont"]').val());
-  }
-}
-
-function changeCellphone(){
-  if($('input[name="checkcompletetel"]').prop('checked')){
-    $("#cellphone").val($('input[name="cellphonet"]').val());
-  }
-}
-
-function changeEmail(){
-  if($('input[name="checkcompletemail"]').prop('checked')){
-    $("#email").val($('input[name="emailt"]').val());
-  }
-}
-
-function changeStreet(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#street").val($('input[name="streett"]').val());
-  }
-}
-
-function changeNumint(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#numint").val($('input[name="numintt"]').val());
-  }
-}
-
-function changeNumext(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#numext").val($('input[name="numextt"]').val());
-  }
-}
-
-function changeColony(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#colony").val($('input[name="colonyt"]').val());
-  }
-}
-
-function changeCity(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#city").val($('input[name="cityt"]').val());
-  }
-}
-
-function changeEstate(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#estate").val($('input[name="estatet"]').val());
-  }
-}
-
-function changeCountry(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#country").val($('input[name="contryt"]').val());
-  }
-}
-
-function changePostalcode(){
-  if($('input[name="checkcompletedir"]').prop('checked')){
-    $("#postalcode").val($('input[name="postalcodet"]').val());
-  }
-}
+$(document).ready(function(){
+  jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $("#sendform").on('click', function () {
+    var businessname=$('input[name="businessname"]').val();
+    var rfc=$('input[name="rfc"]').val();
+    var taxregime=$('select[name="taxregime"]').val();
+    var phoneoffice=$('input[name="phoneoffice"]').val();
+    var extension=$('input[name="extension"]').val();
+    var cellphone=$('input[name="cellphone"]').val();
+    var email=$('input[name="email"]').val();
+    var street=$('input[name="street"]').val();
+    var numint=$('input[name="numint"]').val();
+    var numext=$('input[name="numext"]').val();
+    var colony=$('input[name="colony"]').val();
+    var city=$('input[name="city"]').val();
+    var estate=$('input[name="estate"]').val();
+    var contry=$('input[name="contry"]').val();
+    var postalcode=$('input[name="postalcode"]').val();
+    if($("#companyform").valid()){
+      $.ajax({
+         type:'POST',
+         url:'/empresacreate',
+         data:{businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
+         success:function(data){
+          if(data==1){
+            Swal.fire(
+              'Registrado!',
+              'El cliente se registro correctamente.',
+              'success'
+            )
+            $('input[name="businessname"]').val(null);
+            $('input[name="rfc"]').val(null);
+            $('input[name="taxregime"]').val(null);
+            $('input[name="phoneoffice"]').val(null);
+            $('input[name="extension"]').val(null);
+            $('input[name="cellphone"]').val(null);
+            $('input[name="email"]').val(null);
+            $('input[name="street"]').val(null);
+            $('input[name="numint"]').val(null);
+            $('input[name="numext"]').val(null);
+            $('input[name="colony"]').val(null);
+            $('input[name="city"]').val(null);
+            $('input[name="estate"]').val(null);
+            $('input[name="contry"]').val(null);
+            $('input[name="postalcode"]').val(null);
+          }else{
+            if(data==2){
+              Swal.fire(
+                'Error!',
+                'Hay unproblema con el número telefónico.',
+                'error'
+              )
+            }else{
+              if(data==3){
+                Swal.fire(
+                  'Error!',
+                  'El correo electrónico ya está en uso, porfavor ingrese uno distinto.',
+                  'error'
+                )
+              }else{
+                if(data==4){
+                  Swal.fire(
+                    'Error!',
+                    'Hay unproblema con la dirección.',
+                    'error'
+                  )
+                }else{
+                  if(data==5){
+                    Swal.fire(
+                      'Error!',
+                      'Algo salio mal, intentelo más tarde.',
+                      'error'
+                    )
+                  }else{
+                    if(data==6){
+                      Swal.fire(
+                        'Error!',
+                        'Hay unproblema con la razón social o el RFC.',
+                        'error'
+                      )
+                    }else{
+                      Swal.fire(
+                        'Error!',
+                        'Algo salio mal, intentelo más tarde.',
+                        'error'
+                      )
+                    }
+                  }
+                }
+              }
+            }
+          }
+         }
+      });
+    }
+  });
+});
 
 //Función para validad el RFC
 function rfcValido(rfc) {
     const re       = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
     var   validado = rfc.match(re);
 
-    if (!validado)  //Coincide con el formato general del regex?
+    if (!validado)  //Coincide con el formato general
         return false;
 
     //Separar el dígito verificador del resto del RFC

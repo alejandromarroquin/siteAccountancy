@@ -10,6 +10,7 @@ use App\addresse;
 use App\emails;
 use App\contactlocation;
 use App\accountancie;
+use App\customers;
 use Illuminate\Http\Request;
 
 class CompanieController extends Controller
@@ -21,7 +22,7 @@ class CompanieController extends Controller
      */
     public function index()
     {
-        $companies=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->select('taxinformations.rfc','taxinformations.businessName','emails.email','phones.office')->where('companies.id','!=','1')->get();
+        $companies=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->join('phones','contactlocations.idPhone','=','phones.id')->select('taxinformations.businessname','emails.email','taxinformations.rfc','phones.office')->where('customers.idCompany',session('idcompany'))->get();
         return view('users.company.index',compact('companies'));
     }
 
@@ -43,108 +44,67 @@ class CompanieController extends Controller
      */
     public function store(Request $request)
     {
-        $flag=0;
-        $address=new addresse;
-        $email=new emails;
-        $phone=new Phone;
-        $contacloc=new contactlocation;
-        $taxinf=new taxinformation;
+      $phones=new Phone;
+      $email=new emails;
+      $address=new addresse;
+      $contact=new contactlocation;
+      $taxinf=new taxinformation;
+      $company=new companie;
+      $customers=new customers;
 
-        DB::beginTransaction();
-        try {
-          $phone->office=$request->phoneofficet;
-          $phone->extension=$request->extensiont;
-          $phone->cellphone=$request->cellphonet;
-          $phone->save();
-
-
-          $phone->office=$request->phoneofficet;
-          $phone->extension=$request->extensiont;
-          $phone->cellphone=$request->cellphonet;
-          $phone->save();
-
-          $address->street=$request->streett;
-          $address->colony=$request->colonyt;
-          $address->state=$request->estatet;
-          $address->city=$request->cityt;
-          $address->numExt=$request->numextt;
-          $address->numInt=$request->numintt;
-          $address->postalCode=$request->postalcodet;
-          $address->country=$request->contryt;
-          $address->save();
-
-          $email->email=$request->emailt;
-          $email->save();
-
-          $contacloc->idaddress=$address->id;
-          $contacloc->idphone=$phone->id;
-          $contacloc->idemail=$email->id;
-          $contacloc->save();
-
-          $taxinf->idtaxinformation=$contacloc->id;
-          $taxinf->rfc=$request->rfc;
-          $taxinf->businessname=$request->businessname;
-          $taxinf->taxRegime=$request->taxregime;
-          $taxinf->save();
-
-          if(!$request->checkcompletetel){
-            $phone=new Phone;
-            $phone->office=$request->phoneffice;
-            $phone->extension=$request->extension;
-            $phone->cellphone=$request->cellphone;
-            if($phone->save()){
-                $flag=1;
-            }
-          }
-
-          if(!$request->checkcompletemail){
-            $email=new emails;
-            $email->email=$request->email;
-            if($email->save()){
-                $flag=1;
-            }
-          }
-
-          if(!$request->checkcompletedir){
-            $address=new addresse;
-            $address->street=$request->street;
-            $address->colony=$request->colony;
-            $address->state=$request->estate;
-            $address->city=$request->city;
-            $address->numExt=$request->numext;
-            $address->numInt=$request->numint;
-            $address->postalCode=$request->postalcode;
-            $address->country=$request->contry;
-            if($address->save()){
-                $flag=1;
-            }
-          }
-
-          if($flag==1){
-            $contacloc=new contactlocation;
-            $contacloc->idaddress=$address->id;
-            $contacloc->idphone=$phone->id;
-            $contacloc->idemail=$email->id;
-            $contacloc->save();
-          }
-
-          $company=new companie;
-          $company->idTaxInformation=$taxinf->id;
-          $company->idGeneralInformation=$contacloc->id;
-          $company->save();
-
-          $accountancy=new accountancie;
-          $accountancy->idCompany=$company->id;
-
-          if($accountancy->save()){
-            echo"<script type='text/javascript'>alert('Registro exitoso!')</script>";
-            echo "Llego aqui";
-          }
-          DB::commit();
-        } catch (\PDOException $e) {
-          DB::rollBack();
+      DB::beginTransaction();
+      try{
+        $phones->office=$request->phoneoffice;
+        $phones->extension=$request->extension;
+        $phones->cellphone=$request->cellphone;
+        if(!$phones->save()){
+          return 2;
         }
 
+        $email->email=$request->email;
+        if(!$email->save()){
+          return 3;
+        }
+
+        $address->street=$request->street;
+        $address->colony=$request->colony;
+        $address->state=$request->estate;
+        $address->city=$request->city;
+        $address->numExt=$request->numext;
+        $address->numInt=$request->numint;
+        $address->postalCode=$request->postalcode;
+        $address->country=$request->contry;
+        if(!$address->save()){
+          return 4;
+        }
+
+        $contact->idAddress=$address->id;
+        $contact->idPhone=$phones->id;
+        $contact->idEmail=$email->id;
+        if(!$contact->save()){
+          return 5;
+        }
+
+        $taxinf->idtaxinformation=$contact->id;
+        $taxinf->rfc=$request->rfc;
+        $taxinf->businessname=$request->businessname;
+        $taxinf->taxRegime=$request->taxregime;
+        if(!$taxinf->save()){
+          return 6;
+        }
+
+        $customers->idCompany=session('idcompany');
+        $customers->idTaxInformation=$taxinf->id;
+        if(!$customers->save()){
+          return 7;
+        }
+
+        DB::commit();
+        return 1;
+      }catch(\PDOException $e){
+        DB::rollBack();
+        return 0;
+      }
     }
 
     /**
@@ -166,7 +126,7 @@ class CompanieController extends Controller
      */
     public function edit($companie)
     {
-        $datacompanie=companie::join('taxinformations','companies.id','=','taxinformations.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('emails','contactlocations.id','=','emails.id')->join('phones','contactlocations.id','=','phones.id')->join('addresses','contactlocations.id','=','addresses.id')->select('taxinformations.id as taxid','rfc','businessName','taxRegime','emails.id as emailid','email','phones.id as phoneid','office','extension','cellphone','addresses.id as addressid','street','colony','state','city','numExt','numInt','postalCode','reference','country')->where('taxinformations.rfc',$companie)->get();
+        $datacompanie=companie::join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxinformations.taxRegime','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->get();
         foreach ($datacompanie as $data) {
           $taxid=$data->taxid;
           $rfc=$data->rfc;
@@ -186,10 +146,9 @@ class CompanieController extends Controller
           $numExt=$data->numExt;
           $numInt=$data->numInt;
           $postalCode=$data->postalCode;
-          $reference=$data->reference;
           $country=$data->country;
         }
-        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegime','emailid','email','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','reference','country'));
+        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegime','emailid','email','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','country'));
     }
 
     /**
@@ -208,34 +167,34 @@ class CompanieController extends Controller
       DB::beginTransaction();
       try {
         $taxinf->rfc=$request->rfc;
-        $taxinf->businessName=$request->businessname;
-        $taxinf->taxRegime=$request->taxr;
+        $taxinf->businessname=$request->businessname;
+        $taxinf->taxRegime=$request->taxregime;
         $taxinf->save();
 
-        $email->email=$request->emailt;
+        $email->email=$request->email;
         $email->save();
 
-        $phone->office=$request->phoneofficet;
-        $phone->extension=$request->extensiont;
-        $phone->cellphone=$request->cellphonet;
+        $phone->office=$request->phoneoffice;
+        $phone->extension=$request->extension;
+        $phone->cellphone=$request->cellphone;
         $phone->save();
 
-        $address->street=$request->streett;
-        $address->colony=$request->colonyt;
-        $address->state=$request->estatet;
-        $address->city=$request->cityt;
-        $address->numExt=$request->numextt;
-        $address->numInt=$request->numintt;
-        $address->postalCode=$request->postalcodet;
-        $address->country=$request->contryt;
+        $address->street=$request->street;
+        $address->colony=$request->colony;
+        $address->state=$request->estate;
+        $address->city=$request->city;
+        $address->numExt=$request->numext;
+        $address->numInt=$request->numint;
+        $address->postalCode=$request->postalcode;
+        $address->country=$request->contry;
         $address->save();
 
         DB::commit();
+        return 1;
       } catch (\PDOException $e) {
         DB::rollBack();
+        return 0;
       }
-      $url = asset('/empresas_consultar');
-      return redirect($url);
     }
 
     /**

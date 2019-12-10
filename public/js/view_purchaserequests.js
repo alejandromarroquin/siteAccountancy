@@ -16,12 +16,12 @@ $(document).ready(function(){
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
     });
-    
+
     $(".Ok").click(function(e){
         e.preventDefault();
         var id = $(this).val();
         Swal.fire({
-          title: 'Esta seguro de aprobar la solicitud?',
+          title: 'Está seguro de aprobar la solicitud?',
           text: "No se podrán revertir los cambios!",
           type: 'warning',
           confirmButtonColor: '#3085d6',
@@ -44,7 +44,7 @@ $(document).ready(function(){
         e.preventDefault();
         var id = $(this).val();
         Swal.fire({
-          title: 'Esta seguro de rechazar la solicitud?',
+          title: 'Está seguro de rechazar la solicitud?',
           text: "No se podrán revertir los cambios!",
           type: 'warning',
           confirmButtonColor: '#3085d6',

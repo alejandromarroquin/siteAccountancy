@@ -22,9 +22,9 @@ class CreateCustomersTable extends Migration
             $table->integer('idTaxInformation')->unsigned();
             $table->foreign('idTaxInformation')->references('id')->on('taxinformations')->onDelete('cascade');
 
-            $table->double('maxDebt',10,2);
-            $table->double('actualDebt',10,2);
-            $table->string('notes',100);
+            $table->double('maxDebt',10,2)->nullable();
+            $table->double('actualDebt',10,2)->nullable();
+            $table->string('notes',100)->nullable();
 
             $table->timestamps();
         });

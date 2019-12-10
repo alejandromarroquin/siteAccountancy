@@ -21,7 +21,7 @@ $(document).ready(function(){
     event.preventDefault();
     elegido=$(this).val();
     Swal.fire({
-      title: 'Esta seguro de eliminar la cuenta?',
+      title: 'Está seguro de eliminar la cuenta?',
       text: "No se podrán revertir los cambios!",
       type: 'warning',
       confirmButtonColor: '#3085d6',
@@ -32,13 +32,22 @@ $(document).ready(function(){
       cancelButtonColor: '#929292'
     }).then((result) => {
       if (result.value) {
-        $.get("/accountsdelete", { elegido: elegido });
+        $.get("/accountsdelete", { elegido: elegido }, function(data){
+          if(data==1){
+            Swal.fire(
+              'Eliminado!',
+              'La cuenta se eliminó correctamente.',
+              'success'
+            )
+          }else{
+            Swal.fire(
+              'Error!',
+              'Algo salio mal, intente más tarde.',
+              'error'
+            )
+          }
+        });
         $(this).closest('tr').remove();
-        Swal.fire(
-          'Eliminado!',
-          'La cuenta se eliminó correctamente.',
-          'success'
-        )
       }
     });
   });

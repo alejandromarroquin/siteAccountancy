@@ -15,8 +15,8 @@ $(document).ready(function(){
   });
 
   $("#sendform").on('click', function () {
-    concept=$('#conceptadd').val();
-    amount=$('#amountadd').val();
+    var concept=$('#conceptadd').val();
+    var amount=$('#amountadd').val();
     if($("#budgetform").valid()){
       $.ajax({
          type:'POST',

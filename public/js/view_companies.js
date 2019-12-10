@@ -3,12 +3,13 @@ $(document).ready(function(){
     event.preventDefault();
     elegido=$(this).val();
     Swal.fire({
-      title: 'Esta seguro de eliminar la empresa?',
+      title: 'Está seguro de eliminar la empresa?',
       text: "No se podrán revertir los cambios!",
       type: 'warning',
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Confirmar',
       showCancelButton: true,
+      reverseButtons: true,
       cancelButtonColor: '#929292'
     }).then((result) => {
       if (result.value) {
@@ -23,7 +24,7 @@ $(document).ready(function(){
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   });
-  
+
   $(".edit").click(function(e){
     e.preventDefault();
     var rfc = $(this).val();

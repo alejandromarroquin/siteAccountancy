@@ -12,9 +12,9 @@ class PhonesSeeder extends Seeder
     public function run()
     {
       DB::table('phones')->insert([
-        'office'=>'3768490',
-        'extension'=>'223',
-        'cellphone'=>'7773625344'
+        'office'=>'7773907007',
+        'extension'=>'',
+        'cellphone'=>'7773907007'
       ]);
 
       DB::table('phones')->insert([

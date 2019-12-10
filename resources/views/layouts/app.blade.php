@@ -102,10 +102,10 @@
                                 <a href="#"></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/empresa_registrar">Registrar empresa</a>
+                                <a href="/empresa_registrar">Registrar cliente</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="/empresas_consultar">Consultar empresas</a>
+                                <a href="/empresas_consultar">Consultar clientes</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="/usuario_registrar">Registrar usuario</a>

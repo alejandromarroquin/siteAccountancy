@@ -12,18 +12,15 @@ class CompanieSeeder extends Seeder
     public function run()
     {
       DB::table('companies')->insert([
-        'idTaxInformation'=>'1',
-        'idGeneralInformation'=>'2'
+        'idTaxInformation'=>'1'
       ]);
 
       DB::table('companies')->insert([
-        'idTaxInformation'=>'2',
-        'idGeneralInformation'=>'2'
+        'idTaxInformation'=>'2'
       ]);
 
       DB::table('companies')->insert([
-        'idTaxInformation'=>'3',
-        'idGeneralInformation'=>'1'
+        'idTaxInformation'=>'3'
       ]);
     }
 }

@@ -12,7 +12,7 @@ $(document).ready(function(){
 
   if($('#datetype3')){
     var date = new Date();
-    $('#datetype3').val(date.getFullYear() + "/" + (date.getMonth() +1) + "/" + date.getDate()  + "  " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+    $('#datetype3').text(date.getFullYear() + "/" + (date.getMonth() +1) + "/" + date.getDate()  + "  " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
   }
 });
 
@@ -82,7 +82,7 @@ function addDecimal(input){
 
 function confirmSenForm(){
   Swal.fire({
-    title: 'Esta seguro de eliminar la cuenta?',
+    title: 'Está seguro de eliminar la cuenta?',
     text: "No se podrán revertir los cambios!",
     type: 'warning',
     confirmButtonColor: '#3085d6',

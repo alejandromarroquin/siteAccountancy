@@ -13,18 +13,7 @@ class CustomerSeeder extends Seeder
     {
       DB::table('customers')->insert([
         'idCompany'=>'1',
-        'idTaxInformation'=>'3',
-        'maxDebt'=>'5748.99',
-        'actualDebt'=>'0.00',
-        'notes'=>'Cliente puntual'
-      ]);
-
-      DB::table('customers')->insert([
-        'idCompany'=>'1',
-        'idTaxInformation'=>'3',
-        'maxDebt'=>'5748.99',
-        'actualDebt'=>'4304.00',
-        'notes'=>'Cliente moroso'
+        'idTaxInformation'=>'2'
       ]);
     }
 }

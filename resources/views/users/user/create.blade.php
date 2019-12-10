@@ -11,7 +11,7 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="usercreate" method="POST" role="form">
+          <form action="" method="" role="form" id="userform">
             {{ csrf_field() }}
             <div class="row">
               <div class="col">
@@ -58,11 +58,15 @@
                 </select>
               </div>
             </div>
-            <input class="btn btn-primary" type="submit" value="Registrar">
+            <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+  <script src="{{ asset('js/view_registeruser.js') }}"></script>
 @endsection

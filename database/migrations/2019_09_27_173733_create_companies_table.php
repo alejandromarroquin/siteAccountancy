@@ -19,9 +19,6 @@ class CreateCompaniesTable extends Migration
           $table->integer('idTaxInformation')->unsigned();
           $table->foreign('idTaxInformation')->references('id')->on('taxinformations')->onDelete('cascade');
 
-          $table->integer('idGeneralInformation')->unsigned();
-          $table->foreign('idGeneralInformation')->references('id')->on('contactlocations')->onDelete('cascade');
-
           $table->timestamps();
 
         });

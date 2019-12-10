@@ -16,25 +16,35 @@
       <div class="row margin">
         <form action="/cfdicreate" method="POST" role="form">
           {{ csrf_field() }}
+          <div class="row">
+            <div class="col">
+              <label>Cliente:</label>
+              <select class="form-control" name="account" id="account">
+                <option selected hidden>Selecciona un cliente...</option>      
+              </select>
+            </div>
+          </div>
           <div class="col-lg-8 col-xl-12">
             <div class="row">
-              <div class="col-3">
+              <div class="col">
                 <img class="img-fluid" src="{{asset('img/logoempresa.png')}}">
               </div>
-              <div class="col-3 expeditiondate">
-                <label>Fecha y hora de emisión:</label>
-                <input type="text" class="form-control" name="date" id="datetype3" readonly required/>
+              <div class="col">
+                <div class="col senderinfo">
+                  @foreach($senderdata as $data)
+                    <strong>{{$data->businessname}}</strong><br/>
+                    <strong>R.F.C {{$data->rfc}}</strong><br/>
+                    Domicilio: {{$data->street}} No. {{$data->numExt}}<br/>
+                    Colonia: {{$data->colony}}<br/>
+                    {{$data->city}}, {{$data->state}}.
+                  @endforeach
+                </div>
               </div>
-            </div>
-            <div class="row senderinfo">
-              <div class="col senderinfo">
-                @foreach($senderdata as $data)
-                  <strong>{{$data->businessname}}</strong><br/>
-                  <strong>R.F.C {{$data->rfc}}</strong><br/>
-                  Domicilio: {{$data->street}} No. {{$data->numExt}}<br/>
-                  Colonia: {{$data->colony}}<br/>
-                  {{$data->city}}, {{$data->state}}.
-                @endforeach
+              <div class="col expeditiondate">
+                <label><strong>Fecha y hora de emisión:</strong></label><br/>
+                <label name="date" id="datetype3"></label><br/>
+                <label><strong>Folio / No. Factura:</strong></label>
+                <div class="folio"></div>
               </div>
             </div>
             <div class="capa">

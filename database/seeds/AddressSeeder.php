@@ -12,14 +12,13 @@ class AddressSeeder extends Seeder
     public function run()
     {
       DB::table('addresses')->insert([
-        'street'=>'5 de febrero',
-        'colony'=>'Civac',
+        'street'=>'Autopista del Sol KM 104',
+        'colony'=>'Real del Puente',
         'state'=>'Morelos',
-        'city'=>'Cuernavaca',
-        'numExt'=>'125',
+        'city'=>'Xochitepec',
+        'numExt'=>'',
         'numInt'=>'',
-        'PostalCode'=>'62500',
-        'reference'=>'Portón verde',
+        'PostalCode'=>'62790',
         'country'=>'México',
       ]);
 
@@ -31,7 +30,6 @@ class AddressSeeder extends Seeder
         'numExt'=>'748',
         'numInt'=>'',
         'PostalCode'=>'62680',
-        'reference'=>'Tienda de manualidades',
         'country'=>'México',
       ]);
 
@@ -43,7 +41,6 @@ class AddressSeeder extends Seeder
         'numExt'=>'657',
         'numInt'=>'',
         'PostalCode'=>'46938',
-        'reference'=>'Edificio de cristal',
         'country'=>'México',
       ]);
     }

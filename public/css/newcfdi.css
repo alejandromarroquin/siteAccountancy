@@ -8,6 +8,7 @@
   border-radius: 10px 10px 10px 10px;
   max-height: 792px;
   min-height: 792px;
+  margin-top: 3em;
 }
 
 .margin{
@@ -15,8 +16,8 @@
 }
 
 .expeditiondate{
-  margin-top: 1.5em;
-  margin-left: 32em;
+  margin-top: 1.7em;
+  text-align: center;
 }
 
 .capa{
@@ -32,5 +33,14 @@
 }
 
 .senderinfo{
-  margin-left: 0px;
+  margin-left: 10px;
+  margin-top: 1.7em;
+}
+
+.folio{
+  width: 130px;
+  height: 30px;
+  border:black 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  margin-left: 5em;
 }

@@ -41,7 +41,7 @@
                     <input type="text" class="form-control" id="confirmamountadd" name="confirmamountadd" onblur="verifyamount();" onkeypress="return filterFloat(event,this);" required/>
                   </div>
                 </div>
-                <input class="btn btn-primary" type="button" value="Registrar"id="sendform">
+                <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
               </form>
             </div>
             <div class="tab-pane fade" id="consult" role="tabpanel" aria-labelledby="consult-tab">
@@ -67,7 +67,6 @@
                     <input type="text" class="form-control" id="confirmamount" name="confirmamount" onblur="verifyamount();" onkeypress="return filterFloat(event,this);" required/>
                   </div>
                 </div>
-                <input class="btn btn-primary" type="submit" value="Registrar">
               </form>
             </div>
           </div>
