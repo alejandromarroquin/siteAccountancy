@@ -13,6 +13,11 @@ $(document).ready(function(){
       elegido=$(this).val();
       $.get("/accountscreate", { elegido: elegido }, function(data){
           jQuery('#tbody').append(data);
+          Swal.fire(
+            'Agregado!',
+            'La cuenta se agregó correctamente.',
+            'success'
+          )
       });
     });
   });

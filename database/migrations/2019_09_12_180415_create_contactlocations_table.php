@@ -25,6 +25,9 @@ class CreateContactlocationsTable extends Migration
             $table->integer('idEmail')->unsigned();
             $table->foreign('idEmail')->references('id')->on('emails')->onDelete('cascade');
 
+            $table->string('responsible',240);
+            $table->string('web',200)->nullable();
+
             $table->timestamps();
         });
     }

@@ -15,6 +15,12 @@
             {{ csrf_field() }}
             <div class="row">
               <div class="col">
+                <label>Nombre del responsable:</label>
+                <input type="text" class="form-control" name="responsible" id="responsible" required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
                 <label>Razón social:</label>
                 <input type="text" class="form-control" name="businessname" placeholder="Ej. Empresa S.A. DE C.V." required/>
               </div>
@@ -22,11 +28,12 @@
             <div class="row">
               <div class="col">
                 <label>RCF:</label>
-                <input type="text" class="form-control" id="rfc" name="rfc" onInput="aMayusculas(this.value,this.id)" minlength="12" maxlength="13" required/>
+                <input type="text" class="form-control" id="rfc" name="rfc" onInput="aMayusculas(this.value,this.id)" onchange="validarRFC(this);" minlength="12" maxlength="13" required/>
               </div>
               <div class="col">
                 <label>Régimen fiscal:</label>
                 <select class="form-control" name="taxregime" id="taxregime">
+                  <option selected hidden>Selecciona un regimen...</option>
                   <option value="fisica">Física</option>
                   <option value="moral">Moral</option>
                 </select>
@@ -35,21 +42,25 @@
             <div class="row">
               <div class="col">
                 <label>Télefono de oficina:</label>
-                <input type="text" class="form-control" id="phoneoffice" name="phoneoffice" minlength="10" maxlength="10" placeholder="10 digitos" onkeypress="return soloNumeros(event);" required/>
+                <input type="text" class="form-control" id="phoneoffice" name="phoneoffice" minlength="10" maxlength="10" placeholder="10 digitos sin espacios" onkeypress="return soloNumeros(event);" required/>
               </div>
               <div class="col">
                 <label>Extención:</label>
-                <input type="text" class="form-control" id="extension" name="extension"  maxlength="3" placeholder="Máximo 3 digitos" onkeypress="return soloNumeros(event);">
+                <input type="text" class="form-control" id="extension" name="extension"  maxlength="6" placeholder="Máximo 6 digitos sin espacios" onkeypress="return soloNumeros(event);">
               </div>
               <div class="col">
                 <label>Celular:</label>
-                <input type="text" class="form-control" id="cellphone" name="cellphone" minlength="10" maxlength="10" placeholder="10 digitos" onkeypress="return soloNumeros(event);">
+                <input type="text" class="form-control" id="cellphone" name="cellphone" minlength="10" maxlength="10" placeholder="10 digitos sin espacios" onkeypress="return soloNumeros(event);">
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label>Email:</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder="Ej. nombre@tuempresa.com" required/>
+              </div>
+              <div class="col">
+                <label>Página web:</label>
+                <input type="text" class="form-control" id="web" name="web" placeholder="Ej. www.tuempresa.com">
               </div>
             </div>
             <div class="row">
@@ -58,12 +69,12 @@
                 <input type="text" class="form-control" id="street" name="street" required/>
               </div>
               <div class="col">
-                <label>Número interior:</label>
-                <input type="text" class="form-control" id="numint" name="numint" maxlength="3">
-              </div>
-              <div class="col">
                 <label>Número exterior:</label>
                 <input type="text" class="form-control" id="numext" name="numext" maxlength="4">
+              </div>
+              <div class="col">
+                <label>Número interior:</label>
+                <input type="text" class="form-control" id="numint" name="numint" maxlength="3">
               </div>
             </div>
             <div class="row">

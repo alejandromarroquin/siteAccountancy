@@ -20,6 +20,9 @@ $(document).ready(function(){
     var divcol5=$('<div/>',{
       'class':'col'
     });
+    var divcol6=$('<div/>',{
+      'class':'col'
+    });
     var quantity=$('<input/>',{
       'class': 'form-control',
       'name':'name="quantity[]',
@@ -31,6 +34,11 @@ $(document).ready(function(){
       'class': 'form-control',
       'name':'name="unit[]',
       'id':'unit'+cont
+    });
+    var codeproduct=$('<input/>',{
+      'class': 'form-control',
+      'name':'name="codeproduct[]',
+      'id':'codeproduct'+cont
     });
     var option=$('<option/>',{
       'class': 'form-control',
@@ -62,13 +70,15 @@ $(document).ready(function(){
     divrow.append(divcol3);
     divrow.append(divcol4);
     divrow.append(divcol5);
+    divrow.append(divcol6);
     divcol1.append(quantity);
     divcol2.append(unit);
+    divcol3.append(codeproduct);
     unit.append(option);
     option.text('Selecciona unidad...');
-    divcol3.append(concept);
-    divcol4.append(unitprice);
-    divcol5.append(importe);
+    divcol4.append(concept);
+    divcol5.append(unitprice);
+    divcol6.append(importe);
   });
 });
 

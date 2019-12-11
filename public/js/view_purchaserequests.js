@@ -27,6 +27,7 @@ $(document).ready(function(){
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'Confirmar',
           showCancelButton: true,
+          reverseButtons: true,
           cancelButtonColor: '#929292'
         }).then((result) => {
           if (result.value) {
@@ -50,6 +51,7 @@ $(document).ready(function(){
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'Confirmar',
           showCancelButton: true,
+          reverseButtons: true,
           cancelButtonColor: '#929292'
         }).then((result) => {
           if (result.value) {

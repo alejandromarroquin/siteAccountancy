@@ -11,6 +11,7 @@ $(document).ready(function(){
     var emailid=$('input[name="emailid"]').val();
     var addressid=$('input[name="addressid"]').val();
     var phoneid=$('input[name="phoneid"]').val();
+    var contactid=$('input[name="contactid"]').val();
     var businessname=$('input[name="businessname"]').val();
     var rfc=$('input[name="rfc"]').val();
     var taxregime=$('select[name="taxregime"]').val();
@@ -18,6 +19,7 @@ $(document).ready(function(){
     var extension=$('input[name="extension"]').val();
     var cellphone=$('input[name="cellphone"]').val();
     var email=$('input[name="email"]').val();
+    var web=$('input[name="web"]').val();
     var street=$('input[name="street"]').val();
     var numint=$('input[name="numint"]').val();
     var numext=$('input[name="numext"]').val();
@@ -40,7 +42,7 @@ $(document).ready(function(){
           $.ajax({
             type:'POST',
             url:'/empresaupdate',
-            data:{taxid:taxid,emailid:emailid,addressid:addressid,phoneid:phoneid,businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
+            data:{taxid:taxid,emailid:emailid,addressid:addressid,phoneid:phoneid,contactid:contactid,businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,web:web,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
             success:function(data){
               if(data==1){
                 Swal.fire(

@@ -13,7 +13,7 @@
         <div class="col-lg-8 col-xl-12">
           <form action="" method="" role="form" id="companyform">
             {{ csrf_field() }}
-            <div class="card-header">{{ __('Datos fiscales') }}</div>
+            <input type="text" name="contactid" value="{{$contactid}}" hidden>
             <input type="text" name="taxid" value="{{$taxid}}" hidden>
             <input type="text" name="emailid" value="{{$emailid}}" hidden>
             <input type="text" name="addressid" value="{{$addressid}}" hidden>
@@ -57,6 +57,10 @@
               <div class="col">
                 <label>Email:</label>
                 <input type="text" class="form-control" id="email" name="email" value="{{$email}}" placeholder="Ej. nombre@tuempresa.com" required/>
+              </div>
+              <div class="col">
+                <label>Página web:</label>
+                <input type="text" class="form-control" id="web" name="web" value="{{$web}}" placeholder="Ej. www.tuempresa.com">
               </div>
             </div>
             <div class="row">

@@ -20,10 +20,10 @@
             <div class="col">
               <label>Cliente:</label>
               <select class="form-control" name="account" id="account">
-                <option selected hidden>Selecciona un cliente...</option> 
+                <option selected hidden>Selecciona un cliente...</option>
                 @foreach($customers as $customer)
                   <option>{{$customer->businessname}}</option>
-                @endforeach     
+                @endforeach
               </select>
             </div>
           </div>
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="row customerinf">
-              
+
             </div>
             <div class="capa">
               <div class="container table">
@@ -61,6 +61,9 @@
                   </div>
                   <div class="col">
                     <label>Unidad de medida</label>
+                  </div>
+                  <div class="col">
+                    <label>Código de producto</label>
                   </div>
                   <div class="col">
                     <label>Concepto</label>
@@ -81,9 +84,12 @@
                     <select class="form-control" name="unit[]" id="unit1" required/>
                       <option selected hidden>Selecciona unidad...</option>
                       @foreach($units as $unit)
-                        <option>{{$unit->description}}</option>
+                        <option>{{$unit->code}}</option>
                       @endforeach
                     </select>
+                  </div>
+                  <div class="col">
+                    <input class="form-control" name="codeproduct[]" id="codeproduct1" required/>
                   </div>
                   <div class="col">
                     <input class="form-control" name="concept[]" id="concept1" required/>
