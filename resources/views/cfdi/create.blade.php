@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="row customerinf">
-
+              
             </div>
             <div class="capa">
               <div class="container table">
@@ -102,6 +102,9 @@
                 </div>
               </div>
             </div>
+              <div class="row qr">
+                {!!QrCode::size(200)->generate("aquivaelqr") !!}
+              </div>
           </div>
           <input class="btn btn-primary" type="submit" value="Generar factura">
         </form>
