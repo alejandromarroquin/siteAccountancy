@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::join('companies','users.id','=','companies.id')->select('name','lastname','email')->get();
+        $users=User::join('companies','users.idCompany','=','companies.id')->select('name','lastname','email')->where('companies.id',session('idcompany'))->get();
         return view('users.user.index',compact('users'));
     }
 
@@ -108,14 +108,15 @@ class UserController extends Controller
         $user->name=$request->name;
         $user->lastname=$request->lastname;
         $user->email=$request->email;
-        $user->password=$request->password;
+        $user->password=Hash::make($request->password);
         $user->save();
         DB::commit();
+        return 1;
       } catch (\PDOException $e) {
         DB::rollBack();
+        return 0;
       }
-      $url = asset('/usuarios_consultar');
-      return redirect($url);
+      
     }
 
     /**

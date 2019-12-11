@@ -11,7 +11,7 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="/userupdate" method="POST" role="form">
+          <form action="" method="" role="form" id="userform">
             {{ csrf_field() }}
             <div class="row">
               <div class="col">
@@ -43,11 +43,15 @@
                 <input type="text" class="form-control" id="password" name="password" placeholder="Ingresa una nueva contraseña"/>
               </div>
             </div>
-            <input class="btn btn-primary" type="submit" value="Registrar">
+            <input class="btn btn-primary" type="button" value="Actualizar" id="updateform">
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+  <script src="{{ asset('js/view_edit_user.js')}}"></script>
 @endsection
