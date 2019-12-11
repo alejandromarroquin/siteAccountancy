@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\cfdi;
 use App\taxinformation;
+use App\customers;
 use App\unitmeasurements;
 use Illuminate\Http\Request;
 use DB;
@@ -33,8 +34,9 @@ class CfdiController extends Controller
     public function create()
     {
         $senderdata=taxinformation::join('companies','taxinformations.id','=','companies.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.rfc','taxinformations.businessname','taxinformations.taxRegime','addresses.street','addresses.numExt','addresses.colony','addresses.city','addresses.state')->where('companies.id',session('idcompany'))->get();
+        $customers=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessname')->get();
         $units=unitmeasurements::all();
-        return view('cfdi.create',compact('units','senderdata'));
+        return view('cfdi.create',compact('units','senderdata','customers'));
     }
 
     /**

@@ -13,7 +13,21 @@ $(document).ready(function(){
       cancelButtonColor: '#929292'
     }).then((result) => {
       if (result.value) {
-        $.get("/empresadelete", { elegido: elegido });
+        $.get("/empresadelete", { elegido: elegido },function(data){
+          if(data==1){
+            Swal.fire(
+              'Eliminado!',
+              'El cliente se eliminó correctamente.',
+              'success'
+            )
+          }else{
+            Swal.fire(
+              'Error!',
+              'Algo salio mal, intente más tarde.',
+              'error'
+            )
+          }
+        });
         $(this).closest('tr').remove();
       }
     });

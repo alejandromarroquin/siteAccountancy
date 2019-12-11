@@ -126,7 +126,7 @@ class CompanieController extends Controller
      */
     public function edit($companie)
     {
-        $datacompanie=companie::join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxinformations.taxRegime','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->get();
+        $datacompanie=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxinformations.taxRegime','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->where('taxinformations.rfc',$companie)->get();
         foreach ($datacompanie as $data) {
           $taxid=$data->taxid;
           $rfc=$data->rfc;
@@ -206,8 +206,7 @@ class CompanieController extends Controller
      */
     public function destroy(Request $request,companie $companie)
     {
-
-      if(companie::join('taxinformations','companies.id','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
+      if(customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
         return 1;
       }else{
         return 0;

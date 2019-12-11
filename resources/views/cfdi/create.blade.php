@@ -20,7 +20,10 @@
             <div class="col">
               <label>Cliente:</label>
               <select class="form-control" name="account" id="account">
-                <option selected hidden>Selecciona un cliente...</option>      
+                <option selected hidden>Selecciona un cliente...</option> 
+                @foreach($customers as $customer)
+                  <option>{{$customer->businessname}}</option>
+                @endforeach     
               </select>
             </div>
           </div>
@@ -46,6 +49,9 @@
                 <label><strong>Folio / No. Factura:</strong></label>
                 <div class="folio"></div>
               </div>
+            </div>
+            <div class="row customerinf">
+
             </div>
             <div class="capa">
               <div class="container table">

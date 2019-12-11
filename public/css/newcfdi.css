@@ -44,3 +44,10 @@
   border-radius: 10px 10px 10px 10px;
   margin-left: 5em;
 }
+
+.customerinf{
+  border-top:black 1px solid;
+  border-bottom:black 1px solid;
+  width: 103%;
+  height: 100px;
+}

@@ -128,7 +128,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request,User $user)
     {
-        if(User::join('companies','users.id','=','companies.id')->where('users.email',$request->elegido)->delete()){
+        if(User::join('companies','users.idCompany','=','companies.id')->where('users.email',$request->elegido)->delete()){
           return 1;
         }else{
           return 0;
