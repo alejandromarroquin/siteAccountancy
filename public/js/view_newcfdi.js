@@ -1,4 +1,11 @@
 $(document).ready(function(){
+  $('.code').qrcode({
+    //render:"table"
+    width: 110,
+    height: 110,
+    text: "aquivaloquedebedecirelqr"
+  });
+
   $('.add').on('click',function(event){
     var cont=$('#cont').val();
     var divrow=$('<div/>',{
@@ -40,6 +47,11 @@ $(document).ready(function(){
       'name':'name="codeproduct[]',
       'id':'codeproduct'+cont
     });
+    var codesat=$('<a/>',{
+      'href':'http://pys.sat.gob.mx/PyS/catPyS.aspx',
+      'target':'blank',
+      'class':'codesat'
+    });
     var option=$('<option/>',{
       'class': 'form-control',
       'name':'name="unit[]',
@@ -74,12 +86,39 @@ $(document).ready(function(){
     divcol1.append(quantity);
     divcol2.append(unit);
     divcol3.append(codeproduct);
+    codesat.text('consultar catálogo');
+    divcol3.append(codesat);
     unit.append(option);
     option.text('Selecciona unidad...');
     divcol4.append(concept);
     divcol5.append(unitprice);
     divcol6.append(importe);
   });
+
+  $("#customer").on('change', function () {
+    $("#customer option:selected").each(function () {
+      elegido=$(this).val();
+      $.get("/getcustomer", { elegido: elegido }, function(data){
+          $('.businessnamecustomer').text($("#customer").val());
+          $('.rfccustomer').text('RFC: '+data);
+      });
+    });
+  });
+
+  $("#methodpayment").on('change', function () {
+    $("#methodpayment option:selected").each(function () {
+      elegido=$(this).val();
+      $('#methodpay').text(elegido);
+    });
+  });
+
+  $("#waypayment").on('change', function () {
+    $("#waypayment option:selected").each(function () {
+      elegido=$(this).val();
+      $('#awaypay').text(elegido);
+    });
+  });
+
 });
 
 function inputChange(input){

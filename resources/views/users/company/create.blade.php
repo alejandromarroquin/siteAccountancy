@@ -21,6 +21,12 @@
             </div>
             <div class="row">
               <div class="col">
+                <label>Puesto del responsable:</label>
+                <input type="text" class="form-control" name="positionresponsible" id="positionresponsible" required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
                 <label>Razón social:</label>
                 <input type="text" class="form-control" name="businessname" placeholder="Ej. Empresa S.A. DE C.V." required/>
               </div>

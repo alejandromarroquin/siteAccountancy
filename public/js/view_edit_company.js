@@ -1,4 +1,11 @@
 $(document).ready(function(){
+  jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
   if($('#taxr').val()=="Fisica"){
     $('#taxregime option[value="Fisica"]').attr("selected", true);
   }else{
@@ -6,12 +13,13 @@ $(document).ready(function(){
   }
 
   $("#updateform").on('click', function () {
-    jQuery.validator.messages.required = 'Esté campo es obligatorio.';
     var taxid=$('input[name="taxid"]').val();
     var emailid=$('input[name="emailid"]').val();
     var addressid=$('input[name="addressid"]').val();
     var phoneid=$('input[name="phoneid"]').val();
     var contactid=$('input[name="contactid"]').val();
+    var responsible=$('input[name="responsible"]').val();
+    var positionresponsible=$('input[name="positionresponsible"]').val();
     var businessname=$('input[name="businessname"]').val();
     var rfc=$('input[name="rfc"]').val();
     var taxregime=$('select[name="taxregime"]').val();
@@ -42,7 +50,7 @@ $(document).ready(function(){
           $.ajax({
             type:'POST',
             url:'/empresaupdate',
-            data:{taxid:taxid,emailid:emailid,addressid:addressid,phoneid:phoneid,contactid:contactid,businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,web:web,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
+            data:{taxid:taxid,emailid:emailid,addressid:addressid,phoneid:phoneid,contactid:contactid,responsible:responsible,positionresponsible:positionresponsible,businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,web:web,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
             success:function(data){
               if(data==1){
                 Swal.fire(

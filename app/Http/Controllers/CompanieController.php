@@ -75,8 +75,9 @@ class CompanieController extends Controller
         $contact->idAddress=$address->id;
         $contact->idPhone=$phones->id;
         $contact->idEmail=$email->id;
-        $contact->web=$request->web;
         $contact->responsible=$request->responsible;
+        $contact->positionresponsible=$request->positionresponsible;
+        $contact->web=$request->web;
         $contact->save();
 
         $taxinf->idtaxinformation=$contact->id;
@@ -116,7 +117,7 @@ class CompanieController extends Controller
      */
     public function edit($companie)
     {
-        $datacompanie=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxinformations.taxRegime','contactlocations.id as contactid','contactlocations.responsible','contactlocations.web','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->where('taxinformations.rfc',$companie)->get();
+        $datacompanie=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxinformations.taxRegime','contactlocations.id as contactid','contactlocations.responsible','contactlocations.positionresponsible','contactlocations.web','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->where('taxinformations.rfc',$companie)->get();
         foreach ($datacompanie as $data) {
           $taxid=$data->taxid;
           $rfc=$data->rfc;
@@ -126,6 +127,7 @@ class CompanieController extends Controller
           $email=$data->email;
           $contactid=$data->contactid;
           $responsible=$data->responsible;
+          $positionresponsible=$data->positionresponsible;
           $web=$data->web;
           $phoneid=$data->phoneid;
           $office=$data->office;
@@ -141,7 +143,7 @@ class CompanieController extends Controller
           $postalCode=$data->postalCode;
           $country=$data->country;
         }
-        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegime','emailid','email','contactid','responsible','web','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','country'));
+        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegime','emailid','email','contactid','responsible','positionresponsible','web','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','country'));
     }
 
     /**
@@ -183,6 +185,8 @@ class CompanieController extends Controller
         $address->country=$request->contry;
         $address->save();
 
+        $contactlocation->responsible=$request->responsible;
+        $contactlocation->positionresponsible=$request->positionresponsible;
         $contactlocation->web=$request->web;
         $contactlocation->save();
 

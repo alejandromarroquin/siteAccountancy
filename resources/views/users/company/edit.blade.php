@@ -20,6 +20,18 @@
             <input type="text" name="phoneid" value="{{$phoneid}}" hidden>
             <div class="row">
               <div class="col">
+                <label>Nombre del responsable:</label>
+                <input type="text" class="form-control" name="responsible" id="responsible" value="{{$responsible}}" required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label>Puesto del responsable:</label>
+                <input type="text" class="form-control" name="positionresponsible" id="positionresponsible" value="{{$positionresponsible}}" required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
                 <label>Razón social:</label>
                 <input type="text" class="form-control" name="businessname" value="{{$businessName}}" placeholder="Ej. Empresa S.A. DE C.V." required/>
               </div>
@@ -46,7 +58,7 @@
               </div>
               <div class="col">
                 <label>Extención:</label>
-                <input type="text" class="form-control" id="extension" name="extension" value="{{$extension}}"  maxlength="3" placeholder="Máximo 3 digitos" onkeypress="return soloNumeros(event);">
+                <input type="text" class="form-control" id="extension" name="extension" value="{{$extension}}"  maxlength="6" placeholder="Máximo 6 digitos" onkeypress="return soloNumeros(event);">
               </div>
               <div class="col">
                 <label>Celular:</label>

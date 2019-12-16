@@ -68,6 +68,7 @@ $(document).ready(function(){
 
   $("#sendform").on('click', function () {
     var responsible=$('input[name="responsible"]').val();
+    var positionresponsible=$('input[name="positionresponsible"]').val();
     var businessname=$('input[name="businessname"]').val();
     var rfc=$('input[name="rfc"]').val();
     var taxregime=$('select[name="taxregime"]').val();
@@ -88,7 +89,7 @@ $(document).ready(function(){
       $.ajax({
          type:'POST',
          url:'/empresacreate',
-         data:{responsible:responsible,businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,web:web,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
+         data:{responsible:responsible,positionresponsible:positionresponsible,businessname:businessname,rfc:rfc,taxregime:taxregime,phoneoffice:phoneoffice,extension:extension,cellphone:cellphone,email:email,web:web,street:street,numint:numint,numext:numext,colony:colony,city:city,estate:estate,contry:contry,postalcode:postalcode},
          success:function(data){
           if(data==1){
             Swal.fire(

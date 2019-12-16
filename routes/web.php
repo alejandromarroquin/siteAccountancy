@@ -31,13 +31,14 @@ Route::post('/userupdate','UserController@update');
 
 Route::get('/factura','CfdiController@create');
 Route::post('/cfdicreate','CfdiController@store');
+Route::get('/getcustomer','CfdiController@getCustomer');
 
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
 Route::get('/getbudgets','BudgetsController@consultBudgets');
 Route::get('/getamount','BudgetsController@consultAmount');
 
-Route::get('/movimientos','CapitalmovementsController@create');
+Route::get('/flujo_capital','CapitalmovementsController@create');
 Route::post('/movementscreate','CapitalmovementsController@store');
 
 Route::get('/compras_consultar','PurchaserequestsController@index');

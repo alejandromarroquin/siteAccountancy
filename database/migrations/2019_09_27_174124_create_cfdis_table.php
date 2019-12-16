@@ -21,6 +21,9 @@ class CreateCfdisTable extends Migration
           $table->integer('idMethodPayment')->unsigned();
           $table->foreign('idMethodPayment')->references('id')->on('methodpayments')->onDelete('cascade');
 
+          $table->integer('idwaypay')->unsigned();
+          $table->foreign('idwaypay')->references('id')->on('waytopays')->onDelete('cascade');
+
           $table->integer('unitMeasurement')->unsigned();
           $table->foreign('unitMeasurement')->references('id')->on('unitmeasurements')->onDelete('cascade');
 

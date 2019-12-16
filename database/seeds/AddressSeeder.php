@@ -12,11 +12,11 @@ class AddressSeeder extends Seeder
     public function run()
     {
       DB::table('addresses')->insert([
-        'street'=>'Autopista del Sol KM 104',
+        'street'=>'Autopista del Sol',
         'colony'=>'Real del Puente',
         'state'=>'Morelos',
         'city'=>'Xochitepec',
-        'numExt'=>'',
+        'numExt'=>'KM 104',
         'numInt'=>'',
         'PostalCode'=>'62790',
         'country'=>'México',

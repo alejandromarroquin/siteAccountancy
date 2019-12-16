@@ -6,6 +6,8 @@ use App\cfdi;
 use App\taxinformation;
 use App\customers;
 use App\unitmeasurements;
+use App\methodpayment;
+use App\waytopay;
 use Illuminate\Http\Request;
 use DB;
 
@@ -35,8 +37,25 @@ class CfdiController extends Controller
     {
         $senderdata=taxinformation::join('companies','taxinformations.id','=','companies.id')->join('contactlocations','taxinformations.id','=','contactlocations.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.rfc','taxinformations.businessname','taxinformations.taxRegime','addresses.street','addresses.numExt','addresses.colony','addresses.city','addresses.state')->where('companies.id',session('idcompany'))->get();
         $customers=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessname')->get();
+        $methodspayment=methodpayment::all();
+        $wayspayment=waytopay::all();
         $units=unitmeasurements::all();
-        return view('cfdi.create',compact('units','senderdata','customers'));
+        return view('cfdi.create',compact('units','senderdata','customers','methodspayment','wayspayment'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getCustomer(Request $request)
+    {
+        $customer=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->select('taxinformations.rfc')->where('taxinformations.businessname',$request->elegido)->get();
+        foreach($customer as $data){
+          $customer=$data->rfc;
+        }
+        return $customer;
     }
 
     /**

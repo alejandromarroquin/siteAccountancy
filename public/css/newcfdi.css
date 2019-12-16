@@ -6,9 +6,9 @@
 .col-lg-8{
   border:black 1px solid;
   border-radius: 10px 10px 10px 10px;
-  max-height: 792px;
   min-height: 792px;
   margin-top: 3em;
+  position: relative;
 }
 
 .margin{
@@ -18,6 +18,7 @@
 .expeditiondate{
   margin-top: 1.7em;
   text-align: center;
+  font-size: 12px;
 }
 
 .capa{
@@ -35,6 +36,7 @@
 .senderinfo{
   margin-left: 10px;
   margin-top: 1.7em;
+  font-size: 12px;
 }
 
 .folio{
@@ -42,16 +44,76 @@
   height: 30px;
   border:black 1px solid;
   border-radius: 10px 10px 10px 10px;
-  margin-left: 5em;
+  margin-left: 6.1em;
 }
 
-.customerinf{
+.inf{
   border-top:black 1px solid;
   border-bottom:black 1px solid;
   width: 103%;
-  height: 100px;
+  height: 140px;
+}
+
+.customerinf{
+  border-right:black 1px solid;
 }
 
 .qr{
-  padding-bottom: -30px;
+  position: absolute;
+  bottom: 25px;
+  margin-left: 5px;
+  width: 100%;
+}
+
+.codesat{
+  font-size: 13px;
+}
+
+.brand{
+  margin-top: 2em;
+  width: 80%;
+  height: 80%;
+}
+
+.margin3em{
+  margin-left: 3em;
+}
+
+.satinf{
+  margin-top: 8px;
+  margin-left: .1em;
+  font-size: 11px;
+}
+
+.datos{
+  line-height:90%;
+}
+
+.table{
+  font-size: 12px;
+}
+
+.amountcalc{
+  text-align: center;
+  margin-left: 10em;
+}
+
+.label{
+  margin-right: 2em;
+}
+
+.totales{
+  width: 100px;
+}
+
+.stamp{
+  width: 400px;
+  margin-left: 1em;
+  font-size: 11px;
+  height: 35px;
+}
+
+.code{
+  width: 110px;
+  height: 110px;
 }

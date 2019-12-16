@@ -12,12 +12,20 @@ $(document).ready(function(){
     $("#subaccount option:selected").each(function () {
       elegido=$(this).val();
       $.get("/accountscreate", { elegido: elegido }, function(data){
-          jQuery('#tbody').append(data);
-          Swal.fire(
-            'Agregado!',
-            'La cuenta se agregó correctamente.',
-            'success'
-          )
+          if(data!=0){
+            jQuery('#tbody').append(data);
+            Swal.fire(
+              'Agregado!',
+              'La cuenta se agregó correctamente.',
+              'success'
+            )
+          }else{
+            Swal.fire(
+              'Error!',
+              'Algo salio mal, verifique que la cuenta no haya sido ya registrada.',
+              'error'
+            )
+          }
       });
     });
   });

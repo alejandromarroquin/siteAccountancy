@@ -17,9 +17,9 @@
         <form action="/cfdicreate" method="POST" role="form">
           {{ csrf_field() }}
           <div class="row">
-            <div class="col">
+            <div class="col-6">
               <label>Cliente:</label>
-              <select class="form-control" name="account" id="account">
+              <select class="form-control" name="customer" id="customer">
                 <option selected hidden>Selecciona un cliente...</option>
                 @foreach($customers as $customer)
                   <option>{{$customer->businessname}}</option>
@@ -27,9 +27,29 @@
               </select>
             </div>
           </div>
+          <div class="row">
+            <div class="col">
+              <label>Método de pago:</label>
+              <select class="form-control" name="methodpayment" id="methodpayment">
+                <option selected hidden>Selecciona un método de pago...</option>
+                @foreach($methodspayment as $methodpayment)
+                  <option>{{$methodpayment->description}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col">
+              <label>Forma de pago</label>
+              <select class="form-control" name="waypayment" id="waypayment">
+                <option selected hidden>Selecciona una forma de pago...</option>
+                @foreach($wayspayment as $waypayment)
+                  <option>{{$waypayment->description}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
           <div class="col-lg-8 col-xl-12">
             <div class="row">
-              <div class="col">
+              <div class="col brand">
                 <img class="img-fluid" src="{{asset('img/logoempresa.png')}}">
               </div>
               <div class="col">
@@ -50,8 +70,34 @@
                 <div class="folio"></div>
               </div>
             </div>
-            <div class="row customerinf">
-
+            <div class="row inf">
+              <div class="col customerinf">
+                <label class="margin3em"><strong>Receptor:</strong></label>
+                <div class="row">
+                  <div class="col">
+                    <label class="businessnamecustomer margin3em"></label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label class="rfccustomer margin3em"></label>
+                  </div>
+                </div>
+              </div>
+              <div class="col satinf">
+                <div class="row">
+                  <div class="col datos">
+                    <label>Folio Fiscal: &nbsp</label><br/>
+                    <label>Certificado del CSD: &nbsp</label><br/>
+                    <label>Certificado del SAT: &nbsp</label><br/>
+                    <label>Fecha de Certificación: &nbsp</label><br/>
+                    <label>Régimen Fiscal: &nbsp</label><br/>
+                    <label>Método de Pago: &nbsp</label><label id="methodpay"></label><br/>
+                    <label>Uso de CFDI: &nbsp</label><br/>
+                    <label>Forma de Pago: &nbsp</label><label id="awaypay"></label><br/>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="capa">
               <div class="container table">
@@ -66,7 +112,7 @@
                     <label>Código de producto</label>
                   </div>
                   <div class="col">
-                    <label>Concepto</label>
+                    <label>Descripción</label>
                   </div>
                   <div class="col">
                     <label>Precio unitario</label>
@@ -90,6 +136,7 @@
                   </div>
                   <div class="col">
                     <input class="form-control" name="codeproduct[]" id="codeproduct1" required/>
+                    <a href="http://pys.sat.gob.mx/PyS/catPyS.aspx"  target="blank" class="codesat">Consultar catálogo</a>
                   </div>
                   <div class="col">
                     <input class="form-control" name="concept[]" id="concept1" required/>
@@ -108,9 +155,20 @@
                 </div>
               </div>
             </div>
-              <div class="row qr">
-                {!!QrCode::size(200)->generate("aquivaelqr") !!}
+            <div class="row qr">
+              <div class="code"></div>
+              <div class="col">
+                <div class="row stamp">
+                  <strong>Sello Digital del CFDI</strong>
+                </div>
+                <div class="row stamp">
+                  <strong>Sello Digital del SAT</strong>
+                </div>
+                <div class="row stamp">
+                  <strong>Cadena original del complemento de certificación del SAT</strong>
+                </div>
               </div>
+            </div>
           </div>
           <input class="btn btn-primary" type="submit" value="Generar factura">
         </form>
@@ -122,4 +180,5 @@
 
 @section('scripts')
   <script src="{{ asset('js/view_newcfdi.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/jquery.qrcode.min.js') }}"></script>
 @endsection

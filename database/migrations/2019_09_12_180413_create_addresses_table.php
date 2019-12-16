@@ -19,8 +19,8 @@ class CreateAddressesTable extends Migration
             $table->string('colony',30);
             $table->string('state',45);
             $table->string('city',30);
-            $table->string('numExt',4)->nullable();
-            $table->string('numInt',3)->nullable();
+            $table->string('numExt',8)->nullable();
+            $table->string('numInt',5)->nullable();
             $table->string('postalCode',5);
             $table->string('country',60);
 

@@ -57,9 +57,12 @@ class CapitalmovementsController extends Controller
           $cashflow->iddebit=$debit->id;
           $cashflow->concept=$request->concept;
           $cashflow->save();
+
           DB::commit();
+          return 1;
         } catch (\PDOException $e) {
           DB::rollBack();
+          return 0;
         }
     }
 
