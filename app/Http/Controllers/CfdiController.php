@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\cfdi;
 use App\taxinformation;
 use App\customers;
@@ -66,27 +67,7 @@ class CfdiController extends Controller
      */
     public function store(Request $request)
     {
-      $cfdi=new cfdi;
-      DB::beginTransaction();
-      try {
-        $cfdi->idCompany=1;
-        $cfdi->idMethodPayment=1;
-        $cfdi->expeditionPlace=1;
-        $cfdi->expeditionDate=date("Y-m-d");
-        $cfdi->iva=67.39;
-        $cfdi->typePayment=1;
-        $cfdi->customsNumber=1;
-        $cfdi->customsDate=date("Y-m-d");
-        $cfdi->digitalStamp="";
-        $cfdi->codeqr="";
-        $cfdi->save();
-        DB::commit();
-      } catch (\PDOException $e) {
-        DB::rollBack();
-      }
-        foreach ($request->quantity as $k) {
-          echo ($k);
-        }
+      Storage::disk('local')->makeDirectory('path/to'); 
     }
 
     /**

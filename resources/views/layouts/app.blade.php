@@ -167,9 +167,6 @@
                           <li class="list-group-item">
                               <a href="/generar_reportes">Generar reportes</a>
                           </li>
-                          <li class="list-group-item">
-                              <a href="/consultar_reportes">Consultar reportes</a>
-                          </li>
                       </ul>
                     </li>
                   </ul>

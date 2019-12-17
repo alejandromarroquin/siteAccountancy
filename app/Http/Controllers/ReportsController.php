@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\accountancie;
+use App\capitalmovements;
 
 class ReportsController extends Controller
 {
@@ -58,6 +60,8 @@ class ReportsController extends Controller
     public function generateTrialbalance(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        $cashflow=capitalmovements::join('accountancycatalogs','capitalmovements.idAccountancyCatalog','=','accountancycatalogs.id')->get();
+
         return view('reports/trialbalance',compact('company'));
     }
 

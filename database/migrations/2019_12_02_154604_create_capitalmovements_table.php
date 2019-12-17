@@ -16,13 +16,12 @@ class CreateCapitalmovementsTable extends Migration
         Schema::create('capitalmovements', function (Blueprint $table) {
           $table->increments('id');
 
-          $table->integer('idcredit')->unsigned();
-          $table->foreign('idcredit')->references('id')->on('credits')->onDelete('cascade');
-
-          $table->integer('iddebit')->unsigned();
-          $table->foreign('iddebit')->references('id')->on('debits')->onDelete('cascade');
+          $table->integer('idAccountancyCatalog')->unsigned();
+          $table->foreign('idAccountancyCatalog')->references('id')->on('accountancycatalogs')->onDelete('cascade');
 
           $table->string('concept');
+          $table->double('amount',10,2);
+          $table->string('type',1);
 
           $table->timestamps();
         });

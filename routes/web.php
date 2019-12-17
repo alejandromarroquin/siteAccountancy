@@ -30,7 +30,7 @@ Route::get('/useredit/{id}','UserController@edit');
 Route::post('/userupdate','UserController@update');
 
 Route::get('/factura','CfdiController@create');
-Route::post('/cfdicreate','CfdiController@store');
+Route::get('/cfdicreate','CfdiController@store');
 Route::get('/getcustomer','CfdiController@getCustomer');
 
 Route::get('/budget','BudgetsController@create');

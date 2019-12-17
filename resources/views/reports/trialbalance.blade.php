@@ -37,15 +37,15 @@
                 <th scope="col" class="cols">Acredor</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row" class="cols">1</th>
-                <td class="cols">Mark</td>
-                <td class="cols">Otto</td>
-                <td class="cols">@mdo</td>
-                <td class="cols">Otto</td>
-                <td class="cols">@mdo</td>
-              </tr>
+            <tbody>        
+                <tr>
+                  <th scope="row" class="cols">1</th>
+                  <td class="cols">d</td>
+                  <td class="cols">s</td>
+                  <td class="cols">s</td>
+                  <td class="cols">Otto</td>
+                  <td class="cols">@mdo</td>
+                </tr>
             </tbody>
           </table>
         </div>
