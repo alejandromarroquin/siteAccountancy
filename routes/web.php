@@ -30,7 +30,7 @@ Route::get('/useredit/{id}','UserController@edit');
 Route::post('/userupdate','UserController@update');
 
 Route::get('/factura','CfdiController@create');
-Route::get('/cfdicreate','CfdiController@store');
+Route::post('/cfdicreate','CfdiController@store');
 Route::get('/getcustomer','CfdiController@getCustomer');
 
 Route::get('/budget','BudgetsController@create');
@@ -58,6 +58,9 @@ Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
 Route::post('/generatestatementresult','ReportsController@generateStatementresult');
 Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
 Route::post('/generatecashflow','ReportsController@generateCashflow');
+
+Route::get('/configuracion','ConfigurationController@index');
+Route::post('/saveconfig','ConfigurationController@store');
 
 Auth::routes();
 

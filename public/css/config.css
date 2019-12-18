@@ -1,0 +1,10 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.brand{
+  border: black 1px solid;
+  height: 14em;
+  margin-top: 2em;
+}

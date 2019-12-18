@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use File;
 use App\companie;
 use App\Phone;
 use App\taxinformation;
@@ -90,6 +91,12 @@ class CompanieController extends Controller
         $customers->idTaxInformation=$taxinf->id;
         $customers->save();
 
+        $path = public_path().'/storage/Company/'.$request->rfc;
+        File::makeDirectory($path, $mode = 0777, true, true);
+        $pathbrand=$path.'/Brand';
+        File::makeDirectory($pathbrand, $mode = 0777, true, true);
+        $pathcfdis=$path.'/CFDIS';
+        File::makeDirectory($pathcfdis, $mode = 0777, true, true);
         DB::commit();
         return 1;
       }catch(\PDOException $e){
@@ -208,6 +215,7 @@ class CompanieController extends Controller
     public function destroy(Request $request,companie $companie)
     {
       if(customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
+        Storage::disk('local')->deleteDirectory($request->elegido);
         return 1;
       }else{
         return 0;

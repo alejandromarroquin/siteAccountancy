@@ -19,7 +19,7 @@ class CreateTaxinformationsTable extends Migration
             $table->integer('idtaxinformation')->unsigned();
             $table->foreign('idtaxinformation')->references('id')->on('contactlocations')->onDelete('cascade');
 
-            $table->string('rfc',13);
+            $table->string('rfc',13)->unique();
             $table->string('businessname',250);
             $table->string('taxRegime',6);
 

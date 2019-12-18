@@ -1,4 +1,10 @@
 $(document).ready(function(){
+  jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
   $('.code').qrcode({
     //render:"table"
     width: 110,
@@ -117,6 +123,42 @@ $(document).ready(function(){
       elegido=$(this).val();
       $('#awaypay').text(elegido);
     });
+  });
+
+  $("#sendform").on('click', function () {
+    var rfcsender=$('input[name="rfcsender"]').val();
+    if($("#cfdiform").valid()){
+      Swal.fire({
+        title: 'Está seguro de generar el CFDI?',
+        type: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Confirmar',
+        showCancelButton: true,
+        reverseButtons: true,
+        cancelButtonColor: '#929292'
+      }).then((result)=>{
+        $.ajax({
+           type:'POST',
+           url:'/cfdicreate',
+           data:{rfcsender:rfcsender},
+           success:function(data){
+            if(data==1){
+              Swal.fire(
+                'Registrado!',
+                'El CFDI se generó correctamente.',
+                'success'
+              )
+            }else{
+                Swal.fire(
+                  'Error!',
+                  'Algo salio mal, intentelo más tarde.',
+                  'error'
+                )
+              }
+            }
+        });
+      });
+    }
   });
 
 });

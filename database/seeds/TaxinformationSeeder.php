@@ -13,7 +13,7 @@ class TaxinformationSeeder extends Seeder
     {
       DB::table('taxinformations')->insert([
         'idtaxinformation'=>'1',
-        'rfc'=>'VIC160316AYA',
+        'rfc'=>'DYC160316AT6',
         'businessname'=>'D&C Tech Development and Consulting S.A. de C.V.',
         'taxRegime'=>'Física'
       ]);

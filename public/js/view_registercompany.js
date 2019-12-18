@@ -98,6 +98,7 @@ $(document).ready(function(){
               'success'
             )
             $('input[name="responsible"]').val(null);
+            $('input[name="positionresponsible"]').val(null);
             $('input[name="businessname"]').val(null);
             $('input[name="rfc"]').val(null);
             $('input[name="taxregime"]').val(null);
@@ -112,7 +113,6 @@ $(document).ready(function(){
             $('input[name="colony"]').val(null);
             $('input[name="city"]').val(null);
             $('input[name="estate"]').val(null);
-            $('input[name="contry"]').val(null);
             $('input[name="postalcode"]').val(null);
           }else{
               Swal.fire(

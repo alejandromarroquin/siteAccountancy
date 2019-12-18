@@ -34,7 +34,7 @@
             <div class="row">
               <div class="col">
                 <label>RCF:</label>
-                <input type="text" class="form-control" id="rfc" name="rfc" onInput="aMayusculas(this.value,this.id)" onchange="validarRFC(this);" minlength="12" maxlength="13" required/>
+                <input type="text" class="form-control" id="rfc" name="rfc" onInput="aMayusculas(this.value,this.id)" minlength="12" maxlength="13" required/>
               </div>
               <div class="col">
                 <label>Régimen fiscal:</label>

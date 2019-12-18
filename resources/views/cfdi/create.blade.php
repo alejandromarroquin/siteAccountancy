@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="row margin">
-        <form action="/cfdicreate" method="POST" role="form">
+        <form action="" method="" role="form" id="cfdiform">
           {{ csrf_field() }}
           <div class="row">
             <div class="col-6">
@@ -50,11 +50,12 @@
           <div class="col-lg-8 col-xl-12">
             <div class="row">
               <div class="col brand">
-                <img class="img-fluid" src="{{asset('img/logoempresa.png')}}">
+                <img class="img-fluid" src="{{$url}}">
               </div>
               <div class="col">
                 <div class="col senderinfo">
                   @foreach($senderdata as $data)
+                    <input type="text" name="rfcsender" value="{{$data->rfc}}" hidden/>
                     <strong>{{$data->businessname}}</strong><br/>
                     <strong>R.F.C {{$data->rfc}}</strong><br/>
                     Domicilio: {{$data->street}} No. {{$data->numExt}}<br/>
@@ -145,7 +146,7 @@
                     <input class="form-control" name="unitprice[]" id="unitprice1" onchange="inputChange(this);addDecimal(this);" onkeypress="return filterFloat(event,this);" required/>
                   </div>
                   <div class="col">
-                    <input class="form-control" name="importe[]" id="importe1" onchange="addDecimal(this);" readonly required/>
+                    <input class="form-control" name="importe[]" id="importe1" onchange="addDecimal(this);" readonly/>
                   </div>
                 </div>
               </div>
@@ -170,7 +171,7 @@
               </div>
             </div>
           </div>
-          <input class="btn btn-primary" type="submit" value="Generar factura">
+          <input class="btn btn-primary" type="button" value="Generar factura" id="sendform">
         </form>
       </div>
     </div>
