@@ -22,7 +22,7 @@
                 <label>Logo:</label>
                 <input type="file" name="brand" required/>
                 <div class="brand">
-                  <img src="" class="img-fluid">
+                  <img src="{{$url}}" class="img-fluid">
                 </div>
               </div>
             </div>

@@ -14,7 +14,12 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-        return view('config/create');
+        if (Storage::disk('local')->exists('/Company/'.session('rfc').'/Brand/','brand'.session('rfc').'.png')){
+          $url = Storage::disk('local')->url('Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png');
+        }else{
+          $url=null;
+        }
+        return view('config/create',compact('url'));
     }
 
     /**
@@ -39,7 +44,7 @@ class ConfigurationController extends Controller
           $file = $request->file('brand');
           $nombre = 'brand'.session('rfc').'.png';
           Storage::disk('local')->put('/Company/'.session('rfc').'/Brand/'.$nombre,  File::get($file));
-          return 1;
+          return redirect('/configuracion');
         }else{
           return 0;
         }

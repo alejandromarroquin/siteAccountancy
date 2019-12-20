@@ -6,7 +6,7 @@
 .col-lg-8{
   border:black 1px solid;
   border-radius: 10px 10px 10px 10px;
-  min-height: 792px;
+  height: 1300px;
   margin-top: 3em;
   position: relative;
 }

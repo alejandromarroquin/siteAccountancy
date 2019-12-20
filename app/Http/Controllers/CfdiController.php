@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Providers\FacturacionModerna;
 use App\cfdi;
 use App\taxinformation;
 use App\customers;
 use App\unitmeasurements;
 use App\methodpayment;
 use App\waytopay;
-use Illuminate\Http\Request;
 use DB;
 
 class CfdiController extends Controller
@@ -72,72 +73,160 @@ class CfdiController extends Controller
      */
     public function store(Request $request)
     {
-      //https://github.com/facturacionmoderna/FacturacionModerna-PHP/blob/master/ejemploTimbradoXML.php
-      
-      return $request->rfcsender;
+      date_default_timezone_set('America/Mexico_City');
+      /**
+      * Niveles de debug:
+      * 0 - No almacenar
+      * 1 - Almacenar mensajes SOAP en archivo log.
+      */
+
+      $debug = 1;
+
+      // RFC utilizado para el ambiente de pruebas
+      $rfc_emisor = "TCM970625MB1";
+
+      /**
+       * Archivos del CSD de prueba proporcionados por el SAT.
+       * Ver http://developers.facturacionmoderna.com/webroot/CertificadosDemo-FacturacionModerna.zip
+       */
+      $numero_certificado = "20001000000300022762";
+      $archivo_cer = "../app/Utilities/Certificates/20001000000300022762.cer";
+      $archivo_pem = "../app/Utilities/Certificates/20001000000300022762.key.pem";
+
+
+      // Datos de acceso al ambiente de pruebas
+      $url_timbrado = "https://t1demo.facturacionmoderna.com/timbrado/wsdl";
+      $user_id = "UsuarioPruebasWS";
+      $user_password = "b9ec2afa3361a59af4b4d102d3f704eabdf097d4";
+
+      // generar y sellar un XML con los CSD de pruebas
+      $cfdi = $this->generarXML($rfc_emisor);
+      $cfdi = $this->sellarXML($cfdi, $numero_certificado, $archivo_cer, $archivo_pem);
+
+      // die(var_dump($cfdi));
+
+      $parametros = array('emisorRFC' => $rfc_emisor,'UserID' => $user_id,'UserPass' => $user_password);
+
+      $opciones = array();
+
+      /**
+      * Establecer el valor a true, si desea que el Web services genere el CBB en
+      * formato PNG correspondiente.
+      * Nota: Utilizar está opción deshabilita 'generarPDF'
+      */
+      $opciones['generarCBB'] = false;
+
+      /**
+      * Establecer el valor a true, si desea que el Web services genere la
+      * representación impresa del XML en formato PDF.
+      * Nota: Utilizar está opción deshabilita 'generarCBB'
+      */
+      $opciones['generarPDF'] = false;
+
+      /**
+      * Establecer el valor a true, si desea que el servicio genere un archivo de
+      * texto simple con los datos del Nodo: TimbreFiscalDigital
+      */
+      $opciones['generarTXT'] = false;
+
+
+      $cliente = new FacturacionModerna($url_timbrado, $parametros, $debug);
+
+      if($cliente->timbrar($cfdi, $opciones)){
+          // Almacenanos en la raíz del proyecto los archivos generados.
+          $comprobante = getcwd().'/storage/Company/'.session('rfc').'/CFDIS/'.$cliente->UUID;
+
+          if($cliente->xml){
+            file_put_contents($comprobante.".xml", $cliente->xml);
+            return 1;
+          }else{
+            return 0;
+          }
+          // if(isset($cliente->pdf)){
+          //     echo "PDF almacenado correctamente en $comprobante.pdf\n";
+          //     file_put_contents($comprobante.".pdf", $cliente->pdf);
+          // }
+          // if(isset($cliente->png)){
+          //     echo "CBB en formato PNG almacenado correctamente en $comprobante.png\n";
+          //     file_put_contents($comprobante.".png", $cliente->png);
+          // }
+      }else{
+        echo "[".$cliente->ultimoCodigoError."] - ".$cliente->ultimoError."\n";
+      }
     }
 
-    public function generateXML(){
-      $cfdi=<<<XML
-      <?xml version="1.0" encoding="UTF-8"?>
-      <cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" Version="3.3" Serie="A" Folio="167ABC" Fecha="2017-10-30T09:09:23" Sello="kqFJelLV1B99l8DunR98pn5k8uCwi94k+PhZJ2crw5Et2+qSkoROBlOWsoXrv93j5UUPBkxTmlStwTGBHSHWiQr1ewA4/fzseNIaWokVbIr8iFwrZETgZWp6Q+dErqLntDPISWYHmXfnvXi/Om7hCtklZC/msv3ZmmojcZEkjJb0Rk+sVDh+qm3sRbx40k1xKX1xtgLnX4/P/DwZlv+mj31YE4MEpy48xMjBA7dPNE4dF9UL3mTAQhwMV40MCrLpjTn95ov8mnL0ftaxuqzGXhqqNcDk1YF5OtBXuGFKwWAfY53bNxz1GeVY1+/8xZsmUmuukwA5uvIa7ghGt/4twA==" NoCertificado="20001000000300022817" Certificado="MIIGBzCCA++gAwIBAgIUMjAwMDEwMDAwMDAzMDAwMjI4MTcwDQYJKoZIhvcNAQELBQAwggFmMSAw HgYDVQQDDBdBLkMuIDIgZGUgcHJ1ZWJhcyg0MDk2KTEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRt aW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1 cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSkwJwYJKoZIhvcNAQkBFhphc2lzbmV0QHBydWViYXMu c2F0LmdvYi5teDEmMCQGA1UECQwdQXYuIEhpZGFsZ28gNzcsIENvbC4gR3VlcnJlcm8xDjAMBgNV BBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQRGlzdHJpdG8gRmVkZXJhbDESMBAGA1UE BwwJQ295b2Fjw6FuMRUwEwYDVQQtEwxTQVQ5NzA3MDFOTjMxITAfBgkqhkiG9w0BCQIMElJlc3Bv bnNhYmxlOiBBQ0RNQTAeFw0xNjEwMjUyMTU3NTZaFw0yMDEwMjUyMTU3NTZaMIHzMTAwLgYDVQQD EydSQURJT0dSQUZJQVMgSU5EVVNUUklBTEVTIERFTCBDRU5UUk8gQUMxMDAuBgNVBCkTJ1JBRElP R1JBRklBUyBJTkRVU1RSSUFMRVMgREVMIENFTlRSTyBBQzEwMC4GA1UEChMnUkFESU9HUkFGSUFT IElORFVTVFJJQUxFUyBERUwgQ0VOVFJPIEFDMSUwIwYDVQQtExxWT0M5OTAxMjlJMjYgLyBGVUFC NzcwMTE3QlhBMR4wHAYDVQQFExUgLyBGVUFCNzcwMTE3TURGUk5OMDkxFDASBgNVBAsUC1BydWVi YV9DRkRJMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlO2ox7F9hB1xqkVlkonG1ZLv xh9d1tW/fEHu4vssixClDB/QhAYjQwXZY33IYGOs2Cfhzm/ApqsXJUp+Kp2Xu8TEW744+LCIIt12 RoHl4UBLuWyUafPsgMO3bsLIDMpAGU7b7+qAShN8gQiePD8aCy/86wzPoInhLfZ2r59/ozn4TzcA MAqX2e/M8o3jSuLxlgNyVqQLSjNy8rddB89oVn51APDt/CWuha5f9BJ47X6sVqr3ZRXicuwbAnoZ VovX1XoLt8YEP2sm10Jm4+OO+rHGLM/OBqA6AZvIfPe3Z32cijkrRRz9+nmRTSrZQkjJpYKglEZR DgV+wpt9cYYiAQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0B AQsFAAOCAgEAVlOG4eH705Rl3BKjvKqs1+JJAzJbRD738gp5d1nQk6sfGYqer0AGpK0VXqmteThR Nr/KrtJg73iwr0dfvSYzZ+Krzf6PMHGzENIDdcVzcfOw3Q5v7Pj/9KEqVJGMQQXOPjoJ2fe4E8A7 TKh0zkQRZezNGmZwL7SMQPQwtgfYxUMh1jBdbCLMBzurg9thOsJyrBn49k1HjwB3HBMgZktdm5Kd g1ypCRjQcFTpKog2aWIl38nZCpWs5eheeOJgn28U6kX0TW0JqSEUwHpO6y8pWnffTL9/rKc6CxQw QRarV4qmiJrdeFq3cgk79sRgQA0fltYDB8DLF7Hkdji74glUZtrMD2XKoGMOSJrhlDJU7kphIOaw Vk1zbEON2rz3vt+NX02ovZct9Wg9lsI8FpQUcufa03vBkY3CUONPY9QUIDKw+y4Ng4+WijByUMsh YBWiZRKSZF6o4fJdj1kVUTktYZvUdB+CarxRWKt+Ga+xwztYCVfzWJSrxvD9jcynqWPKNy4m3IgJ RZ4oCiwVAsSinMRG0INUMJaSYAqa5dhyzXlg/1s0cjb4rewaypxV+S4pmW7CVci2ZWZG6QICsh+2 MeX9DaW2SYl0JFlCDmSiRIE8yvryw3S2v7MRN0ltqMNPnOmlUc8qPEVZ9OfClm39abKIe1PWI7TZ /1rM+dE4ucU=" SubTotal="2269400" Moneda="MXN" Total="1436012.00" TipoDeComprobante="I" FormaPago="01" MetodoPago="PUE" CondicionesDePago="CONDICIONES" Descuento="0.00" TipoCambio="1" LugarExpedicion="45079">
-          <cfdi:CfdiRelacionados TipoRelacion="01">
-              <cfdi:CfdiRelacionado UUID="A39DA66B-52CA-49E3-879B-5C05185B0EF7" />
-          </cfdi:CfdiRelacionados>
-          <cfdi:Emisor Rfc="LAHH850905BZ4" Nombre="HORACIO LLANOS" RegimenFiscal="608" />
-          <cfdi:Receptor Rfc="HEPR930322977" Nombre="RAFAEL ALEJANDRO HERNÁNDEZ PALACIOS" UsoCFDI="G01" />
-          <cfdi:Conceptos>
-              <cfdi:Concepto ClaveProdServ="01010101" ClaveUnidad="F52" NoIdentificacion="00001" Cantidad="1.5" Unidad="TONELADA" Descripcion="ACERO" ValorUnitario="1500000" Importe="2250000">
-                  <cfdi:Impuestos>
-                      <cfdi:Traslados>
-                          <cfdi:Traslado Base="2250000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="360000" />
-                      </cfdi:Traslados>
-                      <cfdi:Retenciones>
-                          <cfdi:Retencion Base="2250000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.530000" Importe="1192500" />
-                      </cfdi:Retenciones>
-                  </cfdi:Impuestos>
-                  <cfdi:CuentaPredial Numero="51888" />
-              </cfdi:Concepto>
-              <cfdi:Concepto ClaveProdServ="01010101" ClaveUnidad="F52" NoIdentificacion="00002" Cantidad="1.6" Unidad="TONELADA" Descripcion="ALUMINIO" ValorUnitario="1500" Importe="2400">
-                  <cfdi:Impuestos>
-                      <cfdi:Traslados>
-                          <cfdi:Traslado Base="2400" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="384" />
-                      </cfdi:Traslados>
-                      <cfdi:Retenciones>
-                          <cfdi:Retencion Base="2400" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.530000" Importe="1272" />
-                      </cfdi:Retenciones>
-                  </cfdi:Impuestos>
-                  <cfdi:InformacionAduanera NumeroPedimento="15  48  3009  0001234" />
-              </cfdi:Concepto>
-              <cfdi:Concepto ClaveProdServ="01010101" ClaveUnidad="F52" NoIdentificacion="00003" Cantidad="1.7" Unidad="TONELADA" Descripcion="ZAMAC" ValorUnitario="10000" Importe="17000">
-                  <cfdi:Impuestos>
-                      <cfdi:Traslados>
-                          <cfdi:Traslado Base="17000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="2720" />
-                      </cfdi:Traslados>
-                      <cfdi:Retenciones>
-                          <cfdi:Retencion Base="17000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="2720" />
-                      </cfdi:Retenciones>
-                  </cfdi:Impuestos>
-                  <cfdi:Parte ClaveProdServ="01010101" NoIdentificacion="055155" Cantidad="1.0" Descripcion="PARTE EJEMPLO" Unidad="UNIDAD" ValorUnitario="1.00" Importe="1.00">
-                      <cfdi:InformacionAduanera NumeroPedimento="15  48  3009  0002777" />
-                  </cfdi:Parte>
-              </cfdi:Concepto>
-          </cfdi:Conceptos>
-          <cfdi:Impuestos TotalImpuestosRetenidos="1196492" TotalImpuestosTrasladados="363104">
-              <cfdi:Retenciones>
-                  <cfdi:Retencion Impuesto="002" Importe="2720" />
-                  <cfdi:Retencion Impuesto="003" Importe="1193772" />
-              </cfdi:Retenciones>
-              <cfdi:Traslados>
-                  <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="363104" />
-              </cfdi:Traslados>
+    /**
+     * Sellar el comprobante
+     * @param  string $cfdi               XML a sellar
+     * @param  string $numero_certificado Numero del certificado
+     * @param  string $archivo_cer        Ruta del archivo .cer
+     * @param  string $archivo_pem        Ruta del archivo .pem
+     * @return string                     XML sellado
+     */
+    function sellarXML($cfdi, $numero_certificado, $archivo_cer, $archivo_pem) {
+        $private = openssl_pkey_get_private(file_get_contents($archivo_pem));
+        $certificado = str_replace(array('\n', '\r'), '', base64_encode(file_get_contents($archivo_cer)));
+
+        $xdoc = new \DomDocument();
+        $xdoc->loadXML($cfdi) or die("XML invalido");
+
+        $c = $xdoc->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
+        $c->setAttribute('Certificado', $certificado);
+        $c->setAttribute('NoCertificado', $numero_certificado);
+
+        $XSL = new \DOMDocument();
+        $XSL->load('../app/Utilities/xslt33/cadenaoriginal_3_3.xslt');
+
+        $proc = new \XSLTProcessor;
+        $proc->importStyleSheet($XSL);
+
+        $cadena_original = $proc->transformToXML($xdoc);
+        openssl_sign($cadena_original, $sig, $private, OPENSSL_ALGO_SHA256);
+        $sello = base64_encode($sig);
+
+        $c->setAttribute('Sello', $sello);
+
+        return $xdoc->saveXML();
+    }
+
+
+    /**
+     * Generar el xml basico para el trimbrado
+     * @param  string $rfc_emisor RFC del emisor
+     * @return string XML valido
+     */
+    function generarXML ($rfc_emisor) {
+        $fecha_actual = substr( date('c'), 0, 19);
+
+        $cfdi = <<<XML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" Version="3.3" Serie="A" Folio="01" Fecha="$fecha_actual" Sello="TqVg+/JpnhP5rLODxlLB3ptRT3QgArW4taQCK5H3QZcGnSm570QFq3Vpe7vBpxcq6Nr25no9sdvwzekU7pgawmUwCL5KWcZCWkCEKCx0UUBuxMRwSgKhR1iTDR/Jy+nosxoWhRA/NZxtTKvoePKKkT5waMN5Qy2YM5TtXSFnNXM=" FormaPago="03" NoCertificado="20001000000200000192" Certificado="MIIERjCCAy6gAwIBAgIUMjAwMDEwMDAwMDAyMDAwMDAxOTIwDQYJKoZIhvcNAQEFBQAwggFcMRowGAYDVQQDDBFBLkMuIDIgZGUgcHJ1ZWJhczEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSkwJwYJKoZIhvcNAQkBFhphc2lzbmV0QHBydWViYXMuc2F0LmdvYi5teDEmMCQGA1UECQwdQXYuIEhpZGFsZ28gNzcsIENvbC4gR3VlcnJlcm8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQRGlzdHJpdG8gRmVkZXJhbDESMBAGA1UEBwwJQ295b2Fjw6FuMTQwMgYJKoZIhvcNAQkCDCVSZXNwb25zYWJsZTogQXJhY2VsaSBHYW5kYXJhIEJhdXRpc3RhMB4XDTEyMTAyMjIwNDgwNloXDTE2MTAyMjIwNDgwNlowgcAxITAfBgNVBAMTGEVESVRPUklBTCBTSVNUQSBTQSBERSBDVjEhMB8GA1UEKRMYRURJVE9SSUFMIFNJU1RBIFNBIERFIENWMSEwHwYDVQQKExhFRElUT1JJQUwgU0lTVEEgU0EgREUgQ1YxJTAjBgNVBC0THEVTSTkyMDQyNzg4NiAvIEhFR1Q3NjEwMDM0UzIxHjAcBgNVBAUTFSAvIEhFR1Q3NjEwMDNNREZSTk4wOTEOMAwGA1UECxMFQW1pZ2EwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAK6YqAg3LHOPpAKD9OFkcNgB5wj+3k4oHPK3bFfku4TCEswtMhIt5LnZCt4UK0cp9SYpKMa2kZVYm6k6zphWg9bzv3pvHwt9mB6kFGyApU71cOk16unqL2o/pDj65zNtUBfDyKkKBUGQMYgtqvVq6aXJipqKOS/NsDKEUt0q1ghTAgMBAAGjHTAbMAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgbAMA0GCSqGSIb3DQEBBQUAA4IBAQCgCCpYDbmN8npLX6vHCEJAF/1G3KhuAGY48wVt1va1YXRy6yj+tJZ9HZ3l8TY7J6n10XkrbzedOArKyjdpfqWbNabZHw6b2IlSN8HrHliiAEor5hwTUJnkg6S1nm0mmirInxCmWoVV+qrEX/XHylJ+OjIql/GyZrH9sEPCY+LYFfVhO0U73jKqajMEeZtWYq5wro4UhPUhlYgwhlzUN6XNWtiC8ohjE6QJaf8jYRsJjHraZL257O1o5T/3ULMJhASN7R211FmyAuiYsq8H3buPE0kl+EmN8DUNpTDkB9Xf1ba6gXZ0PRXF1oGUwxvX9FiI5eIau2RLfy9AfJPcpAXN" CondicionesDePago="CONTADO" SubTotal="1850" Descuento="175.00" Moneda="MXN" Total="1943.00" TipoDeComprobante="I" MetodoPago="PUE" LugarExpedicion="68050">
+      <cfdi:Emisor Rfc="$rfc_emisor" Nombre="FACTURACION MODERNA SA DE CV" RegimenFiscal="601"/>
+      <cfdi:Receptor Rfc="XAXX010101000" Nombre="PUBLICO EN GENERAL" UsoCFDI="G01"/>
+      <cfdi:Conceptos>
+        <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="AULOG001" Cantidad="5" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Aurriculares USB Logitech" ValorUnitario="350.00" Importe="1750.00" Descuento="175.00">
+          <cfdi:Impuestos>
+            <cfdi:Traslados>
+              <cfdi:Traslado Base="1575.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="252.00"/>
+            </cfdi:Traslados>
           </cfdi:Impuestos>
-          <cfdi:Complemento>
-              <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="5CB8D806-7BDF-4D24-AC4C-4C469EB4F57A" FechaTimbrado="2017-10-31T17:39:42" RfcProvCertif="SFE0807172W7" SelloCFD="kqFJelLV1B99l8DunR98pn5k8uCwi94k+PhZJ2crw5Et2+qSkoROBlOWsoXrv93j5UUPBkxTmlStwTGBHSHWiQr1ewA4/fzseNIaWokVbIr8iFwrZETgZWp6Q+dErqLntDPISWYHmXfnvXi/Om7hCtklZC/msv3ZmmojcZEkjJb0Rk+sVDh+qm3sRbx40k1xKX1xtgLnX4/P/DwZlv+mj31YE4MEpy48xMjBA7dPNE4dF9UL3mTAQhwMV40MCrLpjTn95ov8mnL0ftaxuqzGXhqqNcDk1YF5OtBXuGFKwWAfY53bNxz1GeVY1+/8xZsmUmuukwA5uvIa7ghGt/4twA==" NoCertificadoSAT="20001000000300022779" SelloSAT="tUH6OL8H4V/Pcsjjjhvscme19OU1aRx03RKXRVsGUbtiZCQAxkWwzVKOjrXxJR0rVHHChhDpG6Yg/fIZaVwwVJXy9xLE2O6WUdeY+iEUJGrVp4Kv4PyfSz/KCqJp/dnpAGvdl2BpY1ZvpRi4a2/MJ7UvokEU2malSiGoB0mPrPeYo/nXkFUDfrisQ9pZDKgpowkw4mi4sYZOPl5JCPaF8X5LuSLDNcO3FPeslDvjqtM0Jlmu3tk5/O2opjhKDv7L+327JFU+efbExqifTR43Anthnu0mXv+zSviDlLbxJcRF+bXXvPHlYi3gENazzOxHlnlXa+qfCU3eNRd+uih3gA==" />
-          </cfdi:Complemento>
-      </cfdi:Comprobante>
-      XML;
-      return $cfdi;
+        </cfdi:Concepto>
+        <cfdi:Concepto ClaveProdServ="43201800" NoIdentificacion="USB" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Memoria USB 32gb marca Kingston" ValorUnitario="100.00" Importe="100.00">
+          <cfdi:Impuestos>
+            <cfdi:Traslados>
+              <cfdi:Traslado Base="100.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="16.00"/>
+            </cfdi:Traslados>
+          </cfdi:Impuestos>
+        </cfdi:Concepto>
+      </cfdi:Conceptos>
+      <cfdi:Impuestos TotalImpuestosTrasladados="268.00">
+        <cfdi:Traslados>
+          <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="268.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Comprobante>
+    XML;
+        return $cfdi;
     }
 
     /**

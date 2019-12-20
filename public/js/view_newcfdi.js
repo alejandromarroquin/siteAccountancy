@@ -43,25 +43,25 @@ $(document).ready(function(){
       'onkeypress':'return soloNumeros(event);',
       'id':'quantity'+cont
     });
-    var unit=$('<select/>',{
+    var unit=$('<input/>',{
       'class': 'form-control',
       'name':'name="unit[]',
       'id':'unit'+cont
+    });
+    var catalogcodeunits=$('<a/>',{
+      'href':'http://pys.sat.gob.mx/PyS/catUnidades.aspx',
+      'target':'blank',
+      'class':'catalogcodeunits'
     });
     var codeproduct=$('<input/>',{
       'class': 'form-control',
       'name':'name="codeproduct[]',
       'id':'codeproduct'+cont
     });
-    var codesat=$('<a/>',{
+    var catalogcodeproducts=$('<a/>',{
       'href':'http://pys.sat.gob.mx/PyS/catPyS.aspx',
       'target':'blank',
-      'class':'codesat'
-    });
-    var option=$('<option/>',{
-      'class': 'form-control',
-      'name':'name="unit[]',
-      'id':'unit'+cont
+      'class':'catalogcodeproducts'
     });
     var concept=$('<input/>',{
       'class': 'form-control',
@@ -91,11 +91,11 @@ $(document).ready(function(){
     divrow.append(divcol6);
     divcol1.append(quantity);
     divcol2.append(unit);
+    catalogcodeunits.text('Consultar catálogo');
+    divcol2.append(catalogcodeunits);
     divcol3.append(codeproduct);
-    codesat.text('consultar catálogo');
-    divcol3.append(codesat);
-    unit.append(option);
-    option.text('Selecciona unidad...');
+    catalogcodeproducts.text('Consultar catálogo');
+    divcol3.append(catalogcodeproducts);
     divcol4.append(concept);
     divcol5.append(unitprice);
     divcol6.append(importe);
@@ -137,6 +137,22 @@ $(document).ready(function(){
         reverseButtons: true,
         cancelButtonColor: '#929292'
       }).then((result)=>{
+        Swal.fire({
+          title: 'Se está generando la factura!',
+          html: 'Esperé un mmento...',
+          timer: 9000,
+          timerProgressBar: true,
+          onBeforeOpen: () => {
+            Swal.showLoading()
+            timerInterval = setInterval(() => {
+              Swal.getContent().querySelector('b')
+                .textContent = Swal.getTimerLeft()
+            }, 100)
+          },
+          onClose: () => {
+            clearInterval(timerInterval)
+          }
+        });
         $.ajax({
            type:'POST',
            url:'/cfdicreate',
@@ -144,7 +160,7 @@ $(document).ready(function(){
            success:function(data){
             if(data==1){
               Swal.fire(
-                'Registrado!',
+                'Facturado!',
                 'El CFDI se generó correctamente.',
                 'success'
               )
@@ -160,7 +176,6 @@ $(document).ready(function(){
       });
     }
   });
-
 });
 
 function inputChange(input){

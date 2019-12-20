@@ -124,10 +124,7 @@
                                 <a href="/factura">Nueva factura</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Enviar facturas</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Recepción de facturas</a>
+                                <a href="#">Cancelar factura</a>
                             </li>
                         </ul>
                     </li>

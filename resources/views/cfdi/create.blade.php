@@ -14,13 +14,13 @@
         </div>
       </div>
       <div class="row margin">
-        <form action="" method="" role="form" id="cfdiform">
+        <form action="/cfdicreate" method="POST" role="form" id="cfdiform">
           {{ csrf_field() }}
           <div class="row">
             <div class="col-6">
               <label>Cliente:</label>
-              <select class="form-control" name="customer" id="customer">
-                <option selected hidden>Selecciona un cliente...</option>
+              <select class="form-control" name="customer" id="customer" required/>
+                <option value="null" selected hidden>Selecciona un cliente...</option>
                 @foreach($customers as $customer)
                   <option>{{$customer->businessname}}</option>
                 @endforeach
@@ -128,12 +128,8 @@
                     <input class="form-control" name="quantity[]" id="quantity1" onchange="inputChange(this);" onkeypress="return soloNumeros(event);" required/>
                   </div>
                   <div class="col">
-                    <select class="form-control" name="unit[]" id="unit1" required/>
-                      <option selected hidden>Selecciona unidad...</option>
-                      @foreach($units as $unit)
-                        <option>{{$unit->code}}</option>
-                      @endforeach
-                    </select>
+                    <input class="form-control" type="text" name="unit[]" id="unit1">
+                    <a href="http://pys.sat.gob.mx/PyS/catUnidades.aspx" target="_blank">Consultar catálogo</a>
                   </div>
                   <div class="col">
                     <input class="form-control" name="codeproduct[]" id="codeproduct1" required/>
