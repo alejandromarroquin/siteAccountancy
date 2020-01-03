@@ -66,7 +66,7 @@
 }
 
 .codesat{
-  font-size: 13px;
+  font-size: 11.4px;
 }
 
 .brand{
@@ -102,10 +102,6 @@
   margin-right: 2em;
 }
 
-.totales{
-  width: 100px;
-}
-
 .stamp{
   width: 400px;
   margin-left: 1em;
@@ -116,4 +112,8 @@
 .code{
   width: 110px;
   height: 110px;
+}
+
+.totals{
+  width:97%;
 }

@@ -48,7 +48,6 @@ function addDecimal(nid1,nid2,nid3,nid4,nid5,input){
      if($('"'+check+'"').prop('checked')){
        document.getElementById(nid3).value=(parseFloat(yup)*2)+".00";
      }else{
-       alert("66666");
        document.getElementById(nid3).value=yup+".00";
      }
 

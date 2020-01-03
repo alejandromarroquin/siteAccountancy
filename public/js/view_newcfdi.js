@@ -22,7 +22,7 @@ $(document).ready(function(){
       'class':'col-2'
     });
     var divcol2=$('<div/>',{
-      'class':'col'
+      'class':'col-1'
     });
     var divcol3=$('<div/>',{
       'class':'col'
@@ -36,12 +36,21 @@ $(document).ready(function(){
     var divcol6=$('<div/>',{
       'class':'col'
     });
+    var divcol7=$('<div/>',{
+      'class':'col'
+    });
     var quantity=$('<input/>',{
       'class': 'form-control',
       'name':'name="quantity[]',
-      'onchange':'inputChange(this);',
+      'onchange':'inputChange(this);setSubtotal(this);setTotal();',
       'onkeypress':'return soloNumeros(event);',
       'id':'quantity'+cont
+    });
+    var iva=$('<input/>',{
+      'type':'checkbox',
+      'name':'applyiva',
+      'onchange':'setIVA(this);setTotal();',
+      'id':'applyiva'+cont
     });
     var unit=$('<input/>',{
       'class': 'form-control',
@@ -51,7 +60,7 @@ $(document).ready(function(){
     var catalogcodeunits=$('<a/>',{
       'href':'http://pys.sat.gob.mx/PyS/catUnidades.aspx',
       'target':'blank',
-      'class':'catalogcodeunits'
+      'class':'codesat'
     });
     var codeproduct=$('<input/>',{
       'class': 'form-control',
@@ -61,7 +70,7 @@ $(document).ready(function(){
     var catalogcodeproducts=$('<a/>',{
       'href':'http://pys.sat.gob.mx/PyS/catPyS.aspx',
       'target':'blank',
-      'class':'catalogcodeproducts'
+      'class':'codesat'
     });
     var concept=$('<input/>',{
       'class': 'form-control',
@@ -71,7 +80,7 @@ $(document).ready(function(){
     var unitprice=$('<input/>',{
       'class': 'form-control',
       'name':'name="unitprice[]',
-      'onchange':'inputChange(this);addDecimal(this);',
+      'onchange':'inputChange(this);addDecimal(this);setSubtotal(this);setTotal();',
       'onkeypress':'return filterFloat(event,this);',
       'id':'unitprice'+cont
     });
@@ -89,16 +98,18 @@ $(document).ready(function(){
     divrow.append(divcol4);
     divrow.append(divcol5);
     divrow.append(divcol6);
+    divrow.append(divcol7);
     divcol1.append(quantity);
-    divcol2.append(unit);
+    divcol2.append(iva);
+    divcol3.append(unit);
     catalogcodeunits.text('Consultar catálogo');
-    divcol2.append(catalogcodeunits);
-    divcol3.append(codeproduct);
+    divcol3.append(catalogcodeunits);
+    divcol4.append(codeproduct);
     catalogcodeproducts.text('Consultar catálogo');
-    divcol3.append(catalogcodeproducts);
-    divcol4.append(concept);
-    divcol5.append(unitprice);
-    divcol6.append(importe);
+    divcol4.append(catalogcodeproducts);
+    divcol5.append(concept);
+    divcol6.append(unitprice);
+    divcol7.append(importe);
   });
 
   $("#customer").on('change', function () {
@@ -127,6 +138,8 @@ $(document).ready(function(){
 
   $("#sendform").on('click', function () {
     var rfcsender=$('input[name="rfcsender"]').val();
+    var condicspay=$('select[name="condicspay"]').val();
+    var subtotal=$('input[name="subtotal"]').val();
     if($("#cfdiform").valid()){
       Swal.fire({
         title: 'Está seguro de generar el CFDI?',
@@ -141,42 +154,76 @@ $(document).ready(function(){
           title: 'Se está generando la factura!',
           html: 'Esperé un mmento...',
           timer: 9000,
-          timerProgressBar: true,
           onBeforeOpen: () => {
             Swal.showLoading()
             timerInterval = setInterval(() => {
-              Swal.getContent().querySelector('b')
-                .textContent = Swal.getTimerLeft()
             }, 100)
           },
           onClose: () => {
             clearInterval(timerInterval)
           }
         });
-        $.ajax({
-           type:'POST',
-           url:'/cfdicreate',
-           data:{rfcsender:rfcsender},
-           success:function(data){
-            if(data==1){
-              Swal.fire(
-                'Facturado!',
-                'El CFDI se generó correctamente.',
-                'success'
-              )
-            }else{
-                Swal.fire(
-                  'Error!',
-                  'Algo salio mal, intentelo más tarde.',
-                  'error'
-                )
-              }
-            }
-        });
+
       });
     }
   });
 });
+
+function setSubtotal(input){
+  var id=$(input).attr('id');
+  var num=id.charAt(id.length-1);
+  if($('#unitprice'+num).val()!=''){
+    var sum=0;
+    var cont=$('#cont').val();
+    for (var i = 1; i < cont; i++) {
+      if($('#importe'+i).val()!=''){
+        sum=sum+parseFloat($('#importe'+i).val());
+      }
+    }
+    if(sum.toString().indexOf('.',0)<0){
+      $('input[name="subtotal"]').val(sum+".00");
+    }else{
+      $('input[name="subtotal"]').val(sum);
+    }
+  }
+}
+
+function setIVA(checkbox){
+  var value=checkbox.value
+  var id=$(checkbox).attr('id');
+  var num=id.charAt(id.length-1);
+  if($('#'+id).prop('checked')){
+    var iva=parseFloat($('#importe'+num).val())*0.16;
+    if($('input[name="iva"]').val()!=''){
+      $('input[name="iva"]').val(round(parseFloat($('input[name="iva"]').val())+iva,2));
+    }else{
+      $('input[name="iva"]').val(round(iva,2));
+    }
+  }else{
+    if($('input[name="iva"]').val()!=''){
+      $('input[name="iva"]').val(round(parseFloat($('input[name="iva"]').val())-(parseFloat($('#importe'+num).val())*0.16),2));
+    }
+  }
+}
+
+function setTotal(){
+  var total=0;
+  if($('input[name="iva"]').val()!=''){
+    total=parseFloat($('input[name="iva"]').val())+parseFloat($('input[name="subtotal"]').val());
+    if(total.toString().indexOf('.',0)<0){
+      $('input[name="total"]').val(total+'.00');
+    }else{
+      $('input[name="total"]').val(total);
+    }
+  }else{
+    total=parseFloat($('input[name="subtotal"]').val());
+    if(total.toString().indexOf('.',0)<0){
+      $('input[name="total"]').val(total+'.00');
+    }else{
+      $('input[name="total"]').val(total);
+    }
+  }
+}
 
 function inputChange(input){
   var value=input.value.trim();

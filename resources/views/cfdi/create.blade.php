@@ -47,6 +47,22 @@
               </select>
             </div>
           </div>
+          <div class="row">
+            <div class="col-2">
+              <label>Moneda</label>
+              <select class="form-control" name="currency">
+                <option>MXN</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <label>Condiciones de pago:</label>
+              <select class="form-control" name="condicspay">
+                <option>Contado</option>
+                <option>Anticipado</option>
+                <option>Aplazado</option>
+              </select>
+            </div>
+          </div>
           <div class="col-lg-8 col-xl-12">
             <div class="row">
               <div class="col brand">
@@ -106,11 +122,14 @@
                   <div class="col-2">
                     <label>Cantidad</label>
                   </div>
-                  <div class="col">
-                    <label>Unidad de medida</label>
+                  <div class="col-1">
+                    <label>IVA</label>
                   </div>
                   <div class="col">
-                    <label>Código de producto</label>
+                    <label>U. Medida</label>
+                  </div>
+                  <div class="col">
+                    <label>Cod. Producto</label>
                   </div>
                   <div class="col">
                     <label>Descripción</label>
@@ -125,11 +144,14 @@
                 <div class="row" id="inputs">
                   <input type="text" name="cont" value="2" id="cont" hidden/>
                   <div class="col-2">
-                    <input class="form-control" name="quantity[]" id="quantity1" onchange="inputChange(this);" onkeypress="return soloNumeros(event);" required/>
+                    <input class="form-control" name="quantity[]" id="quantity1" onchange="inputChange(this);setSubtotal(this);setTotal();" onkeypress="return soloNumeros(event);" required/>
+                  </div>
+                  <div class="col-1">
+                    <input type="checkbox" name="applyiva[]" id="applyiva1" onchange="setIVA(this);setTotal();">
                   </div>
                   <div class="col">
                     <input class="form-control" type="text" name="unit[]" id="unit1">
-                    <a href="http://pys.sat.gob.mx/PyS/catUnidades.aspx" target="_blank">Consultar catálogo</a>
+                    <a href="http://pys.sat.gob.mx/PyS/catUnidades.aspx" target="_blank" class="codesat">Consultar catálogo</a>
                   </div>
                   <div class="col">
                     <input class="form-control" name="codeproduct[]" id="codeproduct1" required/>
@@ -139,7 +161,7 @@
                     <input class="form-control" name="concept[]" id="concept1" required/>
                   </div>
                   <div class="col">
-                    <input class="form-control" name="unitprice[]" id="unitprice1" onchange="inputChange(this);addDecimal(this);" onkeypress="return filterFloat(event,this);" required/>
+                    <input class="form-control" name="unitprice[]" id="unitprice1" onchange="inputChange(this);addDecimal(this);setSubtotal(this);setTotal();" onkeypress="return filterFloat(event,this);" required/>
                   </div>
                   <div class="col">
                     <input class="form-control" name="importe[]" id="importe1" onchange="addDecimal(this);" readonly/>
@@ -149,6 +171,36 @@
               <div class="row">
                 <div class="col">
                   <button type="button" class="btn btn-secondary add">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="row totals">
+              <div class="col" style="text-align:right;">
+                <div class="form-group">
+                  <label>Subtotal:</label>
+                  <label>
+                    <input class="form-control" name="subtotal" readonly/>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row totals">
+              <div class="col" style="text-align:right;">
+                <div class="form-group">
+                  <label>IVA:</label>
+                  <label>
+                    <input class="form-control" name="iva" readonly/>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row totals">
+              <div class="col" style="text-align:right;">
+                <div class="form-group">
+                  <label>Total:</label>
+                  <label>
+                    <input class="form-control" name="total" readonly/>
+                  </label>
                 </div>
               </div>
             </div>
