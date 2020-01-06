@@ -18,6 +18,7 @@
           {{ csrf_field() }}
           <div class="row">
             <div class="col-6">
+              <input type="text" name="taxregime" value="@foreach($senderdata as $data){{$data->code}}@endforeach" hidden/>
               <label>Cliente:</label>
               <select class="form-control" name="customer" id="customer" required/>
                 <option value="null" selected hidden>Selecciona un cliente...</option>
@@ -33,7 +34,7 @@
               <select class="form-control" name="methodpayment" id="methodpayment">
                 <option selected hidden>Selecciona un método de pago...</option>
                 @foreach($methodspayment as $methodpayment)
-                  <option>{{$methodpayment->description}}</option>
+                  <option value="{{$methodpayment->code}}">{{$methodpayment->description}}</option>
                 @endforeach
               </select>
             </div>
@@ -72,6 +73,8 @@
                 <div class="col senderinfo">
                   @foreach($senderdata as $data)
                     <input type="text" name="rfcsender" value="{{$data->rfc}}" hidden/>
+                    <input type="text" name="businessname" value="{{$data->businessname}}" hidden/>
+                    <input type="text" name="cp" value="{{$data->postalCode}}" hidden/>
                     <strong>{{$data->businessname}}</strong><br/>
                     <strong>R.F.C {{$data->rfc}}</strong><br/>
                     Domicilio: {{$data->street}} No. {{$data->numExt}}<br/>
@@ -98,6 +101,7 @@
                 <div class="row">
                   <div class="col">
                     <label class="rfccustomer margin3em"></label>
+                    <input type="text" name="rfccust" hidden/>
                   </div>
                 </div>
               </div>

@@ -12,6 +12,7 @@ use App\emails;
 use App\contactlocation;
 use App\accountancie;
 use App\customers;
+use App\taxregime;
 use Illuminate\Http\Request;
 
 class CompanieController extends Controller
@@ -34,7 +35,31 @@ class CompanieController extends Controller
      */
     public function create()
     {
-        return view('users.company.create');
+        $taxregimes=taxregime::all();
+        return view('users.company.create',compact('taxregimes'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function validateRFC(Request $request){
+        $type=taxregime::select('fisica','moral')->where('id',$request->taxregime)->get();
+        foreach ($type as $data) {
+          $fisica=$data->fisica;
+          $moral=$data->moral;
+        }
+        if($fisica==0 && $moral==1){
+          return 1;
+        }else{
+          if($fisica==1 && $moral==0){
+            return 2;
+          }else{
+            return 3;
+          }
+        }
     }
 
     /**
@@ -84,7 +109,7 @@ class CompanieController extends Controller
         $taxinf->idtaxinformation=$contact->id;
         $taxinf->rfc=$request->rfc;
         $taxinf->businessname=$request->businessname;
-        $taxinf->taxRegime=$request->taxregime;
+        $taxinf->idtaxRegime=$request->taxregime;
         $taxinf->save();
 
         $customers->idCompany=session('idcompany');
@@ -124,12 +149,14 @@ class CompanieController extends Controller
      */
     public function edit($companie)
     {
-        $datacompanie=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxinformations.taxRegime','contactlocations.id as contactid','contactlocations.responsible','contactlocations.positionresponsible','contactlocations.web','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->where('taxinformations.rfc',$companie)->get();
+        $taxregimes=taxregime::all();
+        $datacompanie=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('taxregimes','taxinformations.idtaxRegime','=','taxregimes.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->join('phones','contactlocations.idPhone','=','phones.id')->join('addresses','contactlocations.idAddress','=','addresses.id')->select('taxinformations.id as taxid','taxinformations.rfc','taxinformations.businessname as businessName','taxregimes.description','taxregimes.code','contactlocations.id as contactid','contactlocations.responsible','contactlocations.positionresponsible','contactlocations.web','emails.id as emailid','emails.email','phones.id as phoneid','phones.office','phones.extension','phones.cellphone','addresses.id as addressid','addresses.street','addresses.colony','addresses.state','addresses.city','addresses.numExt','addresses.numInt','addresses.postalCode','addresses.country')->where('taxinformations.rfc',$companie)->get();
         foreach ($datacompanie as $data) {
           $taxid=$data->taxid;
           $rfc=$data->rfc;
           $businessName=$data->businessName;
-          $taxRegime=$data->taxRegime;
+          $taxRegimecode=$data->code;
+          $taxRegimedescrip=$data->description;
           $emailid=$data->emailid;
           $email=$data->email;
           $contactid=$data->contactid;
@@ -150,7 +177,7 @@ class CompanieController extends Controller
           $postalCode=$data->postalCode;
           $country=$data->country;
         }
-        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegime','emailid','email','contactid','responsible','positionresponsible','web','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','country'));
+        return view('users.company.edit',compact('taxid','rfc','businessName','taxRegimedescrip','taxRegimecode','emailid','email','contactid','responsible','positionresponsible','web','phoneid','office','extension','cellphone','addressid','street','colony','state','city','numExt','numInt','postalCode','country','taxregimes'));
     }
 
     /**
@@ -169,9 +196,9 @@ class CompanieController extends Controller
       $contactlocation=contactlocation::find($request->contactid);
       DB::beginTransaction();
       try {
+        $taxinf->idtaxRegime=$request->taxregime;
         $taxinf->rfc=$request->rfc;
         $taxinf->businessname=$request->businessname;
-        $taxinf->taxRegime=$request->taxregime;
         $taxinf->save();
 
         $email->email=$request->email;

@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PhonesSeeder::class);
         $this->call(EmailSeeder::class);
         $this->call(ContactlocationSeeder::class);
+        $this->call(TaxregimeSeeder::class);
         $this->call(TaxinformationSeeder::class);
         $this->call(CompanieSeeder::class);
         $this->call(UserSeeder::class);

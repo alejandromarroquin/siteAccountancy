@@ -44,10 +44,12 @@
               </div>
               <div class="col">
                 <label>Régimen fiscal:</label>
-                <input type="text" name="taxr" id="taxr" value="{{$taxRegime}}" hidden>
+                <input type="text" name="taxr" id="taxr" hidden>
                 <select class="form-control" name="taxregime" id="taxregime" required/>
-                  <option value="Fisica">Fisica</option>
-                  <option value="Moral">Moral</option>
+                  <option value="$taxRegimecode" selected hidden/>{{$taxRegimedescrip}}</option>
+                  @foreach($taxregimes as $taxregime)
+                    <option value="{{$taxregime->id}}">{{$taxregime->description}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>

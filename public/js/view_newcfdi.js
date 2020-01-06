@@ -118,6 +118,7 @@ $(document).ready(function(){
       $.get("/getcustomer", { elegido: elegido }, function(data){
           $('.businessnamecustomer').text($("#customer").val());
           $('.rfccustomer').text('RFC: '+data);
+          $('input[name="rfccust"]').val(data);
       });
     });
   });
@@ -138,8 +139,15 @@ $(document).ready(function(){
 
   $("#sendform").on('click', function () {
     var rfcsender=$('input[name="rfcsender"]').val();
+    var businessname=$('input[name="businessname"]').val();
+    var taxregime=$('input[name="taxregime"]').val();
+    var cp=$('input[name="cp"]').val();
     var condicspay=$('select[name="condicspay"]').val();
+    var methodpayment=$('select[name="methodpayment"]').val();
+    var currency=$('select[name="currency"]').val();
     var subtotal=$('input[name="subtotal"]').val();
+    var total=$('input[name="total"]').val();
+    var rfccust=$('input[name="rfccust"]').val();
     if($("#cfdiform").valid()){
       Swal.fire({
         title: 'Está seguro de generar el CFDI?',
@@ -150,20 +158,41 @@ $(document).ready(function(){
         reverseButtons: true,
         cancelButtonColor: '#929292'
       }).then((result)=>{
-        Swal.fire({
-          title: 'Se está generando la factura!',
-          html: 'Esperé un mmento...',
-          timer: 9000,
-          onBeforeOpen: () => {
-            Swal.showLoading()
-            timerInterval = setInterval(() => {
-            }, 100)
-          },
-          onClose: () => {
-            clearInterval(timerInterval)
-          }
-        });
-
+        if(result.value){
+          Swal.fire({
+            title: 'Se está generando la factura!',
+            html: 'Esperé un mmento...',
+            timer: 9000,
+            onBeforeOpen: () => {
+              Swal.showLoading()
+              timerInterval = setInterval(() => {
+              }, 100)
+            },
+            onClose: () => {
+              clearInterval(timerInterval)
+            }
+          });
+          $.ajax({
+           type:'POST',
+           url:'/cfdicreate',
+           data:{rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,cp:cp,condicspay:condicspay,methodpayment:methodpayment,currency:currency,subtotal:subtotal,total:total,rfccust:rfccust},
+           success:function(data){
+            if(data==1){
+              Swal.fire(
+                'Facturado!',
+                'El CFDI se generó correctamente.',
+                'success'
+              )
+            }else{
+                Swal.fire(
+                  'Error!',
+                  'Algo salio mal, intentelo más tarde.',
+                  'error'
+                )
+              }
+            }
+          });
+        }
       });
     }
   });

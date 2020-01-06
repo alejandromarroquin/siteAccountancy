@@ -42,27 +42,37 @@ $(document).ready(function(){
   $("#taxregime").on('change', function () {
     $("#taxregime option:selected").each(function () {
       taxregime=$(this).val();
-      if(taxregime=="moral"){
-        if($('input[name="rfc"]').val().length==12){
-          Swal.fire(
-            'RFC no valido!',
-            'La longitud del RFC no es correcta.',
-            'warning'
-          ).then((result)=>{
-            $('input[name="rfc"]').val(null);
-          });
-        }
-      }else{
-        if($('input[name="rfc"]').val().length==13){
-          Swal.fire(
-            'RFC no valido!',
-            'La longitud del RFC no es correcta.',
-            'warning'
-          ).then((result)=>{
-            $('input[name="rfc"]').val(null);
-          });
-        }
-      }
+      $.ajax({
+         type:'POST',
+         url:'/validaterfc',
+         data:{taxregime:taxregime},
+         success:function(data){
+           if(data==1){
+             $('input[name="typetaxregime"]').val();
+             if($('input[name="rfc"]').val().length==12){
+               Swal.fire(
+                 'RFC no valido!',
+                 'La longitud del RFC no es correcta.',
+                 'warning'
+               ).then((result)=>{
+                 $('input[name="rfc"]').val(null);
+               });
+             }
+           }else{
+             if(data==2){
+               if($('input[name="rfc"]').val().length==13){
+                 Swal.fire(
+                   'RFC no valido!',
+                   'La longitud del RFC no es correcta.',
+                   'warning'
+                 ).then((result)=>{
+                   $('input[name="rfc"]').val(null);
+                 });
+               }
+             }
+           }
+          }
+      });
     });
   });
 
