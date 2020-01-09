@@ -154,7 +154,7 @@
                     <input type="checkbox" name="applyiva[]" id="applyiva1" onchange="setIVA(this);setTotal();">
                   </div>
                   <div class="col">
-                    <input class="form-control" type="text" name="unit[]" id="unit1">
+                    <input class="form-control" type="text" name="unit[]" id="unit1" required/>
                     <a href="http://pys.sat.gob.mx/PyS/catUnidades.aspx" target="_blank" class="codesat">Consultar catálogo</a>
                   </div>
                   <div class="col">

@@ -10,7 +10,14 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-12 col-xl-12">
-          <h1 class="page-header">Balance general:</h1>
+          <div class="row">
+            <div class="col">
+              <h1 class="page-header">Balance general:</h1>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary">Descargar</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row margin">

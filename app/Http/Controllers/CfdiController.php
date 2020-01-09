@@ -12,6 +12,9 @@ use App\unitmeasurements;
 use App\methodpayment;
 use App\waytopay;
 use DB;
+use PDF;
+use Mail;
+use QrCode;
 
 class CfdiController extends Controller
 {
@@ -63,6 +66,12 @@ class CfdiController extends Controller
           $customer=$data->rfc;
         }
         return $customer;
+    }
+
+    public function printCFDI(){
+      $ad="texto";
+      $pdf = \PDF::loadView('cfdi/newcfdi',compact('ad'));
+      return $pdf->download('newcfdi.pdf');
     }
 
     /**

@@ -44,6 +44,7 @@ $(document).ready(function(){
       'name':'name="quantity[]',
       'onchange':'inputChange(this);setSubtotal(this);setTotal();',
       'onkeypress':'return soloNumeros(event);',
+      'required':'true',
       'id':'quantity'+cont
     });
     var iva=$('<input/>',{
@@ -55,6 +56,7 @@ $(document).ready(function(){
     var unit=$('<input/>',{
       'class': 'form-control',
       'name':'name="unit[]',
+      'required':'true',
       'id':'unit'+cont
     });
     var catalogcodeunits=$('<a/>',{
@@ -65,6 +67,7 @@ $(document).ready(function(){
     var codeproduct=$('<input/>',{
       'class': 'form-control',
       'name':'name="codeproduct[]',
+      'required':'true',
       'id':'codeproduct'+cont
     });
     var catalogcodeproducts=$('<a/>',{
@@ -75,6 +78,7 @@ $(document).ready(function(){
     var concept=$('<input/>',{
       'class': 'form-control',
       'name':'name="concept[]',
+      'required':'true',
       'id':'concept'+cont
     });
     var unitprice=$('<input/>',{
@@ -82,6 +86,7 @@ $(document).ready(function(){
       'name':'name="unitprice[]',
       'onchange':'inputChange(this);addDecimal(this);setSubtotal(this);setTotal();',
       'onkeypress':'return filterFloat(event,this);',
+      'required':'true',
       'id':'unitprice'+cont
     });
     var importe=$('<input/>',{

@@ -20,10 +20,8 @@
             <div class="row">
               <div class="col-4">
                 <label>Logo:</label>
-                <input type="file" name="brand" required/>
-                <div class="brand">
-                  <img src="{{$url}}" class="img-fluid">
-                </div>
+                <input type="file" name="brand">
+                <img src="{{$url}}" id="imagen1_preview"/>
               </div>
             </div>
             <input class="btn btn-primary" type="submit" value="Guardar">

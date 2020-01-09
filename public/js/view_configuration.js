@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     $('input[name="brand"]').on('change',function(){
       if($('input[name="brand"]').val()!=null){
         var fileName = this.files[0].name;
@@ -28,5 +27,4 @@ $(document).ready(function(){
         }
       }
     });
-
 });
