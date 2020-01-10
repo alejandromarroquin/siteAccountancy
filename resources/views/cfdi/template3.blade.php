@@ -8,7 +8,7 @@
             }
             header {
                 position: fixed;
-                top: 0cm;
+                top: 1em;
                 left: 0cm;
                 right: 0cm;
                 height: 1cm;
@@ -37,27 +37,34 @@
               font-size: 14px;
               color: black;
             }
+            h3{
+              color: #E32121;
+              line-height: 15px;
+            }
+            h5{
+              line-height: 15px;
+            }
             main{
-              padding-top: 15em;
+              padding-top: 22em;
               width: 90%;
               margin: auto;
-            }
-            table, td, th {
-              border: 1px solid #ddd;
-              text-align: left;
             }
             table {
               border-collapse: collapse;
               width: 100%;
             }
+
             th, td {
-              padding: 15px;
+              text-align: left;
+              padding: 8px;
             }
-            th{
+
+            tr:nth-child(even){background-color: #f2f2f2}
+
+            th {
+              background-color: #5698E8;
+              color: black;
               font-size: 12px;
-            }
-            td{
-              font-size: 11px;
             }
             .cod{
               width: 15%;
@@ -79,36 +86,30 @@
             }
             .logo{
               padding-top: 1em;
-              padding-left: 2em;
+              margin-left: 5em;
               float: left;
             }
             .senderinf{
               float: left;
               padding-left: 4em;
             }
-            .customerinf{
-              padding-left: 1em;
-            }
-            .customer{
-              margin-top: 1em;
+            .subheader{
+              border: 1px solid #ddd;
+              height: 130px;
+              width: 90%;
+              margin: auto;
             }
             .date{
               color: black;
-              text-align: right;
-              padding-right: 3em;
+              text-align: center;
+              margin-left: 2em;
             }
+
             .address{
               line-height: 15px;
             }
             .group-address{
               margin-top: 3px;
-            }
-            .vl{
-              border-left: 2px solid gray;
-              height: 120px;
-              float: left;
-              padding-top: 2em;
-              margin-left: 6em;
             }
             .balances{
               float: right;
@@ -123,9 +124,13 @@
               font-weight: bold;
             }
             .commercial{
-              margin-top: 8em;
-              height: 250px;
+              margin-top: 3em;
+              height: 180px;
               border: 1px solid black;
+              text-align: center;
+              font-family: Arial;
+              font-size: 40px;
+              color: gray;
             }
             .codeqr{
               float: left;
@@ -137,15 +142,27 @@
             .titlestamp{
               font-size: 11px;
             }
+            .customer{
+              margin-left: 1em;
+              margin-top: 1em;
+              float: left;
+              width: 50%;
+            }
+            .taxinf{
+              margin-left: 1em;
+              margin-top: 0.4em;
+              float: left;
+            }
+            .inf{
+              font-size: 11px;
+              line-height: 15px;
+            }
         </style>
     </head>
     <body>
         <!-- Define header and footer blocks before your content -->
         <header>
             <hr></hr>
-            <div class="date">
-              <label>Fecha 09/01/2020 No.0001</label>
-            </div>
             <div class="logo">
               <img src="storage/Company/DYC160316AT6/Brand/brandDYC160316AT6.png" width="180" height="130">
             </div>
@@ -161,12 +178,28 @@
               <label>Página web</label>
               <label>Correo electronico</label>
             </div>
-            <div class="vl"></div>
-            <div class="customerinf">
-              <label>CLIENTE</label>
+            <div class="date">
+              <h3>Factura</h3>
+              <h3>000383</h3>
+              <h5>Fecha y hora de Expedición:</h5>
+            </div><br>
+            <div class="subheader">
               <div class="customer">
-                <label>Nombre de la empresa</label>
-                <label>RFC</label>
+                <label>CLIENTE</label>
+                <div class="customerinf">
+                  <label>Razón social del cliente</label>
+                  <label>RFC</label>
+                </div>
+              </div>
+              <div class="taxinf">
+                <label class="inf">Folio Fiscal: </label>
+                <label class="inf">Certificado del CSD: </label>
+                <label class="inf">Certificado del SAT: </label>
+                <label class="inf">Fecha de Certificación: </label>
+                <label class="inf">Régimen Fiscal: </label>
+                <label class="inf">Método de Pago: </label><label id="methodpay"></label>
+                <label class="inf">Uso de CFDI: </label>
+                <label class="inf">Forma de Pago: </label><label id="awaypay"></label>
               </div>
             </div>
         </header>

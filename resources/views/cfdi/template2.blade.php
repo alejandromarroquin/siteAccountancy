@@ -8,7 +8,7 @@
             }
             header {
                 position: fixed;
-                top: 1em;
+                top: 0cm;
                 left: 0cm;
                 right: 0cm;
                 height: 1cm;
@@ -37,15 +37,8 @@
               font-size: 14px;
               color: black;
             }
-            h3{
-              color: #E32121;
-              line-height: 15px;
-            }
-            h5{
-              line-height: 15px;
-            }
             main{
-              padding-top: 22em;
+              padding-top: 15em;
               width: 90%;
               margin: auto;
             }
@@ -86,30 +79,36 @@
             }
             .logo{
               padding-top: 1em;
-              margin-left: 5em;
+              padding-left: 2em;
               float: left;
             }
             .senderinf{
               float: left;
               padding-left: 4em;
             }
-            .subheader{
-              border: 1px solid #ddd;
-              height: 130px;
-              width: 90%;
-              margin: auto;
+            .customerinf{
+              padding-left: 1em;
+            }
+            .customer{
+              margin-top: 1em;
             }
             .date{
               color: black;
-              text-align: center;
-              margin-left: 2em;
+              text-align: right;
+              padding-right: 3em;
             }
-
             .address{
               line-height: 15px;
             }
             .group-address{
               margin-top: 3px;
+            }
+            .vl{
+              border-left: 2px solid gray;
+              height: 120px;
+              float: left;
+              padding-top: 2em;
+              margin-left: 6em;
             }
             .balances{
               float: right;
@@ -125,7 +124,7 @@
             }
             .commercial{
               margin-top: 3em;
-              height: 180px;
+              height: 250px;
               border: 1px solid black;
               text-align: center;
               font-family: Arial;
@@ -142,27 +141,15 @@
             .titlestamp{
               font-size: 11px;
             }
-            .customer{
-              margin-left: 1em;
-              margin-top: 1em;
-              float: left;
-              width: 50%;
-            }
-            .taxinf{
-              margin-left: 1em;
-              margin-top: 0.4em;
-              float: left;
-            }
-            .inf{
-              font-size: 11px;
-              line-height: 15px;
-            }
         </style>
     </head>
     <body>
         <!-- Define header and footer blocks before your content -->
         <header>
             <hr></hr>
+            <div class="date">
+              <label>Fecha 09/01/2020 No.0001</label>
+            </div>
             <div class="logo">
               <img src="storage/Company/DYC160316AT6/Brand/brandDYC160316AT6.png" width="180" height="130">
             </div>
@@ -178,28 +165,12 @@
               <label>Página web</label>
               <label>Correo electronico</label>
             </div>
-            <div class="date">
-              <h3>Factura</h3>
-              <h3>000383</h3>
-              <h5>Fecha y hora de Expedición:</h5>
-            </div><br>
-            <div class="subheader">
+            <div class="vl"></div>
+            <div class="customerinf">
+              <label>CLIENTE</label>
               <div class="customer">
-                <label>CLIENTE</label>
-                <div class="customerinf">
-                  <label>Razón social del cliente</label>
-                  <label>RFC</label>
-                </div>
-              </div>
-              <div class="taxinf">
-                <label class="inf">Folio Fiscal: </label>
-                <label class="inf">Certificado del CSD: </label>
-                <label class="inf">Certificado del SAT: </label>
-                <label class="inf">Fecha de Certificación: </label>
-                <label class="inf">Régimen Fiscal: </label>
-                <label class="inf">Método de Pago: </label><label id="methodpay"></label>
-                <label class="inf">Uso de CFDI: </label>
-                <label class="inf">Forma de Pago: </label><label id="awaypay"></label>
+                <label>Nombre de la empresa</label>
+                <label>RFC</label>
               </div>
             </div>
         </header>

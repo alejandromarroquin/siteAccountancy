@@ -26,6 +26,23 @@
             </div>
             <input class="btn btn-primary" type="submit" value="Guardar">
           </form>
+          <div class="templates">
+            <label>Selecciona una plantilla para tus facturas:</label>
+            <div class="row">
+              <div class="col">
+                <img src="img/Template1.png" width="250">
+                <button type="button" class="btn btn-primary" onclick="selectTemplate(this);">Seleccionar</button>
+              </div>
+              <div class="col">
+                <img src="img/Template2.png" width="250">
+                <button type="button" class="btn btn-primary">Seleccionar</button>
+              </div>
+              <div class="col">
+                <img src="img/Template3.png" width="250">
+                <button type="button" class="btn btn-primary">Seleccionar</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

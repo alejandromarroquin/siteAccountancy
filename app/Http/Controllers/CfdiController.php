@@ -70,8 +70,8 @@ class CfdiController extends Controller
 
     public function printCFDI(){
       $ad="texto";
-      $pdf = \PDF::loadView('cfdi/newcfdi',compact('ad'));
-      return $pdf->download('newcfdi.pdf');
+      $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
+      return $pdf->download('template3.pdf');
     }
 
     /**

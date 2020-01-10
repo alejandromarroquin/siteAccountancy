@@ -28,3 +28,7 @@ $(document).ready(function(){
       }
     });
 });
+
+function selectTemplate(button){
+  alert(button);
+}

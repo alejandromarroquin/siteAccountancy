@@ -13,18 +13,11 @@
     <!-- icon -->
     <link rel="icon" type="image/png" href="{{asset('img/icon.png')}}" />
 
-    <!-- Fonts -->
-    <link href="{{ asset('vendor/font-awesome/fonts/familyNunito.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">
     <link href="{{ asset('dist/css/sb-admin-2.css')}}" rel="stylesheet">
-    <link href="{{ asset('dist/css/validate.css')}}" rel="stylesheet"><!-- CSS para validación con JQuery -->
-    <link href="{{ asset('vendor/morrisjs/morris.css')}}" rel="stylesheet">
+    <link href="{{ asset('dist/css/validate.css')}}" rel="stylesheet">
     <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('dist/css/select2.css')}}" rel="stylesheet">
-    <link href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <link href="{{ asset('css/nv-sb.css')}}" rel="stylesheet">
-    <link href="{{asset('vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
     <link href="{{ asset('css/content.css')}}" rel="stylesheet">
     <link href="{{ asset('css/layout.css')}}" rel="stylesheet">
     <link href="{{ asset('css/forms.css')}}" rel="stylesheet">
