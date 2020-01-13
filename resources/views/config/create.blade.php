@@ -27,7 +27,8 @@
             <input class="btn btn-primary" type="submit" value="Guardar">
           </form>
           <div class="templates">
-            <input type="text" name="numtemplate" value="2" hidden/>
+            <input type="text" name="idconfig" value="{{$idconfig}}" hidden/>
+            <input type="text" name="numtemplate" value="{{$numtemp}}" hidden/>
             <label>Selecciona una plantilla para tus facturas:</label>
             <div class="row">
               <div class="col">

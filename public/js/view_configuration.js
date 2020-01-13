@@ -39,11 +39,37 @@ $(document).ready(function(){
 });
 
 function selectTemplate(button){
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  var idconfig=$('input[name="idconfig"]').val();
   var id=$(button).attr("id");
   var numid=id.charAt(id.length-1);
   $('#'+id).css({'background':'white','border':'1px solid gray','color':'black'});
   $('#'+id).text('Seleccionado');
   $('#'+id).attr("disabled", true);
+  $.ajax({
+   type:'POST',
+   url:'/updatetemplate',
+   data:{numid:numid,idconfig:idconfig},
+   success:function(data){
+    if(data==1){
+      Swal.fire(
+        'Actualizado!',
+        'La plantilla se actualizó correctamente.',
+        'success'
+      )
+    }else{
+        Swal.fire(
+          'Error!',
+          'Algo salio mal, intentelo más tarde.',
+          'error'
+        )
+      }
+    }
+  });
   if(numid==1){
     $('#template2').css({'background':'#38A6C1','border':'1px solid gray','color':'white'});
     $('#template2').text('Seleccionar');

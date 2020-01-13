@@ -35,6 +35,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BalancesheetSeeder::class);
         $this->call(PeriodpoliciesSeeder::class);
         $this->call(CheckbalanceSeeder::class);
-
+        $this->call(Configuration::class);
     }
 }

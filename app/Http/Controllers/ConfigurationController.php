@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\configuration;
+use DB;
 use File;
+
 class ConfigurationController extends Controller
 {
     /**
@@ -19,7 +22,32 @@ class ConfigurationController extends Controller
         }else{
           $url=null;
         }
-        return view('config/create',compact('url'));
+        $template=DB::table('configurations')->select('id','cfditemplate')->where('idComapny',session('idcompany'))->get();
+        foreach ($template as $data) {
+          $numtemp=$data->cfditemplate;
+          $idconfig=$data->id;
+        }
+        return view('config/create',compact('url','numtemp','idconfig'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTemplate(Request $request){
+        $config=configuration::find($request->idconfig);
+        DB::beginTransaction();
+        try {
+          $config->cfditemplate=$request->numid;
+          $config->save();
+          DB::commit();
+          return 1;
+        } catch (\PDOException $e) {
+          DB::rollBack();
+          return 0;
+        }
     }
 
     /**

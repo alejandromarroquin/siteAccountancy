@@ -63,6 +63,7 @@ Route::post('/generatecashflow','ReportsController@generateCashflow');
 
 Route::get('/configuracion','ConfigurationController@index');
 Route::post('/saveconfig','ConfigurationController@store');
+Route::post('/updatetemplate','ConfigurationController@updateTemplate');
 
 Auth::routes();
 

@@ -13,7 +13,7 @@ class CreateConfigurationTable extends Migration
      */
     public function up()
     {
-        Schema::create('configuration', function (Blueprint $table) {
+        Schema::create('configurations', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('idComapny')->unsigned();
