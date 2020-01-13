@@ -1,10 +1,6 @@
 $(document).ready(function(){
   jQuery.validator.messages.required = 'Esté campo es obligatorio.';
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
+
 
   $('input[name="rfc"]').on('change', function () {
     rfc=$('input[name="rfc"]').val();
@@ -76,7 +72,29 @@ $(document).ready(function(){
     });
   });
 
+  $('input[name="postalcode"]').on('change', function () {
+    var endpoint_sepomex  = "http://api-sepomex.hckdrk.mx/query/";
+    var method_sepomex = 'info_cp/';
+    var cp = $('input[name="postalcode"]').val();
+    var variable_string = '?type=simplified';
+    var url = endpoint_sepomex + method_sepomex + cp + variable_string;
+    $('select[name="colony"]').empty();
+    $.get(url).done(function( data ) {
+      for(var i = 0; i < data.response.asentamiento.length; i++) {
+        $('select[name="colony"]').append('<option>'+data.response.asentamiento[i]+'</option>');
+      }
+      $('input[name="city"]').val(data.response.municipio);
+      $('input[name="estate"]').val(data.response.estado);
+      $('input[name="contry"]').val(data.response.pais);
+    });
+  });
+
   $("#sendform").on('click', function () {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     var responsible=$('input[name="responsible"]').val();
     var positionresponsible=$('input[name="positionresponsible"]').val();
     var businessname=$('input[name="businessname"]').val();

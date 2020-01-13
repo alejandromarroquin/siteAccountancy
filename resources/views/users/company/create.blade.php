@@ -73,9 +73,15 @@
             </div>
             <div class="row">
               <div class="col">
+                <label>Cóigo postal:</label>
+                <input type="text" class="form-control" id="postalcode" name="postalcode" minlength="4" maxlength="5" onkeypress="return soloNumeros(event);" required/>
+              </div>
+              <div class="col">
                 <label>Calle:</label>
                 <input type="text" class="form-control" id="street" name="street" required/>
               </div>
+            </div>
+            <div class="row">
               <div class="col">
                 <label>Número exterior:</label>
                 <input type="text" class="form-control" id="numext" name="numext" maxlength="4">
@@ -84,29 +90,25 @@
                 <label>Número interior:</label>
                 <input type="text" class="form-control" id="numint" name="numint" maxlength="3">
               </div>
+              <div class="col">
+                <label>Colonia:</label>
+                <select class="form-control" name="colony" id="colony" required/>
+
+                </select>
+              </div>
             </div>
             <div class="row">
               <div class="col">
-                <label>Colonia:</label>
-                <input type="text" class="form-control" id="colony" name="colony" required/>
-              </div>
-              <div class="col">
                 <label>Municipio:</label>
-                <input type="text" class="form-control" id="city" name="city" required/>
+                <input type="text" class="form-control" id="city" name="city" readonly required/>
               </div>
               <div class="col">
                 <label>Estado:</label>
-                <input type="text" class="form-control" id="estate" name="estate" onkeypress="return soloLetras(event);" required/>
+                <input type="text" class="form-control" id="estate" name="estate" readonly required/>
               </div>
-            </div>
-            <div class="row">
               <div class="col">
                 <label>Pais:</label>
-                <input type="text" class="form-control" id="contry" name="contry" onkeypress="return soloLetras(event);" value="México" readonly required/>
-              </div>
-              <div class="col">
-                <label>Cóigo postal:</label>
-                <input type="text" class="form-control" id="postalcode" name="postalcode"minlength="5" maxlength="5" onkeypress="return soloNumeros(event);" required/>
+                <input type="text" class="form-control" id="contry" name="contry" readonly required/>
               </div>
             </div>
             <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
