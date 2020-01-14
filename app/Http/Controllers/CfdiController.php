@@ -74,6 +74,22 @@ class CfdiController extends Controller
       return $pdf->download('template3.pdf');
     }
 
+    public function sendEmail(){
+      $user = 1;
+            $id = 1;
+
+            $data = array(
+                'title' => "Test",
+                'message' => "Testing...",
+                'user' => $user,
+                'id' => $id
+            );
+            Mail::send('email/email', $data, function($message)
+            {
+                $message->to('mcao160696@upemor.edu.mx', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'\storage\Company\DYC160316AT6\CFDIS\3FA71D82-3224-11EA-9EF3-8B6547BBEC09.xml');
+            });
+    }
+
     /**
      * Store a newly created resource in storage.
      *

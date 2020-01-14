@@ -34,6 +34,7 @@ Route::get('/factura','CfdiController@create');
 Route::post('/cfdicreate','CfdiController@store');
 Route::get('/getcustomer','CfdiController@getCustomer');
 Route::get('/printcfdi','CfdiController@printCFDI');
+Route::get('/sendmail','CfdiController@sendEmail');
 
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
