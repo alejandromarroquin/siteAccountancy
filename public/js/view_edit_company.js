@@ -1,18 +1,23 @@
 $(document).ready(function(){
   jQuery.validator.messages.required = 'Esté campo es obligatorio.';
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+  var endpoint_sepomex  = "http://api-sepomex.hckdrk.mx/query/";
+  var method_sepomex = 'info_cp/';
+  var cp = $('input[name="postalcode"]').val();
+  var variable_string = '?type=simplified';
+  var url = endpoint_sepomex + method_sepomex + cp + variable_string;
+  $.get(url).done(function( data ) {
+    for(var i = 0; i < data.response.asentamiento.length; i++) {
+      $('select[name="colony"]').append('<option>'+data.response.asentamiento[i]+'</option>');
     }
   });
 
-  if($('#taxr').val()=="Fisica"){
-    $('#taxregime option[value="Fisica"]').attr("selected", true);
-  }else{
-    $('#taxregime option[value="Moral"]').attr("selected", true);
-  }
-
   $("#updateform").on('click', function () {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     var taxid=$('input[name="taxid"]').val();
     var emailid=$('input[name="emailid"]').val();
     var addressid=$('input[name="addressid"]').val();
@@ -23,6 +28,7 @@ $(document).ready(function(){
     var businessname=$('input[name="businessname"]').val();
     var rfc=$('input[name="rfc"]').val();
     var taxregime=$('select[name="taxregime"]').val();
+    alert(taxregime);
     var phoneoffice=$('input[name="phoneoffice"]').val();
     var extension=$('input[name="extension"]').val();
     var cellphone=$('input[name="cellphone"]').val();
@@ -31,7 +37,7 @@ $(document).ready(function(){
     var street=$('input[name="street"]').val();
     var numint=$('input[name="numint"]').val();
     var numext=$('input[name="numext"]').val();
-    var colony=$('input[name="colony"]').val();
+    var colony=$('select[name="colony"]').val();
     var city=$('input[name="city"]').val();
     var estate=$('input[name="estate"]').val();
     var contry=$('input[name="contry"]').val();

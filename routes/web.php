@@ -21,7 +21,7 @@ Route::post('/empresacreate','CompanieController@store');
 Route::get('/empresadelete','CompanieController@destroy');
 Route::get('/empresaedit/{id}','CompanieController@edit');
 Route::post('/empresaupdate','CompanieController@update');
-Route::post('/validaterfc','CompanieController@validateRFC');
+Route::get('/validaterfc/{taxregime}','CompanieController@validateRFC');
 
 Route::get('/usuarios_consultar','UserController@index');
 Route::get('/usuario_registrar','UserController@create');

@@ -1,7 +1,6 @@
 $(document).ready(function(){
   jQuery.validator.messages.required = 'Esté campo es obligatorio.';
 
-
   $('input[name="rfc"]').on('change', function () {
     rfc=$('input[name="rfc"]').val();
     estructura=/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
@@ -14,60 +13,69 @@ $(document).ready(function(){
         $('input[name="rfc"]').val(null);
       });
     }
-    if($("#taxregime").val()=='fisica' && rfc.length==13){
-      Swal.fire(
-        'RFC no valido!',
-        'La longitud del RFC no es correcta.',
-        'warning'
-      ).then((result)=>{
-        $('input[name="rfc"]').val(null);
+
+    if($("#taxregime").val()!=0){
+      var taxregime=$("#taxregime").val();
+      var url='/validaterfc/'+taxregime;
+      $.get(url).done(function( data ) {
+        if(data==1){
+           $('input[name="typetaxregime"]').val();
+           if($('input[name="rfc"]').val().length==12){
+             Swal.fire(
+               'RFC no valido!',
+               'La longitud del RFC no es correcta.',
+               'warning'
+             ).then((result)=>{
+               $('input[name="rfc"]').val(null);
+             });
+           }
+         }else{
+           if(data==2){
+             if($('input[name="rfc"]').val().length==13){
+               Swal.fire(
+                   'RFC no valido!',
+                   'La longitud del RFC no es correcta.',
+                   'warning'
+                ).then((result)=>{
+                   $('input[name="rfc"]').val(null);
+                })
+             }
+           }
+         }
       });
-    }else{
-      if($("#taxregime").val()=='moral' && rfc.length==12){
-        Swal.fire(
-          'RFC no valido!',
-          'La longitud del RFC no es correcta.',
-          'warning'
-        ).then((result)=>{
-          $('input[name="rfc"]').val(null);
-        });
-      }
     }
+
   });
 
   $("#taxregime").on('change', function () {
     $("#taxregime option:selected").each(function () {
-      taxregime=$(this).val();
-      $.ajax({
-         type:'POST',
-         url:'/validaterfc',
-         data:{taxregime:taxregime},
-         success:function(data){
-           if(data==1){
-             $('input[name="typetaxregime"]').val();
-             if($('input[name="rfc"]').val().length==12){
+      var taxregime=$(this).val();
+      var url='/validaterfc/'+taxregime;
+      $.get(url).done(function( data ) {
+        if(data==1){
+           $('input[name="typetaxregime"]').val();
+           if($('input[name="rfc"]').val().length==12){
+             Swal.fire(
+               'RFC no valido!',
+               'La longitud del RFC no es correcta.',
+               'warning'
+             ).then((result)=>{
+               $('input[name="rfc"]').val(null);
+             });
+           }
+         }else{
+           if(data==2){
+             if($('input[name="rfc"]').val().length==13){
                Swal.fire(
-                 'RFC no valido!',
-                 'La longitud del RFC no es correcta.',
-                 'warning'
-               ).then((result)=>{
-                 $('input[name="rfc"]').val(null);
-               });
-             }
-           }else{
-             if(data==2){
-               if($('input[name="rfc"]').val().length==13){
-                 Swal.fire(
                    'RFC no valido!',
                    'La longitud del RFC no es correcta.',
                    'warning'
-                 ).then((result)=>{
+                ).then((result)=>{
                    $('input[name="rfc"]').val(null);
-                 });
-               }
+                })
              }
            }
-          }
+         }
       });
     });
   });
@@ -108,7 +116,7 @@ $(document).ready(function(){
     var street=$('input[name="street"]').val();
     var numint=$('input[name="numint"]').val();
     var numext=$('input[name="numext"]').val();
-    var colony=$('input[name="colony"]').val();
+    var colony=$('select[name="colony"]').val();
     var city=$('input[name="city"]').val();
     var estate=$('input[name="estate"]').val();
     var contry=$('input[name="contry"]').val();
@@ -138,7 +146,7 @@ $(document).ready(function(){
             $('input[name="street"]').val(null);
             $('input[name="numint"]').val(null);
             $('input[name="numext"]').val(null);
-            $('input[name="colony"]').val(null);
+
             $('input[name="city"]').val(null);
             $('input[name="estate"]').val(null);
             $('input[name="postalcode"]').val(null);

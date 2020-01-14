@@ -46,7 +46,7 @@
                 <label>Régimen fiscal:</label>
                 <input type="text" name="taxr" id="taxr" hidden>
                 <select class="form-control" name="taxregime" id="taxregime" required/>
-                  <option value="$taxRegimecode" selected hidden/>{{$taxRegimedescrip}}</option>
+                  <option value="{{$taxRegimecode}}" selected hidden/>{{$taxRegimedescrip}}</option>
                   @foreach($taxregimes as $taxregime)
                     <option value="{{$taxregime->id}}">{{$taxregime->description}}</option>
                   @endforeach
@@ -79,9 +79,15 @@
             </div>
             <div class="row">
               <div class="col">
+                <label>Cóigo postal:</label>
+                <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{$postalCode}}" minlength="5" maxlength="5" onkeypress="return soloNumeros(event);" required/>
+              </div>
+              <div class="col">
                 <label>Calle:</label>
                 <input type="text" class="form-control" id="street" name="street" value="{{$street}}" required/>
               </div>
+            </div>
+            <div class="row">
               <div class="col">
                 <label>Número interior:</label>
                 <input type="text" class="form-control" id="numint" name="numint" value="{{$numInt}}" maxlength="3">
@@ -90,29 +96,25 @@
                 <label>Número exterior:</label>
                 <input type="text" class="form-control" id="numext" name="numext" value="{{$numExt}}" maxlength="4" required/>
               </div>
+              <div class="col">
+                <label>Colonia:</label>
+                <select class="form-control" name="colony" id="colony">
+                  <option selected hidden>{{$colony}}</option>
+                </select>
+              </div>
             </div>
             <div class="row">
               <div class="col">
-                <label>Colonia:</label>
-                <input type="text" class="form-control" id="colony" name="colony" value="{{$colony}}" required/>
-              </div>
-              <div class="col">
                 <label>Municipio:</label>
-                <input type="text" class="form-control" id="city" name="city" value="{{$city}}" required/>
+                <input type="text" class="form-control" id="city" name="city" value="{{$city}}" readonly/>
               </div>
               <div class="col">
                 <label>Estado:</label>
-                <input type="text" class="form-control" id="estate" name="estate" value="{{$street}}" onkeypress="return soloLetras(event);" required/>
+                <input type="text" class="form-control" id="estate" name="estate" value="{{$street}}" readonly/>
               </div>
-            </div>
-            <div class="row">
               <div class="col">
                 <label>Pais:</label>
-                <input type="text" class="form-control" id="contry" name="contry" value="{{$country}}" onkeypress="return soloLetras(event);" readonly required/>
-              </div>
-              <div class="col">
-                <label>Cóigo postal:</label>
-                <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{$postalCode}}" minlength="5" maxlength="5" onkeypress="return soloNumeros(event);" required/>
+                <input type="text" class="form-control" id="contry" name="contry" value="{{$country}}" readonly/>
               </div>
             </div>
             <input class="btn btn-primary" type="button" value="Actualizar" id="updateform">
