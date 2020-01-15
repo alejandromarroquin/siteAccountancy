@@ -70,24 +70,23 @@ class CfdiController extends Controller
 
     public function printCFDI(){
       $ad="texto";
-      $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
-      return $pdf->download('template3.pdf');
+      $pdf = \PDF::loadView('cfdi/template3',compact('ad'))->render();
+      //$pdf->save(public_path().'\storage\Company\nuevopdf.pdf');
+      $pdf->stream();
     }
 
     public function sendEmail(){
-      $user = 1;
-            $id = 1;
-
             $data = array(
                 'title' => "Test",
                 'message' => "Testing...",
-                'user' => $user,
-                'id' => $id
+                'user' => 1,
+                'id' => 1
             );
             Mail::send('email/email', $data, function($message)
             {
-                $message->to('mcao160696@upemor.edu.mx', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'\storage\Company\DYC160316AT6\CFDIS\3FA71D82-3224-11EA-9EF3-8B6547BBEC09.xml');
+                $message->to('marroquin.alejandroc@gmail.com', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'\storage\Company\DYC160316AT6\CFDIS\3FA71D82-3224-11EA-9EF3-8B6547BBEC09.xml');
             });
+
     }
 
     /**
