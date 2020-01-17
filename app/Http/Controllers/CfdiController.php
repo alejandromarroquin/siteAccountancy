@@ -68,29 +68,6 @@ class CfdiController extends Controller
         return $customer;
     }
 
-    public function printCFDI(){
-      $ad="texto";
-      $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
-      $pdf->save(public_path().'\storage\Company\nuevopdf.pdf');
-    }
-
-    public function sendEmail(){
-      $ad="texto";
-      $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
-      $pdf->save(public_path().'\storage\Company\nuevopdf.pdf');
-            $data = array(
-                'title' => "Test",
-                'message' => "Testing...",
-                'user' => 1,
-                'id' => 1
-            );
-            Mail::send('email/email', $data, function($message)
-            {
-                $message->to('marroquin.alejandroc@gmail.com', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'\storage\Company\DYC160316AT6\CFDIS\3FA71D82-3224-11EA-9EF3-8B6547BBEC09.xml')->attach(public_path().'\storage\Company\nuevopdf.pdf');
-            });
-
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -99,6 +76,25 @@ class CfdiController extends Controller
      */
     public function store(Request $request)
     {
+      $condicspay=$request->condicspay;
+      $subtotal=$request->subtotal;
+      $currency=$request->currency;
+      $total=$request->total;
+      $methodpayment=$request->methodpayment;
+      $street=$request->street;
+      $numext=$request->numExt;
+      $colony=$request->colony;
+      $city=$request->city;
+      $state=$request->state;
+      $cp=$request->cp;
+      $businessname=$request->businessname;
+      $taxregime=$request->taxregime;
+      $rfccust=$request->rfccust;
+
+      $quantity=$request->quantity;
+      $applyiva=$request->applyiva;
+
+
       date_default_timezone_set('America/Mexico_City');
       /**
       * Niveles de debug:
@@ -126,7 +122,7 @@ class CfdiController extends Controller
       $user_password = "b9ec2afa3361a59af4b4d102d3f704eabdf097d4";
 
       // generar y sellar un XML con los CSD de pruebas
-      $cfdi = $this->generarXML($rfc_emisor,$request->condicspay,$request->subtotal,$request->currency,$request->total,$request->methodpayment,$request->cp,$request->businessname,$request->taxregime,$request->rfccust);
+      $cfdi = $this->generarXML($rfc_emisor,$condicspay,$subtotal,$currency,$total,$methodpayment,$cp,$businessname,$taxregime,$rfccust);
       $cfdi = $this->sellarXML($cfdi, $numero_certificado, $archivo_cer, $archivo_pem);
 
       // die(var_dump($cfdi));
@@ -171,8 +167,8 @@ class CfdiController extends Controller
               $filename=substr($comprobante, 71);
               session(['filename'=>$filename]);
             }
-            $ad="texto";
-            $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
+            $temp='cfdi/template'.session('cfditemplate');
+            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust'));
             $pdf->save($comprobante.'.pdf');
             file_put_contents($comprobante.".xml", $cliente->xml);
             $data=array(

@@ -155,7 +155,7 @@
             </div>
             <div class="senderinf">
               <label>Nombre de la empresa</label>
-              <label>{{$ad}}</label>
+              <label>RFC</label>
               <div class="group-address">
                 <label class="address">Street</label>
                 <label class="address">No. Colony</label>

@@ -67,7 +67,7 @@
           <div class="col-lg-8 col-xl-12">
             <div class="row">
               <div class="col brand">
-                <img class="img-fluid" src="{{$url}}">
+                <img class="img-fluid" src="{{$url}}" width="200">
               </div>
               <div class="col">
                 <div class="col senderinfo">
@@ -75,6 +75,11 @@
                     <input type="text" name="rfcsender" value="{{$data->rfc}}" hidden/>
                     <input type="text" name="businessname" value="{{$data->businessname}}" hidden/>
                     <input type="text" name="cp" value="{{$data->postalCode}}" hidden/>
+                    <input type="text" name="street" value="{{$data->street}}" hidden/>
+                    <input type="text" name="numExt" value="{{$data->numExt}}" hidden/>
+                    <input type="text" name="colony" value="{{$data->colony}}" hidden/>
+                    <input type="text" name="city" value="{{$data->city}}" hidden/>
+                    <input type="text" name="state" value="{{$data->state}}" hidden/>
                     <strong>{{$data->businessname}}</strong><br/>
                     <strong>R.F.C {{$data->rfc}}</strong><br/>
                     Domicilio: {{$data->street}} No. {{$data->numExt}}<br/>

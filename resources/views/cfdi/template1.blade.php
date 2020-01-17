@@ -167,12 +167,12 @@
               <img src="storage/Company/DYC160316AT6/Brand/brandDYC160316AT6.png" width="180" height="130">
             </div>
             <div class="senderinf">
-              <label>Nombre de la empresa</label>
-              <label>{{$ad}}</label>
+              <label>{{$businessname}}</label>
+              <label>R.F.C. {{$rfc_emisor}}</label>
               <div class="group-address">
-                <label class="address">Street</label>
-                <label class="address">No. Colony</label>
-                <label class="address">City State</label>
+                <label class="address">{{$street}}</label>
+                <label class="address">No.{{$numext}} {{$colony}}</label>
+                <label class="address">{{$city}} {{$state}}</label>
               </div>
               <label>Télefono</label>
               <label>Página web</label>

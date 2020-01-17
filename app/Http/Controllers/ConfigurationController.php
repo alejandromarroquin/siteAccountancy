@@ -42,6 +42,7 @@ class ConfigurationController extends Controller
         try {
           $config->cfditemplate=$request->numid;
           $config->save();
+          session(['cfditemplate'=>$request->numid])
           DB::commit();
           return 1;
         } catch (\PDOException $e) {

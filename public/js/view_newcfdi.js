@@ -146,6 +146,11 @@ $(document).ready(function(){
     var rfcsender=$('input[name="rfcsender"]').val();
     var businessname=$('input[name="businessname"]').val();
     var taxregime=$('input[name="taxregime"]').val();
+    var street=$('input[name="street"]').val();
+    var numExt=$('input[name="numExt"]').val();
+    var colony=$('input[name="colony"]').val();
+    var city=$('input[name="city"]').val();
+    var state=$('input[name="state"]').val();
     var cp=$('input[name="cp"]').val();
     var condicspay=$('select[name="condicspay"]').val();
     var methodpayment=$('select[name="methodpayment"]').val();
@@ -153,6 +158,8 @@ $(document).ready(function(){
     var subtotal=$('input[name="subtotal"]').val();
     var total=$('input[name="total"]').val();
     var rfccust=$('input[name="rfccust"]').val();
+    var quantity=$('input[name="quantity[]"]').val();
+    var applyiva=$('input[name="applyiva[]"]').val();
     if($("#cfdiform").valid()){
       Swal.fire({
         title: 'Está seguro de generar el CFDI?',
@@ -167,7 +174,7 @@ $(document).ready(function(){
           Swal.fire({
             title: 'Se está generando la factura!',
             html: 'Esperé un mmento...',
-            timer: 9000,
+            timer: 15000,
             onBeforeOpen: () => {
               Swal.showLoading()
               timerInterval = setInterval(() => {
@@ -180,9 +187,8 @@ $(document).ready(function(){
           $.ajax({
            type:'POST',
            url:'/cfdicreate',
-           data:{rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,cp:cp,condicspay:condicspay,methodpayment:methodpayment,currency:currency,subtotal:subtotal,total:total,rfccust:rfccust},
+           data:{rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,methodpayment:methodpayment,currency:currency,subtotal:subtotal,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva},
            success:function(data){
-             alert(data);
             if(data==1){
               Swal.fire(
                 'Facturado!',
