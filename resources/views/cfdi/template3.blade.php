@@ -2,7 +2,6 @@
 <html lang="en" dir="ltr">
     <head>
         <style>
-            /** Define the margins of your page **/
             @page {
                 margin: 0cm 0cm;
             }
@@ -53,14 +52,13 @@
               border-collapse: collapse;
               width: 100%;
             }
-
             th, td {
               text-align: left;
               padding: 8px;
             }
-
-            tr:nth-child(even){background-color: #f2f2f2}
-
+            tr:nth-child(even){
+              background-color: #f2f2f2
+            }
             th {
               background-color: #5698E8;
               color: black;
@@ -160,7 +158,6 @@
         </style>
     </head>
     <body>
-        <!-- Define header and footer blocks before your content -->
         <header>
             <hr></hr>
             <div class="logo">

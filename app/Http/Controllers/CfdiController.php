@@ -70,12 +70,14 @@ class CfdiController extends Controller
 
     public function printCFDI(){
       $ad="texto";
-      $pdf = \PDF::loadView('cfdi/template3',compact('ad'))->render();
-      //$pdf->save(public_path().'\storage\Company\nuevopdf.pdf');
-      $pdf->stream();
+      $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
+      $pdf->save(public_path().'\storage\Company\nuevopdf.pdf');
     }
 
     public function sendEmail(){
+      $ad="texto";
+      $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
+      $pdf->save(public_path().'\storage\Company\nuevopdf.pdf');
             $data = array(
                 'title' => "Test",
                 'message' => "Testing...",
@@ -84,7 +86,7 @@ class CfdiController extends Controller
             );
             Mail::send('email/email', $data, function($message)
             {
-                $message->to('marroquin.alejandroc@gmail.com', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'\storage\Company\DYC160316AT6\CFDIS\3FA71D82-3224-11EA-9EF3-8B6547BBEC09.xml');
+                $message->to('marroquin.alejandroc@gmail.com', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'\storage\Company\DYC160316AT6\CFDIS\3FA71D82-3224-11EA-9EF3-8B6547BBEC09.xml')->attach(public_path().'\storage\Company\nuevopdf.pdf');
             });
 
     }
@@ -161,7 +163,25 @@ class CfdiController extends Controller
           $comprobante = getcwd().'/storage/Company/'.session('rfc').'/CFDIS/'.$cliente->UUID;
 
           if($cliente->xml){
+            $leng=strlen (session('rfc'));
+            if($leng==12){
+              $filename=substr($comprobante, 70);
+              session(['filename'=>$filename]);
+            }else{
+              $filename=substr($comprobante, 71);
+              session(['filename'=>$filename]);
+            }
+            $ad="texto";
+            $pdf = \PDF::loadView('cfdi/template3',compact('ad'));
+            $pdf->save($comprobante.'.pdf');
             file_put_contents($comprobante.".xml", $cliente->xml);
+            $data=array(
+              'name'=>$filename
+            );
+            Mail::send('email/email', $data, function($message)
+            {
+                $message->to('mcao160696@upemor.edu.mx', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.xml')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.pdf');
+            });
             return 1;
           }else{
             return 0;

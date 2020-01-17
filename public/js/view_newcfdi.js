@@ -182,10 +182,11 @@ $(document).ready(function(){
            url:'/cfdicreate',
            data:{rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,cp:cp,condicspay:condicspay,methodpayment:methodpayment,currency:currency,subtotal:subtotal,total:total,rfccust:rfccust},
            success:function(data){
+             alert(data);
             if(data==1){
               Swal.fire(
                 'Facturado!',
-                'El CFDI se generó correctamente.',
+                'El CFDI se envío al correo electrónico del cliente.',
                 'success'
               )
             }else{
