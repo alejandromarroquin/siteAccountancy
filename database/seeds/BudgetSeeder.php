@@ -13,13 +13,13 @@ class BudgetSeeder extends Seeder
     {
       DB::table('budgets')->insert([
         'idAccountancy'=>'1',
-        'concept'=>'Presupuesto general',
+        'typebudget'=>'2',
         'amount'=>'1000000.00'
       ]);
 
       DB::table('budgets')->insert([
         'idAccountancy'=>'1',
-        'concept'=>'Presupuesto de refacciones',
+        'typebudget'=>'1',
         'amount'=>'1000000.00'
       ]);
 

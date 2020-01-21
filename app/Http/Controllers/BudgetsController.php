@@ -71,7 +71,7 @@ class BudgetsController extends Controller
           DB::beginTransaction();
           try{
             $budgets->idAccountancy=session('idaccountancy');
-            $budgets->concept=$request->concept;
+            $budgets->typebudget=$request->typebudget;
             $budgets->amount=$request->amount;
             $budgets->save();
             DB::commit();

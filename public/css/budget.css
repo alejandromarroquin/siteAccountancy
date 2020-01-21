@@ -1,0 +1,31 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.form-check{
+  margin-left: 1.5em;
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 60%;
+  margin-top: 1em;
+}
+
+th {
+  text-align: left;
+}
+
+.purchases,.btnadd{
+  text-align:center;
+}
+
+.costfix{
+  margin-top: 1em;
+  font-size: 18px;
+}
