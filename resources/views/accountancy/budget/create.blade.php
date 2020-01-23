@@ -25,7 +25,7 @@
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="add" role="tabpanel" aria-labelledby="add-tab-tab">
-              <form action="" method="" role="form" id="budgetform">
+              <form action="/budgetcreate" method="POST" role="form" id="budgetform">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-6">
@@ -55,18 +55,18 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col">
+                  <div class="col-3">
                     <label>De:</label>
-                    <input type="date" class="form-control" id="inicio" name="" required/>
+                    <input type="date" class="form-control" id="inicio" name="start" required/>
                   </div>
-                  <div class="col">
+                  <div class="col-3">
                     <label>Hasta:</label>
-                    <input type="date" class="form-control" id="fin" name="" required/>
+                    <input type="date" class="form-control" id="fin" name="end" required/>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <input type="text" name="cont" value="1" hidden/>
+                    <input type="text" name="contfix" value="1" hidden/>
                     <label class="costfix">Costos Fijos</label>
                     <table class="tabfix">
                       <tr>
@@ -77,7 +77,7 @@
                       </tr>
                       <tr id="trfix1">
                         <td><input type="text" name="conceptfix[]"></td>
-                        <td>$<input type="text" name="amountfix[]" id="amountfix1" onchange="sumAmounts();"></td>
+                        <td>$<input type="text" name="amountfix[]" id="amountfix1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);"></td>
                         <td>
                           <select name="categoryfix[]">
                             <option>1</option>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <input type="text" name="cont" value="1" hidden/>
+                    <input type="text" name="contvar" value="1" hidden/>
                     <label class="costfix">Costos Variables</label>
                     <table class="tabvar">
                       <tr>
@@ -104,7 +104,7 @@
                       </tr>
                       <tr id="trvar1">
                         <td><input type="text" name="conceptvar[]"></td>
-                        <td>$<input type="text" name="amountvar[]" id="amountvar1" onchange="sumAmounts();"></td>
+                        <td>$<input type="text" name="amountvar[]" id="amountvar1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);"></td>
                         <td>
                           <select name="categoryvar[]">
                             <option>1</option>
@@ -121,7 +121,7 @@
                 <div class="row">
                   <div class="col-3">
                     <label>Total:</label>
-                    <input type="text" class="form-control" id="amountadd" name="amountadd" readonly required/>
+                    <input type="text" class="form-control" id="total" name="total" readonly/>
                   </div>
                 </div>
                 <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
@@ -132,23 +132,90 @@
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-6">
-                      <label>Concepto:</label>
-                      <select class="form-control" name="concept" id="concept">
-                        <option selected hidden>Selecciona una subcuenta...</option>
-                      </select>
+                      <label>Presupuesto vigente:</label>
                     </div>
-                  </div>
+                </div>
                 <div class="row">
-                  <div class="col-6">
-                    <label>Cantidad:</label>
+                  <div class="col-3">
+                    <label>Vigente desde:</label>
+                    <input class="form-control" type="text" name="" value="" disabled/>
+                  </div>
+                  <div class="col-3">
+                    <label>Vigente hasta:</label>
+                    <input class="form-control" type="text" name="" value="" disabled/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3">
+                    <label>Neto:</label>
+                    <input type="text" class="form-control" id="amountconsult" name="amount" onkeypress="return filterFloat(event,this);" required readonly/>
+                  </div>
+                  <div class="col-3">
+                    <label>Reservado:</label>
+                    <input type="text" class="form-control" id="amountconsult" name="amount" onkeypress="return filterFloat(event,this);" required readonly/>
+                  </div>
+                  <div class="col-3">
+                    <label>Disponible:</label>
                     <input type="text" class="form-control" id="amountconsult" name="amount" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                 </div>
-                <div class="row" hidden/>
-                  <div class="col-6">
-                    <label>Confirmar cantidad:</label>
-                    <input type="text" class="form-control" id="confirmamount" name="confirmamount" onblur="verifyamount();" onkeypress="return filterFloat(event,this);" required/>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" name="contfix" value="1" hidden/>
+                    <label class="costfix">Costos Fijos</label>
+                    <table class="tabfix">
+                      <tr>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Categoria</th>
+                        <th>Compras</th>
+                      </tr>
+                      <tr id="trfix1">
+                        <td>
+
+                        </td>
+                        <td>$
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td class="purchases">
+
+                        </td>
+                      </tr>
+                    </table>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" name="contvar" value="1" hidden/>
+                    <label class="costfix">Costos Variables</label>
+                    <table class="tabvar">
+                      <tr>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Categoria</th>
+                        <th>Compras</th>
+                      </tr>
+                      <tr id="trvar1">
+                        <td>
+                          <label>label</label>
+                        </td>
+                        <td>$
+                          <label>label</label>
+                        </td>
+                        <td>
+                          <label>label</label>
+                        </td>
+                        <td class="purchases">
+                          <label>label</label>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
                 </div>
               </form>
             </div>

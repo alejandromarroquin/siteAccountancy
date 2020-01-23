@@ -7,8 +7,7 @@ $(document).ready(function(){
   });
 
   $('.addfixed').on('click',function(event){
-    alert('si');
-    var cont=$('input[name="cont"]').val();
+    var cont=$('input[name="contfix"]').val();
     var newcont=(parseInt(cont)+1);
     var tr=$('<tr/>',{
       'id':'trfix'+newcont
@@ -26,8 +25,9 @@ $(document).ready(function(){
     var amountfix=$('<input/>',{
       'type':'text',
       'name':'amountfix[]',
-      'id':'amount'+newcont,
-      'onchange':'sumAmounts();'
+      'id':'amountfix'+newcont,
+      'onchange':'sumAmounts();',
+      'onkeypress':'return filterFloat(event,this);'
     });
     var categoryfix=$('<select/>',{
       'name':'categoryfix[]'
@@ -46,12 +46,11 @@ $(document).ready(function(){
     td2.append(amountfix);
     td3.append(categoryfix);
     td4.append(purchasesfix);
-
+    $('input[name="contfix"]').val(newcont);
   });
 
   $('.addvar').on('click',function(event){
-    alert('ok');
-    var cont=$('input[name="cont"]').val();
+    var cont=$('input[name="contvar"]').val();
     var newcont=(parseInt(cont)+1);
     var tr=$('<tr/>',{
       'id':'trvar'+newcont
@@ -69,10 +68,11 @@ $(document).ready(function(){
     var amountvar=$('<input/>',{
       'type':'text',
       'name':'amountvar[]',
-      'id':'amount'+newcont,
-      'onchange':'sumAmounts();'
+      'id':'amountvar'+newcont,
+      'onchange':'sumAmounts();',
+      'onkeypress':'return filterFloat(event,this);'
     });
-    var categorvar=$('<select/>',{
+    var categoryvar=$('<select/>',{
       'name':'categoryvar[]'
     });
     var purchasesvar=$('<input/>',{
@@ -89,7 +89,7 @@ $(document).ready(function(){
     td2.append(amountvar);
     td3.append(categoryvar);
     td4.append(purchasesvar);
-    $('input[name="cont"]').val(newcont);
+    $('input[name="contvar"]').val(newcont);
   });
 
   $("#concept").on('change', function () {
@@ -103,22 +103,29 @@ $(document).ready(function(){
 
   $("#sendform").on('click', function () {
     var typebudget=$('input[name="typebudget"]:checked').val();
-    var amount=$('#amountadd').val();
+    var start=$('input[name="start"]').val();
+    var end=$('input[name="end"]').val();
+    var conceptfix=$('input[name="conceptfix[]"]').map(function(){return $(this).val();}).get();
+    var conceptvar=$('input[name="conceptvar[]"]').map(function(){return $(this).val();}).get();
+    var amountfix=$('input[name="amountfix[]"]').map(function(){return $(this).val();}).get();
+    var amountvar=$('input[name="amountvar[]"]').map(function(){return $(this).val();}).get();
+    var categoryfix=$('input[name="categoryfix[]"]').map(function(){return $(this).val();}).get();
+    var categoryvar=$('input[name="categoryvar[]"]').map(function(){return $(this).val();}).get();
+    var total=$('input[name="total"]').val();
+    var cont=$('input[name="contfix"]').val();
     if($("#budgetform").valid()){
       $.ajax({
          type:'POST',
          url:'/budgetcreate',
-         data:{typebudget:typebudget,amount:amount},
+         data:{typebudget:typebudget,start:start,end:end,conceptfix:conceptfix,conceptvar:conceptvar,amountfix:amountfix,amountvar:amountvar,categoryfix:categoryfix,categoryvar:categoryvar,total:total,cont:cont},
          success:function(data){
+           alert(data);
             if(data!=0){
               Swal.fire(
                 'Registrado!',
                 'El presupuesto se registro correctamente.',
                 'success'
               )
-              $('#conceptadd').val(null);
-              $('#amountadd').val(null);
-              $('#confirmamountadd').val(null);
             }else{
               Swal.fire(
                 'Error!',
@@ -146,10 +153,8 @@ $(document).ready(function(){
   $('#fin').on('change',function(){
     if(new Date($('#fin').val()).getTime()<new Date($('#inicio').val()).getTime()){
       $('#alert').show();
-
     }else{
       $('#alert').hide();
-
     }
   });
 
@@ -167,19 +172,25 @@ $(document).ready(function(){
 
 function sumAmounts(){
   var sum=0;
-  for (var i = 1; i <= $('input[name="cont"]').val(); i++) {
-    sum=parseFloat(sum)+parseFloat($('#amount'+i).val());
+  for (var i = 1; i <= $('input[name="contfix"]').val(); i++) {
+    if($('#amountfix'+i).val()!=''){
+      sum=sum+parseFloat($('#amountfix'+i).val());
+    }
   }
-  alert(sum);
-}
+  for (var i = 1; i <= $('input[name="contvar"]').val(); i++) {
+    if($('#amountvar'+i).val()!=''){
+      sum=sum+parseFloat($('#amountvar'+i).val());
+    }
+  }
 
-function verifyamount(){
-  if($("#amountadd").val()!=$("#confirmamountadd").val() && $("#confirmamountadd").val()!=''){
-    Swal.fire({
-      type: 'error',
-      title: 'Las cantidades no coinciden!',
-      text: 'Porfavor verifica que las cantidades sean iguales'
-    });
-    $("#confirmamountadd").val(null);
+  if(!isNaN(sum)){
+    var sum=String(sum);
+    if(sum.indexOf('.',0)<0){
+      $('input[name="total"]').val(sum.concat(".00"));
+    }else{
+      $('input[name="total"]').val(parseFloat(sum));
+    }
+  }else{
+    $('input[name="total"]').val(0);
   }
 }

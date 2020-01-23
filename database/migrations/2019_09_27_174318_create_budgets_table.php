@@ -18,8 +18,9 @@ class CreateBudgetsTable extends Migration
 
           $table->integer('idAccountancy')->unsigned();
           $table->foreign('idAccountancy')->references('id')->on('accountancies')->onDelete('cascade');
-
           $table->string('typebudget',1);
+          $table->date('start');
+          $table->date('end');
           $table->double('amount',10,2);
 
           $table->timestamps();

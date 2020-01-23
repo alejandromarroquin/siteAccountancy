@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\budgets;
+use App\expense;
 use App\companie;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -67,19 +68,46 @@ class BudgetsController extends Controller
      */
     public function store(Request $request)
     {
-          $budgets=new budgets;
-          DB::beginTransaction();
-          try{
-            $budgets->idAccountancy=session('idaccountancy');
-            $budgets->typebudget=$request->typebudget;
-            $budgets->amount=$request->amount;
-            $budgets->save();
-            DB::commit();
-            return 1;
-          }catch(\PDOException $e){
-            DB::rollBack();
-            return 0;
-          }
+      $budget=new budgets;
+      $array_conceptfix=$request->conceptfix;
+      $array_amountfix=$request->amountfix;
+      $array_conceptvar=$request->conceptvar;
+      $array_amountvar=$request->amountvar;
+      $longitudfix=count($array_conceptfix);
+      $longitudvar=count($array_conceptvar);
+      DB::beginTransaction();
+      try{
+        $budget->idAccountancy=session('idaccountancy');
+        $budget->typebudget=$request->typebudget;
+        $budget->start=$request->start;
+        $budget->end=$request->end;
+        $budget->amount=$request->total;
+        $budget->save();
+
+        for ($i=0; $i < $longitudfix; $i++) {
+          $expenses=new expense;
+          $expenses->idBudget=$budget->id;
+          $expenses->concept=$array_conceptfix[$i];
+          $expenses->amount=$array_amountfix[$i];
+          $expenses->purchases=1;
+          $expenses->save();
+        }
+
+        for ($i=0; $i < $longitudvar; $i++) {
+          $expenses=new expense;
+          $expenses->idBudget=$budget->id;
+          $expenses->concept=$array_conceptvar[$i];
+          $expenses->amount=$array_amountvar[$i];
+          $expenses->purchases=1;
+          $expenses->save();
+        }
+
+        DB::commit();
+        return 1;
+      }catch(\PDOException $e){
+        DB::rollBack();
+        return 0;
+      }
     }
 
     /**
