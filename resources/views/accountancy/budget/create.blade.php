@@ -80,7 +80,21 @@
                         <td>$<input type="text" name="amountfix[]" id="amountfix1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);"></td>
                         <td>
                           <select name="categoryfix[]">
-                            <option>1</option>
+                            <option>Arrendamientos y alquileres</option>
+                            <option>Reparaciones y mantenimientos</option>
+                            <option>Servicios profesionales</option>
+                            <option>Transportes</option>
+                            <option>Primas de seguros</option>
+                            <option>Servicios bancarios</option>
+                            <option>Publicidad y propaganda</option>
+                            <option>Suministros</option>
+                            <option>Servicios exteriores</option>
+                            <option>Impuestos y tributos</option>
+                            <option>Sueldos y salarios</option>
+                            <option>Intereses de préstamos</option>
+                            <option>Intereses por anticipos de cobro</option>
+                            <option>Otros gastos financieros</option>
+                            <option>Principal de préstamos</option>
                           </select>
                         </td>
                         <td class="purchases"><input type="checkbox" name="purchasesfix[]"></td>
@@ -94,7 +108,7 @@
                 <div class="row">
                   <div class="col">
                     <input type="text" name="contvar" value="1" hidden/>
-                    <label class="costfix">Costos Variables</label>
+                    <label class="costvar">Costos Variables</label>
                     <table class="tabvar">
                       <tr>
                         <th>Concepto</th>
@@ -107,7 +121,21 @@
                         <td>$<input type="text" name="amountvar[]" id="amountvar1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);"></td>
                         <td>
                           <select name="categoryvar[]">
-                            <option>1</option>
+                            <option>Arrendamientos y alquileres</option>
+                            <option>Reparaciones y mantenimientos</option>
+                            <option>Servicios profesionales</option>
+                            <option>Transportes</option>
+                            <option>Primas de seguros</option>
+                            <option>Servicios bancarios</option>
+                            <option>Publicidad y propaganda</option>
+                            <option>Suministros</option>
+                            <option>Servicios exteriores</option>
+                            <option>Impuestos y tributos</option>
+                            <option>Sueldos y salarios</option>
+                            <option>Intereses de préstamos</option>
+                            <option>Intereses por anticipos de cobro</option>
+                            <option>Otros gastos financieros</option>
+                            <option>Principal de préstamos</option>
                           </select>
                         </td>
                         <td class="purchases"><input type="checkbox" name="purchasesvar[]"></td>

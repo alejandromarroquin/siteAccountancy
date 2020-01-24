@@ -19,7 +19,9 @@ class CreateExpensesTable extends Migration
             $table->foreign('idBudget')->references('id')->on('budgets')->onDelete('cascade');
             $table->string('concept');
             $table->double('amount',10,2);
+            $table->string('category');
             $table->integer('purchases');
+            $table->string('type',1);
             $table->timestamps();
         });
     }

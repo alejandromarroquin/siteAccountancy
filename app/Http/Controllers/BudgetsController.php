@@ -71,10 +71,12 @@ class BudgetsController extends Controller
       $budget=new budgets;
       $array_conceptfix=$request->conceptfix;
       $array_amountfix=$request->amountfix;
+      $array_categoryfix=$request->categoryfix;
       $array_conceptvar=$request->conceptvar;
       $array_amountvar=$request->amountvar;
       $longitudfix=count($array_conceptfix);
       $longitudvar=count($array_conceptvar);
+
       DB::beginTransaction();
       try{
         $budget->idAccountancy=session('idaccountancy');
@@ -91,6 +93,7 @@ class BudgetsController extends Controller
           $expenses->amount=$array_amountfix[$i];
           $expenses->purchases=1;
           $expenses->save();
+          //return $array_categoryfix[$i];
         }
 
         for ($i=0; $i < $longitudvar; $i++) {
