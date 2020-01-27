@@ -201,13 +201,29 @@ $(document).ready(function(){
     var amountvar=$('input[name="amountvar[]"]').map(function(){return $(this).val();}).get();
     var categoryfix=$('select[name="categoryfix[]"]').map(function(){return $(this).val();}).get();
     var categoryvar=$('select[name="categoryvar[]"]').map(function(){return $(this).val();}).get();
+    var purchasesfix=$('input[name="purchasesfix[]"]').map(function(){
+      if($(this).prop('checked')){
+        $(this).val(1);
+      }else{
+        $(this).val(0);
+      }
+      return $(this).val();
+    }).get();
+    var purchasesvar=$('input[name="purchasesvar[]"]').map(function(){
+      if($(this).prop('checked')){
+        $(this).val(1);
+      }else{
+        $(this).val(0);
+      }
+      return $(this).val();
+    }).get();
     var total=$('input[name="total"]').val();
     var cont=$('input[name="contfix"]').val();
     if($("#budgetform").valid()){
       $.ajax({
          type:'POST',
          url:'/budgetcreate',
-         data:{typebudget:typebudget,start:start,end:end,conceptfix:conceptfix,conceptvar:conceptvar,amountfix:amountfix,amountvar:amountvar,categoryfix:categoryfix,categoryvar:categoryvar,total:total,cont:cont},
+         data:{typebudget:typebudget,start:start,end:end,conceptfix:conceptfix,conceptvar:conceptvar,amountfix:amountfix,amountvar:amountvar,categoryfix:categoryfix,categoryvar:categoryvar,purchasesfix:purchasesfix,purchasesvar:purchasesvar,total:total,cont:cont},
          success:function(data){
            alert(data);
             if(data!=0){

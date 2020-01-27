@@ -72,8 +72,11 @@ class BudgetsController extends Controller
       $array_conceptfix=$request->conceptfix;
       $array_amountfix=$request->amountfix;
       $array_categoryfix=$request->categoryfix;
+      $array_purchasesfix=$request->purchasesfix;
       $array_conceptvar=$request->conceptvar;
       $array_amountvar=$request->amountvar;
+      $array_categoryvar=$request->categoryvar;
+      $array_purchasesvar=$request->purchasesvar;
       $longitudfix=count($array_conceptfix);
       $longitudvar=count($array_conceptvar);
 
@@ -91,9 +94,10 @@ class BudgetsController extends Controller
           $expenses->idBudget=$budget->id;
           $expenses->concept=$array_conceptfix[$i];
           $expenses->amount=$array_amountfix[$i];
-          $expenses->purchases=1;
+          $expenses->category=$array_categoryfix[$i];
+          $expenses->purchases=$array_purchasesfix[$i];
+          $expenses->type="1";
           $expenses->save();
-          //return $array_categoryfix[$i];
         }
 
         for ($i=0; $i < $longitudvar; $i++) {
@@ -101,7 +105,9 @@ class BudgetsController extends Controller
           $expenses->idBudget=$budget->id;
           $expenses->concept=$array_conceptvar[$i];
           $expenses->amount=$array_amountvar[$i];
-          $expenses->purchases=1;
+          $expenses->category=$array_categoryvar[$i];
+          $expenses->purchases=$array_purchasesvar[$i];
+          $expenses->type="2";
           $expenses->save();
         }
 
