@@ -116,9 +116,6 @@
                             <li class="list-group-item">
                                 <a href="/factura">Nueva factura</a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="#">Cancelar factura</a>
-                            </li>
                         </ul>
                     </li>
 

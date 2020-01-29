@@ -21,6 +21,7 @@ class CreateExpensesTable extends Migration
             $table->double('amount',10,2);
             $table->string('category');
             $table->integer('purchases');
+            $table->double('reserved',10,2);
             $table->string('type',1);
             $table->timestamps();
         });

@@ -76,8 +76,8 @@
                         <th>Compras</th>
                       </tr>
                       <tr id="trfix1">
-                        <td><input type="text" name="conceptfix[]"></td>
-                        <td>$<input type="text" name="amountfix[]" id="amountfix1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);"></td>
+                        <td><input type="text" name="conceptfix[]" required/></td>
+                        <td>$<input type="text" name="amountfix[]" id="amountfix1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);" required/></td>
                         <td>
                           <select name="categoryfix[]">
                             <option>Arrendamientos y alquileres</option>
@@ -117,8 +117,8 @@
                         <th>Compras</th>
                       </tr>
                       <tr id="trvar1">
-                        <td><input type="text" name="conceptvar[]"></td>
-                        <td>$<input type="text" name="amountvar[]" id="amountvar1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);"></td>
+                        <td><input type="text" name="conceptvar[]" required/></td>
+                        <td>$<input type="text" name="amountvar[]" id="amountvar1" onchange="sumAmounts();" onkeypress="return filterFloat(event,this);" required/></td>
                         <td>
                           <select name="categoryvar[]">
                             <option>Arrendamientos y alquileres</option>
@@ -160,31 +160,34 @@
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-6">
-                      <label>Presupuesto vigente:</label>
+                      <label>Último presupuesto:</label>
                     </div>
                 </div>
                 <div class="row">
                   <div class="col-3">
                     <label>Vigente desde:</label>
-                    <input class="form-control" type="text" name="" value="" disabled/>
+                    <input class="form-control" type="text" name="" value="{{$start}}" disabled/>
                   </div>
                   <div class="col-3">
                     <label>Vigente hasta:</label>
-                    <input class="form-control" type="text" name="" value="" disabled/>
+                    <input class="form-control" type="text" name="" value="{{$end}}" disabled/>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-3">
-                    <label>Neto:</label>
-                    <input type="text" class="form-control" id="amountconsult" name="amount" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <label>Presupuesto general:</label>
+                    <input type="text" name="totalhidd" value="{{$total}}" hidden/>
+                    <input type="text" class="form-control" name="total" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                   <div class="col-3">
                     <label>Reservado:</label>
-                    <input type="text" class="form-control" id="amountconsult" name="amount" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <input type="text" name="reservedhidd" value="{{$reserved}}" hidden/>
+                    <input type="text" class="form-control" name="reserved" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                   <div class="col-3">
                     <label>Disponible:</label>
-                    <input type="text" class="form-control" id="amountconsult" name="amount" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <input type="text" name="availablehidd" value="{{$available}}" hidden/>
+                    <input type="text" class="form-control" name="available" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                 </div>
                 <div class="row">
@@ -198,20 +201,28 @@
                         <th>Categoria</th>
                         <th>Compras</th>
                       </tr>
-                      <tr id="trfix1">
-                        <td>
-
-                        </td>
-                        <td>$
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td class="purchases">
-
-                        </td>
-                      </tr>
+                      @foreach($budget as $data)
+                        @if($data->type==1)
+                          <tr id="trfix1">
+                            <td>
+                              <label>{{$data->concept}}</label>
+                            </td>
+                            <td>$
+                              <label>{{$data->amount}}</label>
+                            </td>
+                            <td>
+                              <label>{{$data->category}}</label>
+                            </td>
+                            <td class="purchases">
+                              @if($data->purchases==1)
+                                <input type="checkbox" name="" value="" checked disabled/>
+                              @else
+                                <input type="checkbox" name="" value="" disabled/>
+                              @endif
+                            </td>
+                          </tr>
+                        @endif
+                      @endforeach
                     </table>
                   </div>
                 </div>
@@ -226,26 +237,34 @@
                         <th>Categoria</th>
                         <th>Compras</th>
                       </tr>
-                      <tr id="trvar1">
-                        <td>
-                          <label>label</label>
-                        </td>
-                        <td>$
-                          <label>label</label>
-                        </td>
-                        <td>
-                          <label>label</label>
-                        </td>
-                        <td class="purchases">
-                          <label>label</label>
-                        </td>
-                      </tr>
-                    </table>
+                      @foreach($budget as $data)
+                        @if($data->type==2)
+                          <tr id="trvar1">
+                            <td>
+                              <label>{{$data->concept}}</label>
+                            </td>
+                            <td>$
+                              <label>{{$data->amount}}</label>
+                            </td>
+                            <td>
+                              <label>{{$data->category}}</label>
+                            </td>
+                            <td class="purchases">
+                              @if($data->purchases==1)
+                                <input type="checkbox" name="" value="" checked disabled/>
+                              @else
+                                <input type="checkbox" name="" value="" disabled/>
+                              @endif
+                            </td>
+                          </tr>
+                          @endif
+                        @endforeach
+                      </table>
+                    </div>
                   </div>
-                </div>
-
-                </div>
-              </form>
+                  <button type="button" class="btn btn-warning">Editar</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

@@ -28,7 +28,22 @@ class BudgetsController extends Controller
      */
     public function create()
     {
-        return view('accountancy.budget.create');
+        $budget=budgets::join('expenses','expenses.idBudget','=','budgets.id')->where('idAccountancy',session('idaccountancy'))->where('start',\DB::raw("(select max(`start`) from budgets)"))->get();
+        $start='';
+        $end='';
+        $total='';
+        $reserved=0;
+        $available=0;
+        if(!empty($budget)){
+          foreach ($budget as $data) {
+            $start=$data->start;
+            $end=$data->end;
+            $total=$data->total;
+            $reserved=$reserved+$data->reserved;
+          }
+          $available=$total-$reserved;
+        }
+        return view('accountancy.budget.create',compact('budget','start','end','total','reserved','available'));
     }
 
     /**
@@ -44,20 +59,6 @@ class BudgetsController extends Controller
           $amount=$data->amount;
         }
         return $amount;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function consultBudgets(Request $request){
-        $budgets=budgets::select('id','concept')->where('idAccountancy',session('idaccountancy'))->get();
-        echo "<option selected hidden>Selecciona una subcuenta...</option>";
-        foreach($budgets as $budget){
-            echo "<option value=".$budget->id.">".$budget->concept."</option>";
-        }
     }
 
     /**
@@ -86,7 +87,7 @@ class BudgetsController extends Controller
         $budget->typebudget=$request->typebudget;
         $budget->start=$request->start;
         $budget->end=$request->end;
-        $budget->amount=$request->total;
+        $budget->total=$request->total;
         $budget->save();
 
         for ($i=0; $i < $longitudfix; $i++) {
@@ -96,6 +97,7 @@ class BudgetsController extends Controller
           $expenses->amount=$array_amountfix[$i];
           $expenses->category=$array_categoryfix[$i];
           $expenses->purchases=$array_purchasesfix[$i];
+          $expenses->reserved=0.00;
           $expenses->type="1";
           $expenses->save();
         }
@@ -107,6 +109,7 @@ class BudgetsController extends Controller
           $expenses->amount=$array_amountvar[$i];
           $expenses->category=$array_categoryvar[$i];
           $expenses->purchases=$array_purchasesvar[$i];
+          $expenses->reserved=0.00;
           $expenses->type="2";
           $expenses->save();
         }

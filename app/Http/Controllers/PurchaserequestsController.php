@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\purchaserequests;
+use App\budgets;
+use App\expense;
 use DB;
 use Illuminate\Http\Request;
 
@@ -49,6 +51,16 @@ class PurchaserequestsController extends Controller
       }
     }
 
+    public function amountCategory($category){
+      $amount=expense::select('amount','reserved')->where('id',$category)->get();
+      foreach ($amount as $data) {
+        $amount=$data->amount;
+        $reserved=$data->reserved;
+      }
+      $amount=[$amount,$reserved];
+      return $amount;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,7 +68,8 @@ class PurchaserequestsController extends Controller
      */
     public function create()
     {
-        return view('purchases.create');
+        $categorys=budgets::join('expenses','budgets.id','=','expenses.idBudget')->select('expenses.id','expenses.concept')->where('expenses.purchases',1)->where('budgets.idAccountancy',session('idaccountancy'))->get();
+        return view('purchases.create',compact('categorys'));
     }
 
     /**
@@ -67,11 +80,12 @@ class PurchaserequestsController extends Controller
      */
     public function store(Request $request)
     {
+        $purchase=new purchaserequests;
+        $expense=expense::find($request->category);
         DB::beginTransaction();
         try {
-          $purchase=new purchaserequests;
-          $purchase->idAccountancy=1;
-          $purchase->idPersonCheck=1;
+          $purchase->idAccountancy=session('idaccountancy');
+          $purchase->idExpenses=$request->category;
           $purchase->date=$request->date;
           $purchase->concept=$request->concept;
           $purchase->priceunit=$request->unitcost;
@@ -81,12 +95,17 @@ class PurchaserequestsController extends Controller
           $purchase->total=$request->total;
           $purchase->status=0;
           $purchase->save();
+
+          $reserved=$request->reserved+$request->total;
+          $expense->reserved=$reserved;
+          $expense->save();
+
           DB::commit();
+          return 1;
         } catch (\PDOException $e) {
           DB::rollBack();
+          return 0;
         }
-
-        return redirect('/compras')->with('message','Guardado Satisfactoriamente !');
     }
 
     /**

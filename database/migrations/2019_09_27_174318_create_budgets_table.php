@@ -21,7 +21,7 @@ class CreateBudgetsTable extends Migration
           $table->string('typebudget',1);
           $table->date('start');
           $table->date('end');
-          $table->double('amount',10,2);
+          $table->double('total',10,2);
 
           $table->timestamps();
         });

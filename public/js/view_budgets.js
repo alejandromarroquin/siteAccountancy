@@ -6,6 +6,24 @@ $(document).ready(function(){
     }
   });
 
+  if($('input[name="totalhidd"]').val().indexOf('.',0)<0){
+    $('input[name="total"]').val($('input[name="totalhidd"]').val()+'.00');
+  }else{
+    $('input[name="total"]').val($('input[name="totalhidd"]').val());
+  }
+
+  if($('input[name="reservedhidd"]').val().indexOf('.',0)<0){
+    $('input[name="reserved"]').val($('input[name="reservedhidd"]').val()+'.00');
+  }else{
+    $('input[name="reserved"]').val($('input[name="reservedhidd"]').val());
+  }
+
+  if($('input[name="availablehidd"]').val().indexOf('.',0)<0){
+    $('input[name="available"]').val($('input[name="availablehidd"]').val()+'.00');
+  }else{
+    $('input[name="available"]').val($('input[name="availablehidd"]').val());
+  }
+
   $('.addfixed').on('click',function(event){
     var cont=$('input[name="contfix"]').val();
     var newcont=(parseInt(cont)+1);
@@ -225,13 +243,14 @@ $(document).ready(function(){
          url:'/budgetcreate',
          data:{typebudget:typebudget,start:start,end:end,conceptfix:conceptfix,conceptvar:conceptvar,amountfix:amountfix,amountvar:amountvar,categoryfix:categoryfix,categoryvar:categoryvar,purchasesfix:purchasesfix,purchasesvar:purchasesvar,total:total,cont:cont},
          success:function(data){
-           alert(data);
             if(data!=0){
               Swal.fire(
                 'Registrado!',
                 'El presupuesto se registro correctamente.',
                 'success'
-              )
+              ).then((result)=>{
+                location.reload();
+              });
             }else{
               Swal.fire(
                 'Error!',
@@ -263,17 +282,6 @@ $(document).ready(function(){
       $('#alert').hide();
     }
   });
-
-  $('#consult-tab').on('click',function(){
-    $.ajax({
-       type:'GET',
-       url:'/getbudgets',
-       data:{valor:1},
-       success:function(data){
-          $("#concept").html(data);
-       }
-    });
-  });
 });
 
 function sumAmounts(){
@@ -294,9 +302,25 @@ function sumAmounts(){
     if(sum.indexOf('.',0)<0){
       $('input[name="total"]').val(sum.concat(".00"));
     }else{
-      $('input[name="total"]').val(parseFloat(sum));
+      $('input[name="total"]').val(round(parseFloat(sum),2));
     }
   }else{
     $('input[name="total"]').val(0);
   }
+}
+
+// Función para redondear al número de decimales que se desee
+// Recibe como parametros el número que se desea redondear y
+// el número de decimales que se desea
+function round(num, decimales ) {
+    var signo = (num >= 0 ? 1 : -1);
+    num = num * signo;
+    if (decimales === 0) //con 0 decimales
+        return signo * Math.round(num);
+    // round(x * 10 ^ decimales)
+    num = num.toString().split('e');
+    num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimales) : decimales)));
+    // x * 10 ^ (-decimales)
+    num = num.toString().split('e');
+    return signo * (num[0] + 'e' + (num[1] ? (+num[1] - decimales) : -decimales));
 }

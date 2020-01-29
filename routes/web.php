@@ -36,7 +36,6 @@ Route::get('/getcustomer','CfdiController@getCustomer');
 
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
-Route::get('/getbudgets','BudgetsController@consultBudgets');
 Route::get('/getamount','BudgetsController@consultAmount');
 
 Route::get('/flujo_capital','CapitalmovementsController@create');
@@ -47,6 +46,7 @@ Route::get('/compras','PurchaserequestsController@create');
 Route::post('/purchasecreate','PurchaserequestsController@store');
 Route::post('/purchaseupdate','PurchaserequestsController@update');
 Route::get('/purchasesrequest','PurchaserequestsController@consultPurchases');
+Route::get('/amountcategory/{category}','PurchaserequestsController@amountCategory');
 
 Route::get('/cuentas','AccountcatalogsController@create');
 Route::get('/accountscreate','AccountcatalogsController@store');

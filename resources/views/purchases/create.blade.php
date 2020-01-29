@@ -11,12 +11,25 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="/purchasecreate" method="POST" role="form">
+          <form action="" method="" id="purchaseform" role="form">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-2">
                 <label>Fecha:</label>
                 <input type="text" class="form-control" name="date" id="datetype2" readonly required/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <label>Categoria de compra:</label>
+                <select class="form-control" name="category" onblur="validateCategory();" required/>
+                  <option value="0" selected hidden>Seleccione una opción...</option>
+                  @foreach($categorys as $data)
+                    <option value="{{$data->id}}">{{$data->concept}}</option>
+                  @endforeach
+                </select>
+                <input type="text" name="budget" hidden/>
+                <input type="text" name="reserved" hidden/>
               </div>
             </div>
             <div class="row">
@@ -64,7 +77,7 @@
                 <input type="text" class="form-control" id="total" name="total" readonly required/>
               </div>
             </div>
-            <input class="btn btn-primary" type="submit" value="Registrar">
+            <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
           </form>
         </div>
       </div>

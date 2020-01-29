@@ -22,6 +22,9 @@ class CreatePurchaserequestsTable extends Migration
             $table->integer('idPersonCheck')->unsigned()->nullable();
             $table->foreign('idPersonCheck')->references('id')->on('personalinformations')->onDelete('cascade');
 
+            $table->integer('idExpenses')->unsigned();
+            $table->foreign('idExpenses')->references('id')->on('expenses')->onDelete('cascade');
+
             $table->date('date');
             $table->string('concept',100);
             $table->double('priceunit',10,2);
