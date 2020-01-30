@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-  <link rel="stylesheet" href="css/budget.css">
+  <link href="{{asset('css/budget.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -57,11 +57,11 @@
                 <div class="row">
                   <div class="col-3">
                     <label>De:</label>
-                    <input type="date" class="form-control" id="inicio" name="start" required/>
+                    <input class="form-control" type="date" name="start" id="inicio" required/>
                   </div>
                   <div class="col-3">
                     <label>Hasta:</label>
-                    <input type="date" class="form-control" id="fin" name="end" required/>
+                    <input class="form-control" type="date" name="end" id="fin" required/>
                   </div>
                 </div>
                 <div class="row">
@@ -152,7 +152,7 @@
                     <input type="text" class="form-control" id="total" name="total" readonly/>
                   </div>
                 </div>
-                <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
+                <input class="btn btn-primary" type="button" id="sendform" value="Registrar">
               </form>
             </div>
             <div class="tab-pane fade" id="consult" role="tabpanel" aria-labelledby="consult-tab">
@@ -177,17 +177,17 @@
                   <div class="col-3">
                     <label>Presupuesto general:</label>
                     <input type="text" name="totalhidd" value="{{$total}}" hidden/>
-                    <input type="text" class="form-control" name="total" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <input class="form-control" type="text" name="total" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                   <div class="col-3">
                     <label>Reservado:</label>
                     <input type="text" name="reservedhidd" value="{{$reserved}}" hidden/>
-                    <input type="text" class="form-control" name="reserved" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <input class="form-control" type="text" name="reserved" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                   <div class="col-3">
                     <label>Disponible:</label>
                     <input type="text" name="availablehidd" value="{{$available}}" hidden/>
-                    <input type="text" class="form-control" name="available" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <input class="form-control" type="text" name="available" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                 </div>
                 <div class="row">

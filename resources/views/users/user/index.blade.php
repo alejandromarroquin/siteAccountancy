@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('styles')
-  <link href="{{ asset('css/view_accounts.css')}}" rel="stylesheet">
+  <link href="{{asset('css/view_accounts.css')}}" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="table/vendor/perfect-scrollbar/perfect-scrollbar.css">
-	<link rel="stylesheet" type="text/css" href="table/css/util.css">
-	<link rel="stylesheet" type="text/css" href="table/css/table_users.css">
+	<link href="{{asset('table/vendor/perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet">
+	<link href="{{asset('table/css/util.css')}}" rel="stylesheet">
+	<link href="{{asset('table/css/table_users.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')

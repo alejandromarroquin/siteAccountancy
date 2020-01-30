@@ -21,7 +21,7 @@
               <div class="col-4">
                 <label>Logo:</label>
                 <input type="file" name="brand">
-                <img src="{{$url}}" id="imagen1_preview"/>
+                <img src="{{$url}}" id="imagen1_preview" width="300"/>
               </div>
             </div>
             <input class="btn btn-primary" type="submit" value="Guardar">

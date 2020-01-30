@@ -1,7 +1,7 @@
 @extends('layouts.app')
-  <link href="{{ asset('css/trialbalance.css')}}" rel="stylesheet">
-@section('styles')
 
+@section('styles')
+  <link href="{{ asset('css/trialbalance.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')

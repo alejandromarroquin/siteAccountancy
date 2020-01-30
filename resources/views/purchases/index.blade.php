@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('styles')
-  <link rel="stylesheet" type="text/css" href="table/vendor/perfect-scrollbar/perfect-scrollbar.css">
-  <link rel="stylesheet" type="text/css" href="table/css/table.css">
-  <link rel="stylesheet" type="text/css" href="table/css/table_purchases.css">
+  <link href="{{asset('table/vendor/perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet">
+  <link href="{{asset('table/css/table.css')}}" rel="stylesheet">
+  <link href="{{asset('table/css/table_purchases.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')

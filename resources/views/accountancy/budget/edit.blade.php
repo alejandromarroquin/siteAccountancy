@@ -47,11 +47,11 @@
             <div class="row">
               <div class="col-3">
                 <label>De:</label>
-                <input type="date" class="form-control" id="inicio" name="start" required/>
+                <input class="form-control" type="date" name="start" id="inicio" required/>
               </div>
               <div class="col-3">
                 <label>Hasta:</label>
-                <input type="date" class="form-control" id="fin" name="end" required/>
+                <input class="form-control" type="date" name="end" id="fin" required/>
               </div>
             </div>
             <div class="row">
@@ -139,10 +139,10 @@
             <div class="row">
               <div class="col-3">
                 <label>Total:</label>
-                <input type="text" class="form-control" id="total" name="total" readonly/>
+                <input class="form-control" type="text" name="total" id="total" readonly/>
               </div>
             </div>
-            <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
+            <input class="btn btn-primary" type="button" id="sendform" value="Registrar">
           </form>
         </div>
       </div>

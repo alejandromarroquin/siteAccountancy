@@ -3,9 +3,9 @@
 @section('styles')
   <link href="{{ asset('css/view_accounts.css')}}" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="table/vendor/perfect-scrollbar/perfect-scrollbar.css">
-	<link rel="stylesheet" type="text/css" href="table/css/table.css">
-	<link rel="stylesheet" type="text/css" href="table/css/table_companies.css">
+	<link href="{{asset('table/vendor/perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet">
+	<link href="{{asset('table/css/table.css')}}" rel="stylesheet">
+	<link href="{{asset('table/css/table_companies.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
