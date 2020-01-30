@@ -5,7 +5,7 @@ $(document).ready(function(){
     }
   });
   $("#updateform").on('click', function () {
-    jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+    jQuery.validator.messages.required = 'Esté campo es requerido.';
     var idcompany=$('input[name="idcompany"]').val();
     var iduser=$('input[name="iduser"]').val();
     var company=$('select[name="company"]').val();

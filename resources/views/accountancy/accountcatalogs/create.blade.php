@@ -2,7 +2,6 @@
 
 @section('styles')
   <link href="{{ asset('css/view_accounts.css')}}" rel="stylesheet">
-
 	<link rel="stylesheet" type="text/css" href="table/vendor/perfect-scrollbar/perfect-scrollbar.css">
 	<link rel="stylesheet" type="text/css" href="table/css/util.css">
 	<link rel="stylesheet" type="text/css" href="table/css/main.css">

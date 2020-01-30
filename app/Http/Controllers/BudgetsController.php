@@ -31,11 +31,13 @@ class BudgetsController extends Controller
         $budget=budgets::join('expenses','expenses.idBudget','=','budgets.id')->where('idAccountancy',session('idaccountancy'))->where('start',\DB::raw("(select max(`start`) from budgets)"))->get();
         $start='';
         $end='';
-        $total='';
+        $total=0;
         $reserved=0;
         $available=0;
+        $idbudget=0;
         if(!empty($budget)){
           foreach ($budget as $data) {
+            $idbudget=$data->id;
             $start=$data->start;
             $end=$data->end;
             $total=$data->total;
@@ -43,7 +45,7 @@ class BudgetsController extends Controller
           }
           $available=$total-$reserved;
         }
-        return view('accountancy.budget.create',compact('budget','start','end','total','reserved','available'));
+        return view('accountancy.budget.create',compact('budget','start','end','total','reserved','available','idbudget'));
     }
 
     /**
@@ -139,9 +141,9 @@ class BudgetsController extends Controller
      * @param  \App\budgets  $budgets
      * @return \Illuminate\Http\Response
      */
-    public function edit(budgets $budgets)
+    public function edit($budgets)
     {
-        //
+        return view('accountancy.budget.edit');
     }
 
     /**

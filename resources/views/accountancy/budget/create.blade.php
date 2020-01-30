@@ -262,7 +262,7 @@
                       </table>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-warning">Editar</button>
+                  <a href="/budgetedit/{{$start}}" class="btn btn-warning">Editar</a>
                 </form>
               </div>
             </div>

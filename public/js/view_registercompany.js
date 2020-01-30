@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+  jQuery.validator.messages.required = 'Esté campo es requerido.';
 
   $('input[name="rfc"]').on('change', function () {
     rfc=$('input[name="rfc"]').val();

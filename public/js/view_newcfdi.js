@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+  jQuery.validator.messages.required = 'Esté campo es requerido.';
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

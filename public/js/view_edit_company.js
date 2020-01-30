@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  jQuery.validator.messages.required = 'Esté campo es obligatorio.';
+  jQuery.validator.messages.required = 'Esté campo es requerido.';
 
   var endpoint_sepomex  = "http://api-sepomex.hckdrk.mx/query/";
   var method_sepomex = 'info_cp/';

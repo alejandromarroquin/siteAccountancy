@@ -37,6 +37,7 @@ Route::get('/getcustomer','CfdiController@getCustomer');
 Route::get('/budget','BudgetsController@create');
 Route::post('/budgetcreate','BudgetsController@store');
 Route::get('/getamount','BudgetsController@consultAmount');
+Route::get('/budgetedit/{date}','BudgetsController@edit');
 
 Route::get('/flujo_capital','CapitalmovementsController@create');
 Route::post('/movementscreate','CapitalmovementsController@store');

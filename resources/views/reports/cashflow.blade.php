@@ -35,7 +35,7 @@
               </tr>
               <tr>
                 <td scope="row" class="item">La</th>
-                  <td class="cols import">$4424</td>
+                <td class="cols import">$4424</td>
               </tr>
               <tr>
                 <th scope="row" class="rows">Actividades de inversión</th>
@@ -43,7 +43,7 @@
               </tr>
               <tr>
                 <td scope="row" class="item">La</th>
-                  <td class="cols import">$4424</td>
+                <td class="cols import">$4424</td>
               </tr>
               <tr>
                 <th scope="row" class="rows">Actividades de financiamiento</th>
@@ -51,7 +51,7 @@
               </tr>
               <tr>
                 <td scope="row" class="item">La</th>
-                  <td class="cols import">$4424</td>
+                <td class="cols import">$4424</td>
               </tr>
             </tbody>
           </table>

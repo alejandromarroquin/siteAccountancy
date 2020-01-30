@@ -17,23 +17,23 @@
           <h1 class="page-header">Clientes</h1>
         </div>
       </div>
-        <div class="col-lg-8 col-xl-12">
-            <div class="table100 ver1 m-b-110">
-              <div class="table100-head">
-                <table>
-                  <thead>
-                    <tr class="row100 head">
-                      <th class="cell100 column1">RFC</th>
-                      <th class="cell100 column2">Razón social</th>
-                      <th class="cell100 column3">Email</th>
-                      <th class="cell100 column4">Teléfono</th>
-                      <th class="cell100 column5">Edit</th>
-                      <th class="cell100 column6">Delete</th>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
-            <div class="table100-body js-pscroll">
+      <div class="col-lg-8 col-xl-12">
+        <div class="table100 ver1 m-b-110">
+          <div class="table100-head">
+            <table>
+              <thead>
+                <tr class="row100 head">
+                  <th class="cell100 column1">RFC</th>
+                  <th class="cell100 column2">Razón social</th>
+                  <th class="cell100 column3">Email</th>
+                  <th class="cell100 column4">Teléfono</th>
+                  <th class="cell100 column5">Edit</th>
+                  <th class="cell100 column6">Delete</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="table100-body js-pscroll">
             <table>
               <tbody id="tbody">
                 @foreach($companies as $companie)
