@@ -22,7 +22,16 @@
               <input type="text" value="1" name="flag" readonly hidden/>
               <div class="row">
                 <div class="col-6">
-                  <label>Cuenta acredor:</label>
+                  <label>Tipo de movimiento:</label>
+                  <select class="form-control" name="typeflow">
+                    <option>Entrada de dinero</option>
+                    <option>Salida de dinero</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label>Origen::</label>
                   <select class="form-control" name="accountdebit" id="accountdebit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)
@@ -33,7 +42,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label>Cuenta deudor:</label>
+                  <label>Destino:</label>
                   <select class="form-control" name="accountcredit" id="accountcredit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)

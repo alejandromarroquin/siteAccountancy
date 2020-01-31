@@ -18,7 +18,7 @@ class CapitalmovementsController extends Controller
      */
     public function index()
     {
-        //
+        //https://economipedia.com/definiciones/flujo-de-efectivo.html
     }
 
     /**
