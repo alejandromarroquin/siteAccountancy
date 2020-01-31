@@ -143,7 +143,14 @@ class BudgetsController extends Controller
      */
     public function edit($budgets)
     {
-        return view('accountancy.budget.edit');
+        $budget=budgets::join('expenses','budgets.id','=','expenses.idBudget')->select('start','end','type','concept','amount','category','purchases','total','budgets.id as idbudget','expenses.id as idexpense')->where('start',$budgets)->get();
+        foreach ($budget as $data) {
+          $idbudget=$data->idbudget;
+          $start=$data->start;
+          $end=$data->end;
+          $total=$data->total;
+        }
+        return view('accountancy.budget.edit',compact('budget','start','end','total','idbudget'));
     }
 
     /**
@@ -153,9 +160,77 @@ class BudgetsController extends Controller
      * @param  \App\budgets  $budgets
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, budgets $budgets)
+    public function update(Request $request)
     {
-        //
+        $array_idexpensesfix=$request->idexpensefix;
+        $array_idexpensesvar=$request->idexpensevar;
+        $array_conceptfix=$request->conceptfix;
+        $array_conceptvar=$request->conceptvar;
+        $array_amountfix=$request->amountfix;
+        $array_amountvar=$request->amountvar;
+        $array_categoryfix=$request->categoryfix;
+        $array_categoryvar=$request->categoryvar;
+        $array_purchasesfix=$request->purchasesfix;
+        $array_purchasesvar=$request->purchasesvar;
+        $lengthidfix=count($array_idexpensesfix);
+        $lengthidvar=count($array_idexpensesvar);
+        $lengthfix=count($array_conceptfix);
+        $lengthvar=count($array_conceptvar);
+        DB::beginTransaction();
+        try{
+          $budget=budgets::find($request->idbudget);
+          $budget->typebudget=$request->typebudget;
+          $budget->start=$request->start;
+          $budget->end=$request->end;
+          $budget->total=floatval($request->total);
+          $budget->save();
+          for ($i=0; $i < $lengthidfix; $i++) {
+            $expense=expense::find($array_idexpensesfix[$i]);
+            $expense->concept=$array_conceptfix[$i];
+            $expense->amount=$array_amountfix[$i];
+            $expense->category=$array_categoryfix[$i];
+            $expense->purchases=$array_purchasesfix[$i];
+            $expense->save();
+          }
+
+          for ($i=$lengthidfix; $i < $lengthfix; $i++) {
+            $newexpense=new expense;
+            $newexpense->idBudget=$request->idbudget;
+            $newexpense->concept=$array_conceptfix[$i];
+            $newexpense->amount=$array_amountfix[$i];
+            $newexpense->category=$array_categoryfix[$i];
+            $newexpense->purchases=$array_purchasesfix[$i];
+            $newexpense->reserved=0.00;
+            $newexpense->type="1";
+            $newexpense->save();
+          }
+
+          for ($i=0; $i < $lengthidvar; $i++) {
+            $expense=expense::find($array_idexpensesvar[$i]);
+            $expense->concept=$array_conceptvar[$i];
+            $expense->amount=$array_amountvar[$i];
+            $expense->category=$array_categoryvar[$i];
+            $expense->purchases=$array_purchasesvar[$i];
+            $expense->save();
+          }
+
+          for ($i=$lengthidvar; $i < $lengthvar; $i++) {
+            $newexpense=new expense;
+            $newexpense->idBudget=$request->idbudget;
+            $newexpense->concept=$array_conceptvar[$i];
+            $newexpense->amount=$array_amountvar[$i];
+            $newexpense->category=$array_categoryvar[$i];
+            $newexpense->purchases=$array_purchasesvar[$i];
+            $newexpense->reserved=0.00;
+            $newexpense->type="2";
+            $newexpense->save();
+          }
+          DB::commit();
+          return 1;
+        }catch(\PDOException $e){
+          DB::rollBack();
+          return 0;
+        }
     }
 
     /**
