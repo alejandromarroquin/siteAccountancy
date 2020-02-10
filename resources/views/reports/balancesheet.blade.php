@@ -14,9 +14,13 @@
             <div class="col">
               <h1 class="page-header">Balance general:</h1>
             </div>
-            <div class="col">
-              <button type="button" class="btn btn-primary">Descargar</button>
-            </div>
+            <form action="/downloadbalancesheet/2019-12-27/2020-11-17/d&c" method="GET">
+              <input type="text" name="initialdate" value="" hidden>
+              <input type="text" name="finaldate" value="" hidden>
+              <div class="col">
+                <button type="submit" class="btn btn-primary" id="download">Descargar</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -24,6 +28,7 @@
         <div class="col-lg-8 col-xl-12">
           <div class="container information">
             @foreach($company as $information)
+            <input type="text" name="businessName" value="{{$information->businessName}}" hidden>
               <label>{{$information->businessName}}</label><br/>
             @endforeach
             <label>Balance General al </label>

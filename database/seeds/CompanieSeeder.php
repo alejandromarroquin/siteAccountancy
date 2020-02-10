@@ -14,13 +14,5 @@ class CompanieSeeder extends Seeder
       DB::table('companies')->insert([
         'idTaxInformation'=>'1'
       ]);
-
-      DB::table('companies')->insert([
-        'idTaxInformation'=>'2'
-      ]);
-
-      DB::table('companies')->insert([
-        'idTaxInformation'=>'3'
-      ]);
     }
 }

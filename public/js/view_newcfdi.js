@@ -122,8 +122,9 @@ $(document).ready(function(){
       elegido=$(this).val();
       $.get("/getcustomer", { elegido: elegido }, function(data){
           $('.businessnamecustomer').text($("#customer").val());
-          $('.rfccustomer').text('RFC: '+data);
-          $('input[name="rfccust"]').val(data);
+          $('input[name="emailcustomer"]').val(data[0]);
+          $('.rfccustomer').text('RFC: '+data[1]);
+          $('input[name="rfccust"]').val(data[1]);
       });
     });
   });
@@ -143,6 +144,7 @@ $(document).ready(function(){
   });
 
   $("#sendform").on('click', function () {
+    var customer=$('select[name="customer"]').val();
     var rfcsender=$('input[name="rfcsender"]').val();
     var businessname=$('input[name="businessname"]').val();
     var taxregime=$('input[name="taxregime"]').val();
@@ -156,10 +158,13 @@ $(document).ready(function(){
     var methodpayment=$('select[name="methodpayment"]').val();
     var currency=$('select[name="currency"]').val();
     var subtotal=$('input[name="subtotal"]').val();
+    var iva=$('input[name="iva"]').val();
     var total=$('input[name="total"]').val();
     var rfccust=$('input[name="rfccust"]').val();
+    var emailcustomer=$('input[name="emailcustomer"]').val();
     var quantity=$('input[name="quantity[]"]').val();
     var applyiva=$('input[name="applyiva[]"]').val();
+    var waypayment=$('select[name="waypayment"]').val();
     if($("#cfdiform").valid()){
       Swal.fire({
         title: 'Está seguro de generar el CFDI?',
@@ -187,14 +192,17 @@ $(document).ready(function(){
           $.ajax({
            type:'POST',
            url:'/cfdicreate',
-           data:{rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,methodpayment:methodpayment,currency:currency,subtotal:subtotal,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva},
+           data:{customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva,emailcustomer:emailcustomer},
            success:function(data){
+             alert(data);
             if(data==1){
               Swal.fire(
                 'Facturado!',
                 'El CFDI se envío al correo electrónico del cliente.',
                 'success'
-              )
+              ).then((result)=>{
+                location.reload();
+              });
             }else{
                 Swal.fire(
                   'Error!',

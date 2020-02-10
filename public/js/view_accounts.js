@@ -18,7 +18,9 @@ $(document).ready(function(){
               'Agregado!',
               'La cuenta se agregó correctamente.',
               'success'
-            )
+            ).then((result)=>{
+              location.reload();
+            });
           }else{
             Swal.fire(
               'Error!',

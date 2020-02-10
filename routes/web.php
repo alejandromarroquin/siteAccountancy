@@ -58,8 +58,11 @@ Route::get('/getaccount','AccountcatalogsController@consultSubaccount');
 Route::get('/generar_reportes','ReportsController@indexGenerateReports');
 Route::get('/consultar_reportes','ReportsController@indexConsultReports');
 Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
+Route::get('/downloadbalancesheet/{initialdate}/{finaldate}/{businessname}','ReportsController@downloadBalancesheet');
 Route::post('/generatestatementresult','ReportsController@generateStatementresult');
+Route::get('/downloadstatementresult','ReportsController@downloadStatementresult');
 Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
+Route::get('/downloadtrialbalance','ReportsController@downloadTrialbalance');
 Route::post('/generatecashflow','ReportsController@generateCashflow');
 
 Route::get('/configuracion','ConfigurationController@index');

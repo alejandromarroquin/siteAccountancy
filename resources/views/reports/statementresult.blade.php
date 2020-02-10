@@ -9,9 +9,14 @@
   <div class="row mt-4" style="margin-left:20rem;">
     <div class="card-body">
       <div class="row">
-        <div class="col-lg-12 col-xl-12">
+        <div class="col">
           <h1 class="page-header">Estado de resultados</h1>
         </div>
+        <form action="/downloadstatementresult" method="GET">
+          <div class="col">
+            <button type="submit" class="btn btn-primary" id="download">Descargar</button>
+          </div>
+        </form>
       </div>
       <div class="row margin">
         <div class="col-lg-8 col-xl-12">

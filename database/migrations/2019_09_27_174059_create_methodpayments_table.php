@@ -14,8 +14,7 @@ class CreateMethodpaymentsTable extends Migration
     public function up()
     {
         Schema::create('methodpayments', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('code',3);
+          $table->string('code',3)->primary();
           $table->string('description',45);
 
           $table->timestamps();

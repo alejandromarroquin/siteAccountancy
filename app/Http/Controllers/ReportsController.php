@@ -47,8 +47,17 @@ class ReportsController extends Controller
      */
     public function generateBalancesheet(Request $request)
     {
+        $inititaldate=$request->initaldate;
+        $finaldate=$request->finaldate;
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         return view('reports/balancesheet',compact('company'));
+    }
+
+    public function downloadBalancesheet($initialdate,$finaldate,$businessname){
+
+      $pdf = \PDF::loadView('reports.balancesheetPDF');
+      return $pdf->download();
+
     }
 
     public function generateStatementresult(Request $request)
@@ -57,12 +66,22 @@ class ReportsController extends Controller
         return view('reports/statementresult',compact('company'));
     }
 
+    public function downloadStatementresult(){
+      $pdf = \PDF::loadView('reports.statementresultPDF');
+      return $pdf->download();
+    }
+
     public function generateTrialbalance(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         $cashflow=capitalmovements::join('accountancycatalogs','capitalmovements.idAccountancyCatalog','=','accountancycatalogs.id')->get();
 
         return view('reports/trialbalance',compact('company'));
+    }
+
+    public function downloadTrialbalance(){
+      $pdf = \PDF::loadView('reports.trialbalancePDF');
+      return $pdf->download();
     }
 
     public function generateCashflow(Request $request)

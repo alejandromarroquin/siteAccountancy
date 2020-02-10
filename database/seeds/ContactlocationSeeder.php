@@ -20,22 +20,5 @@ class ContactlocationSeeder extends Seeder
         'web'=>'www.dyctech.com'
       ]);
 
-      DB::table('contactlocations')->insert([
-        'idaddress'=>'2',
-        'idphone'=>'2',
-        'idemail'=>'2',
-        'responsible'=>'Viridiana Herrera Matínez',
-        'positionresponsible'=>'Gerente de ventas',
-        'web'=>'www.empresa.com'
-      ]);
-
-      DB::table('contactlocations')->insert([
-        'idaddress'=>'3',
-        'idphone'=>'3',
-        'idemail'=>'3',
-        'responsible'=>'Sergio Romero Tellez',
-        'positionresponsible'=>'Contador',
-        'web'=>'www.empresa.com'
-      ]);
     }
 }

@@ -12,19 +12,8 @@ class EmailSeeder extends Seeder
     public function run()
     {
       DB::table('emails')->insert([
-        'email'=>'soporte.web@dyctech.com'
+        'email'=>'mcao160696@upemor.edu.mx'
       ]);
 
-      DB::table('emails')->insert([
-        'email'=>'vilma@gmail.com'
-      ]);
-
-      DB::table('emails')->insert([
-        'email'=>'rodrigo@gmail.com'
-      ]);
-
-      DB::table('emails')->insert([
-        'email'=>'daniela@gmail.com'
-      ]);
     }
 }

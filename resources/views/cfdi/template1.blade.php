@@ -172,7 +172,7 @@
               <div class="group-address">
                 <label class="address">{{$street}}</label>
                 <label class="address">No.{{$numext}} {{$colony}}</label>
-                <label class="address">{{$city}} {{$state}}</label>
+                <label class="address">{{$city}}, {{$state}}. {{$cp}}</label>
               </div>
               <label>Télefono</label>
               <label>Página web</label>
@@ -180,7 +180,7 @@
             </div>
             <div class="date">
               <h3>Factura</h3>
-              <h3>000383</h3>
+              <h3></h3>
               <h5>Fecha y hora de Expedición:</h5>
             </div><br>
             <div class="subheader">
@@ -188,7 +188,7 @@
                 <label>CLIENTE</label>
                 <div class="customerinf">
                   <label>Razón social del cliente</label>
-                  <label>RFC</label>
+                  <label>RFC {{$rfccust}}</label>
                 </div>
               </div>
               <div class="taxinf">
@@ -247,9 +247,9 @@
             </tr>
           </table>
           <div class="balances">
-            <label class="amounts">Subtotal:</label>
-            <label class="amounts">IVA:</label>
-            <label class="amounts total">Total:</label>
+            <label class="amounts">Subtotal: {{$request->subtotal}}</label>
+            <label class="amounts">IVA: {{$request->iva}}</label>
+            <label class="amounts total">Total: {{$request->total}}</label>
           </div>
           <div class="commercial">
             Espacio publicitario

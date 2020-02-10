@@ -164,12 +164,12 @@
               <img src="storage/Company/DYC160316AT6/Brand/brandDYC160316AT6.png" width="180" height="130">
             </div>
             <div class="senderinf">
-              <label>Nombre de la empresa</label>
-              <label>RFC</label>
+              <label>{{$businessname}}</label>
+              <label>RFC {{$rfc_emisor}}</label>
               <div class="group-address">
-                <label class="address">Street</label>
-                <label class="address">No. Colony</label>
-                <label class="address">City State</label>
+                <label class="address">{{$street}}</label>
+                <label class="address">No. {{$numext}} {{$colony}}</label>
+                <label class="address">{{$city}}, {{$state}}. {{$cp}}</label>
               </div>
               <label>Télefono</label>
               <label>Página web</label>
@@ -185,7 +185,7 @@
                 <label>CLIENTE</label>
                 <div class="customerinf">
                   <label>Razón social del cliente</label>
-                  <label>RFC</label>
+                  <label>RFC {{$rfccust}}</label>
                 </div>
               </div>
               <div class="taxinf">
@@ -244,9 +244,9 @@
             </tr>
           </table>
           <div class="balances">
-            <label class="amounts">Subtotal:</label>
-            <label class="amounts">IVA:</label>
-            <label class="amounts total">Total:</label>
+            <label class="amounts">Subtotal: {{$request->subtotal}}</label>
+            <label class="amounts">IVA: {{$request->iva}}</label>
+            <label class="amounts total">Total: {{$request->total}}</label>
           </div>
           <div class="commercial">
             Espacio publicitario

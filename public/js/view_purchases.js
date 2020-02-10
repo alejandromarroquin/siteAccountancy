@@ -35,7 +35,7 @@ $(document).ready(function(){
               if(data!=0){
                 Swal.fire(
                   'Registrado!',
-                  'El presupuesto se registro correctamente.',
+                  'La solicitud se generó correctamente.',
                   'success'
                 ).then((result)=>{
                   location.reload();

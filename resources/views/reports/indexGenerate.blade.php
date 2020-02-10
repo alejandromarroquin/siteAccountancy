@@ -69,11 +69,11 @@
                     <div class="row">
                       <div class="col">
                         <label>De:</label>
-                        <input type="date" class="form-control" id="inicio" name="" required/>
+                        <input type="date" class="form-control" name="initaldate" id="inicio" name="" required/>
                       </div>
                       <div class="col">
                         <label>Hasta:</label>
-                        <input type="date" class="form-control" id="fin" name="" required/>
+                        <input type="date" class="form-control" name="finaldate" id="fin" name="" required/>
                       </div>
                     </div>
                   </div>

@@ -45,6 +45,7 @@ class CfdiController extends Controller
         $methodspayment=methodpayment::all();
         $wayspayment=waytopay::all();
         $units=unitmeasurements::all();
+        //$numcfd=cfdi::orderBy('numcfdi','desc')->first()->where('idCompany',session('idcompany'));
         if (Storage::disk('local')->exists('/Company/'.session('rfc').'/Brand/','brand'.session('rfc').'.png')){
           $url = Storage::disk('local')->url('Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png');
         }else{
@@ -61,11 +62,13 @@ class CfdiController extends Controller
      */
     public function getCustomer(Request $request)
     {
-        $customer=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->select('taxinformations.rfc')->where('taxinformations.businessname',$request->elegido)->get();
+        $customer=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->join('contactlocations','taxinformations.idtaxinformation','=','contactlocations.id')->join('emails','contactlocations.idEmail','=','emails.id')->select('taxinformations.rfc','emails.email')->where('taxinformations.businessname',$request->elegido)->get();
         foreach($customer as $data){
+          $email=$data->email;
           $customer=$data->rfc;
         }
-        return $customer;
+        $customerdata=[$email,$customer];
+        return $customerdata;
     }
 
     /**
@@ -76,11 +79,14 @@ class CfdiController extends Controller
      */
     public function store(Request $request)
     {
+      $newcfdi=new cfdi;
       $condicspay=$request->condicspay;
       $subtotal=$request->subtotal;
       $currency=$request->currency;
+      $iva=$request->iva;
       $total=$request->total;
       $methodpayment=$request->methodpayment;
+      $waypayment=$request->waypayment;
       $street=$request->street;
       $numext=$request->numExt;
       $colony=$request->colony;
@@ -90,11 +96,47 @@ class CfdiController extends Controller
       $businessname=$request->businessname;
       $taxregime=$request->taxregime;
       $rfccust=$request->rfccust;
-
+      $customer=$request->customer;
       $quantity=$request->quantity;
       $applyiva=$request->applyiva;
 
+      $emailcustomer=$request->emailcustomer;
+      session(['emailcustomer'=>$emailcustomer]);
 
+      $newcfdi->idCompany=session('idcompany');
+      $newcfdi->idMethodPayment=$methodpayment;
+      $newcfdi->idwaypay=$waypayment;
+      $newcfdi->numcfdi=1;
+      $newcfdi->customer=$customer;
+      $newcfdi->currency=$currency;
+      $newcfdi->condicspay=$condicspay;
+      $newcfdi->subtotal=$subtotal;
+      $newcfdi->iva=$iva;
+      $newcfdi->total=$total;
+      $newcfdi->save();
+
+      if(strlen($newcfdi->id)==1){
+        $numcfdi='00000'.$newcfdi->id;
+      }else{
+        if(strlen($newcfdi->id)==2){
+          $numcfdi='0000'.$newcfdi->id;
+        }else{
+          if(strlen($newcfdi->id)==3){
+            $numcfdi='000'.$newcfdi->id;
+          }else{
+            if(strlen($newcfdi->id)==4){
+              $numcfdi='00'.$newcfdi->id;
+            }else{
+              if(strlen($newcfdi->id)==5){
+                $numcfdi='0'.$newcfdi->id;
+              }else{
+                $numcfdi=$newcfdi->id;
+              }
+            }
+          }
+        }
+      }
+      return $numcfdi;
       date_default_timezone_set('America/Mexico_City');
       /**
       * Niveles de debug:
@@ -168,7 +210,7 @@ class CfdiController extends Controller
               session(['filename'=>$filename]);
             }
             $temp='cfdi/template'.session('cfditemplate');
-            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust'));
+            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request'));
             $pdf->save($comprobante.'.pdf');
             file_put_contents($comprobante.".xml", $cliente->xml);
             $data=array(
@@ -176,7 +218,7 @@ class CfdiController extends Controller
             );
             Mail::send('email/email', $data, function($message)
             {
-                $message->to('mcao160696@upemor.edu.mx', 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.xml')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.pdf');
+                $message->to(session('emailcustomer'), 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.xml')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.pdf');
             });
             return 1;
           }else{

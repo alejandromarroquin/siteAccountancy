@@ -1,21 +1,21 @@
 $(document).ready(function(){
   $('#balancesheet').on('click',function(){
-    var url=url='/generatebalancesheet';
+    var url='/generatebalancesheet';
     $('#dates').attr('action', url);
   });
 
   $('#statementresult').on('click',function(){
-    var url=url='/generatestatementresult';
+    var url='/generatestatementresult';
     $('#dates').attr('action', url);
   });
 
   $('#trialbalance').on('click',function(){
-    var url=url='/generatetrialbalance';
+    var url='/generatetrialbalance';
     $('#dates').attr('action', url);
   });
 
   $('#cashflow').on('click',function(){
-    var url=url='/generatecashflow';
+    var url='/generatecashflow';
     $('#dates').attr('action', url);
   });
 });

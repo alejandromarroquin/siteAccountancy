@@ -43,7 +43,7 @@
               <select class="form-control" name="waypayment" id="waypayment">
                 <option selected hidden>Selecciona una forma de pago...</option>
                 @foreach($wayspayment as $waypayment)
-                  <option>{{$waypayment->description}}</option>
+                  <option value="{{$waypayment->id}}">{{$waypayment->description}}</option>
                 @endforeach
               </select>
             </div>
@@ -107,6 +107,7 @@
                   <div class="col">
                     <label class="rfccustomer margin3em"></label>
                     <input type="text" name="rfccust" hidden/>
+                    <input type="text" name="emailcustomer" hidden>
                   </div>
                 </div>
               </div>
