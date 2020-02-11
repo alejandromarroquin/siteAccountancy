@@ -1,4 +1,58 @@
 $(document).ready(function(){
+    $('input[name="cer"]').on('change',function(){
+      if($('input[name="cer"]').val()!=null){
+        var fileName = this.files[0].name;
+        var ext = fileName.split('.');
+        ext = ext[ext.length-1];
+        switch (ext) {
+          case 'cer':
+          break;
+          default:
+            Swal.fire(
+              'Error!',
+              'Extensión del archivo inválida.',
+              'error'
+            ).then(function(){
+              $('input[name="cer"]').val(null);
+            });
+          break;
+        }
+      }
+    });
+
+    $('input[name="commercial"]').on('change',function(){
+      if($('input[name="commercial"]').val()!=null){
+        if($('input[name="commercial"]').width()!=500 && $('input[name="commercial"]').height()!=180){
+          Swal.fire(
+            'Error!',
+            'La imagen no tiene las dimensiones recomendadas.',
+            'error'
+          )
+        }
+      }
+    });
+
+    $('input[name="key"]').on('change',function(){
+      if($('input[name="key"]').val()!=null){
+        var fileName = this.files[0].name;
+        var ext = fileName.split('.');
+        ext = ext[ext.length-1];
+        switch (ext) {
+          case 'pem':
+          break;
+          default:
+            Swal.fire(
+              'Error!',
+              'Extensión del archivo inválida.',
+              'error'
+            ).then(function(){
+              $('input[name="key"]').val(null);
+            });
+          break;
+        }
+      }
+    });
+
     $('input[name="brand"]').on('change',function(){
       if($('input[name="brand"]').val()!=null){
         var fileName = this.files[0].name;

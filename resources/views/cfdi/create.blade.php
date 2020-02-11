@@ -16,6 +16,7 @@
       <div class="row margin">
         <form action="/cfdicreate" method="POST" role="form" id="cfdiform">
           {{ csrf_field() }}
+          <input type="text" name="numcfdi" value="{{$numcfd}}" hidden>
           <div class="row">
             <div class="col-6">
               <input type="text" name="taxregime" value="@foreach($senderdata as $data){{$data->code}}@endforeach" hidden/>

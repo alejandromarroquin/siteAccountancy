@@ -110,12 +110,18 @@ class CompanieController extends Controller
         $customers->idTaxInformation=$taxinf->id;
         $customers->save();
 
-        $path = public_path().'/storage/Company/'.$request->rfc;
-        File::makeDirectory($path, $mode = 0777, true, true);
-        $pathbrand=$path.'/Brand';
-        File::makeDirectory($pathbrand, $mode = 0777, true, true);
-        $pathcfdis=$path.'/CFDIS';
-        File::makeDirectory($pathcfdis, $mode = 0777, true, true);
+
+          $path = public_path().'/storage/Company/'.$request->rfc;
+          File::makeDirectory($path, $mode = 0777, true, true);
+          $pathbrand=$path.'/Brand';
+          File::makeDirectory($pathbrand, $mode = 0777, true, true);
+          $pathcertificates=$path.'/Certificates';
+          File::makeDirectory($pathcertificates, $mode = 0777, true, true);
+          $pathcommercial=$path.'/Commercial';
+          File::makeDirectory($pathcommercial, $mode = 0777, true, true);
+          $pathcfdis=$path.'/CFDIS';
+          File::makeDirectory($pathcfdis, $mode = 0777, true, true);
+
         DB::commit();
         return 1;
       }catch(\PDOException $e){

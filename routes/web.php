@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
         Route::get('/accountscreate','AccountcatalogsController@store');
         Route::get('/accountsdelete','AccountcatalogsController@destroy');
         Route::get('/getaccount','AccountcatalogsController@consultSubaccount');
-        
+
         Route::get('/compras_consultar','PurchaserequestsController@index');
         Route::get('/compras','PurchaserequestsController@create');
         Route::post('/purchasecreate','PurchaserequestsController@store');
@@ -78,6 +78,8 @@ Route::post('/userupdate','UserController@update');
 Route::get('/configuracion','ConfigurationController@index');
 Route::post('/saveconfig','ConfigurationController@store');
 Route::post('/updatetemplate','ConfigurationController@updateTemplate');
+Route::post('/loadfiles','ConfigurationController@loadfiles');
+Route::post('/loadcommercial','ConfigurationController@loadcommercial');
 
 Auth::routes();
 

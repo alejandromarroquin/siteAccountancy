@@ -26,6 +26,28 @@
             </div>
             <input class="btn btn-primary" type="submit" value="Guardar">
           </form>
+          <form action="/loadcommercial" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="row">
+              <div class="col-4">
+                <label>Publicidad:</label>
+                <input type="file" name="commercial">
+              </div>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Guardar">
+          </form>
+          <form action="/loadfiles" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="row">
+              <div class="col-4">
+                <label>Certificado:</label>
+                <input type="file" name="cer">
+                <label>Key:</label>
+                <input type="file" name="key">
+              </div>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Guardar">
+          </form>
           <div class="templates">
             <input type="text" name="idconfig" value="{{$idconfig}}" hidden/>
             <input type="text" name="numtemplate" value="{{$numtemp}}" hidden/>

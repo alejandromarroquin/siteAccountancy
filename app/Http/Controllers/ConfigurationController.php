@@ -52,6 +52,43 @@ class ConfigurationController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function loadFiles(Request $request){
+      if(request()->validate(['cer' => 'file']) && request()->validate(['key' => 'file'])){
+        $filecer = $request->file('cer');
+        $filekey = $request->file('key');
+        $namecer = 'certificate'.session('rfc').'.cer';
+        $namekey = 'key'.session('rfc').'.key.pem';
+        Storage::disk('local')->put('/Company/'.session('rfc').'/Certificados/'.$namecer,  File::get($filecer));
+        Storage::disk('local')->put('/Company/'.session('rfc').'/Certificados/'.$namekey,  File::get($filekey));
+        return redirect('/configuracion');
+      }else{
+        return 0;
+      }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function loadCommercial(Request $request){
+      if(request()->validate(['commercial' => 'image'])){
+        $file = $request->file('commercial');
+        $nombre = 'commercial'.session('rfc').'.png';
+        Storage::disk('local')->put('/Company/'.session('rfc').'/Commercial/'.$nombre,  File::get($file));
+        return redirect('/configuracion');
+      }else{
+        return 0;
+      }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

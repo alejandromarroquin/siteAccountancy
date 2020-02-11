@@ -45,13 +45,21 @@ class CfdiController extends Controller
         $methodspayment=methodpayment::all();
         $wayspayment=waytopay::all();
         $units=unitmeasurements::all();
-        //$numcfd=cfdi::orderBy('numcfdi','desc')->first()->where('idCompany',session('idcompany'));
+        $numcfdi=DB::select('select max(numcfdi) as dd from companies inner join cfdis on companies.id=cfdis.idCompany where companies.id='.session('idcompany'));
+        foreach ($numcfdi as $data) {
+          $numcfd=$data->dd;
+        }
+        if($numcfd==null){
+          $numcfd=1;
+        }else{
+          $numcfd=$numcfd+1;
+        }
         if (Storage::disk('local')->exists('/Company/'.session('rfc').'/Brand/','brand'.session('rfc').'.png')){
           $url = Storage::disk('local')->url('Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png');
         }else{
           $url=null;
         }
-        return view('cfdi.create',compact('units','senderdata','customers','methodspayment','wayspayment','url'));
+        return view('cfdi.create',compact('units','senderdata','customers','methodspayment','wayspayment','url','numcfd'));
     }
 
     /**
@@ -99,6 +107,7 @@ class CfdiController extends Controller
       $customer=$request->customer;
       $quantity=$request->quantity;
       $applyiva=$request->applyiva;
+      $numcfdi=$request->numcfdi;
 
       $emailcustomer=$request->emailcustomer;
       session(['emailcustomer'=>$emailcustomer]);
@@ -106,7 +115,7 @@ class CfdiController extends Controller
       $newcfdi->idCompany=session('idcompany');
       $newcfdi->idMethodPayment=$methodpayment;
       $newcfdi->idwaypay=$waypayment;
-      $newcfdi->numcfdi=1;
+      $newcfdi->numcfdi=$numcfdi;
       $newcfdi->customer=$customer;
       $newcfdi->currency=$currency;
       $newcfdi->condicspay=$condicspay;
@@ -115,28 +124,28 @@ class CfdiController extends Controller
       $newcfdi->total=$total;
       $newcfdi->save();
 
-      if(strlen($newcfdi->id)==1){
-        $numcfdi='00000'.$newcfdi->id;
+      if(strlen($numcfdi)==1){
+        $numcfdi='00000'.$numcfdi;
       }else{
-        if(strlen($newcfdi->id)==2){
-          $numcfdi='0000'.$newcfdi->id;
+        if(strlen($numcfdi)==2){
+          $numcfdi='0000'.$numcfdi;
         }else{
-          if(strlen($newcfdi->id)==3){
-            $numcfdi='000'.$newcfdi->id;
+          if(strlen($numcfdi)==3){
+            $numcfdi='000'.$numcfdi;
           }else{
-            if(strlen($newcfdi->id)==4){
-              $numcfdi='00'.$newcfdi->id;
+            if(strlen($numcfdi)==4){
+              $numcfdi='00'.$numcfdi;
             }else{
-              if(strlen($newcfdi->id)==5){
-                $numcfdi='0'.$newcfdi->id;
+              if(strlen($numcfdi)==5){
+                $numcfdi='0'.$numcfdi;
               }else{
-                $numcfdi=$newcfdi->id;
+                $numcfdi=$numcfdi;
               }
             }
           }
         }
       }
-      return $numcfdi;
+
       date_default_timezone_set('America/Mexico_City');
       /**
       * Niveles de debug:
@@ -210,7 +219,7 @@ class CfdiController extends Controller
               session(['filename'=>$filename]);
             }
             $temp='cfdi/template'.session('cfditemplate');
-            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request'));
+            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request','numcfdi'));
             $pdf->save($comprobante.'.pdf');
             file_put_contents($comprobante.".xml", $cliente->xml);
             $data=array(
@@ -279,7 +288,7 @@ class CfdiController extends Controller
      */
     function generarXML ($rfc_emisor,$condicspay,$subtotal,$currency,$total,$methodpayment,$cp,$businessname,$taxregime,$rfccust) {
         $fecha_actual = substr( date('c'), 0, 19);
-
+        //http://www.danielazucotti.com/conocimientos/generar-sitemap-xml-con-php-de-forma-dinamica/
         $cfdi = <<<XML
         <?xml version="1.0" encoding="UTF-8"?>
         <cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" Version="3.3" Serie="A" Folio="01" Fecha="$fecha_actual" Sello="TqVg+/JpnhP5rLODxlLB3ptRT3QgArW4taQCK5H3QZcGnSm570QFq3Vpe7vBpxcq6Nr25no9sdvwzekU7pgawmUwCL5KWcZCWkCEKCx0UUBuxMRwSgKhR1iTDR/Jy+nosxoWhRA/NZxtTKvoePKKkT5waMN5Qy2YM5TtXSFnNXM=" FormaPago="03" NoCertificado="20001000000200000192" Certificado="MIIERjCCAy6gAwIBAgIUMjAwMDEwMDAwMDAyMDAwMDAxOTIwDQYJKoZIhvcNAQEFBQAwggFcMRowGAYDVQQDDBFBLkMuIDIgZGUgcHJ1ZWJhczEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSkwJwYJKoZIhvcNAQkBFhphc2lzbmV0QHBydWViYXMuc2F0LmdvYi5teDEmMCQGA1UECQwdQXYuIEhpZGFsZ28gNzcsIENvbC4gR3VlcnJlcm8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQRGlzdHJpdG8gRmVkZXJhbDESMBAGA1UEBwwJQ295b2Fjw6FuMTQwMgYJKoZIhvcNAQkCDCVSZXNwb25zYWJsZTogQXJhY2VsaSBHYW5kYXJhIEJhdXRpc3RhMB4XDTEyMTAyMjIwNDgwNloXDTE2MTAyMjIwNDgwNlowgcAxITAfBgNVBAMTGEVESVRPUklBTCBTSVNUQSBTQSBERSBDVjEhMB8GA1UEKRMYRURJVE9SSUFMIFNJU1RBIFNBIERFIENWMSEwHwYDVQQKExhFRElUT1JJQUwgU0lTVEEgU0EgREUgQ1YxJTAjBgNVBC0THEVTSTkyMDQyNzg4NiAvIEhFR1Q3NjEwMDM0UzIxHjAcBgNVBAUTFSAvIEhFR1Q3NjEwMDNNREZSTk4wOTEOMAwGA1UECxMFQW1pZ2EwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAK6YqAg3LHOPpAKD9OFkcNgB5wj+3k4oHPK3bFfku4TCEswtMhIt5LnZCt4UK0cp9SYpKMa2kZVYm6k6zphWg9bzv3pvHwt9mB6kFGyApU71cOk16unqL2o/pDj65zNtUBfDyKkKBUGQMYgtqvVq6aXJipqKOS/NsDKEUt0q1ghTAgMBAAGjHTAbMAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgbAMA0GCSqGSIb3DQEBBQUAA4IBAQCgCCpYDbmN8npLX6vHCEJAF/1G3KhuAGY48wVt1va1YXRy6yj+tJZ9HZ3l8TY7J6n10XkrbzedOArKyjdpfqWbNabZHw6b2IlSN8HrHliiAEor5hwTUJnkg6S1nm0mmirInxCmWoVV+qrEX/XHylJ+OjIql/GyZrH9sEPCY+LYFfVhO0U73jKqajMEeZtWYq5wro4UhPUhlYgwhlzUN6XNWtiC8ohjE6QJaf8jYRsJjHraZL257O1o5T/3ULMJhASN7R211FmyAuiYsq8H3buPE0kl+EmN8DUNpTDkB9Xf1ba6gXZ0PRXF1oGUwxvX9FiI5eIau2RLfy9AfJPcpAXN" CondicionesDePago='$condicspay' SubTotal="1850" Descuento="175.00" Moneda="$currency" Total="1943.00" TipoDeComprobante="I" MetodoPago="$methodpayment" LugarExpedicion="$cp">

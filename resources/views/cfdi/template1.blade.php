@@ -180,7 +180,7 @@
             </div>
             <div class="date">
               <h3>Factura</h3>
-              <h3></h3>
+              <h3>{{$numcfdi}}</h3>
               <h5>Fecha y hora de Expedición:</h5>
             </div><br>
             <div class="subheader">

@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function typeuserContadorGeneral()
     {
-        if ($this->typeuser === '3' || $this->typeuser === '2' || $this->typeuser === '1') {
+        if ($this->typeuser === 3 || $this->typeuser === 2 || $this->typeuser === 1) {
             return true;
         } else {
             return false;
@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function typeuserSubcontador()
     {
-        if ($this->typeuser === '4' || $this->typeuser === '3' || $this->typeuser === '2' || $this->typeuser === '1') {
+        if ($this->typeuser === 4 || $this->typeuser === 3 || $this->typeuser === 2 || $this->typeuser === 1) {
             return true;
         } else {
             return false;

@@ -144,6 +144,7 @@ $(document).ready(function(){
   });
 
   $("#sendform").on('click', function () {
+    var numcfdi=$('input[name="numcfdi"]').val();
     var customer=$('select[name="customer"]').val();
     var rfcsender=$('input[name="rfcsender"]').val();
     var businessname=$('input[name="businessname"]').val();
@@ -179,7 +180,7 @@ $(document).ready(function(){
           Swal.fire({
             title: 'Se está generando la factura!',
             html: 'Esperé un mmento...',
-            timer: 15000,
+            timer: 70000,
             onBeforeOpen: () => {
               Swal.showLoading()
               timerInterval = setInterval(() => {
@@ -192,7 +193,7 @@ $(document).ready(function(){
           $.ajax({
            type:'POST',
            url:'/cfdicreate',
-           data:{customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva,emailcustomer:emailcustomer},
+           data:{numcfdi:numcfdi,customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva,emailcustomer:emailcustomer},
            success:function(data){
              alert(data);
             if(data==1){
