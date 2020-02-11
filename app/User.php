@@ -26,4 +26,32 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function typeuserContadorGeneral()
+    {
+        if ($this->typeuser === '3' || $this->typeuser === '2' || $this->typeuser === '1') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function typeuserSubcontador()
+    {
+        if ($this->typeuser === '4' || $this->typeuser === '3' || $this->typeuser === '2' || $this->typeuser === '1') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function typeuserAsistente()
+    {
+        if ($this->typeuser === 5 || $this->typeuser === 4 || $this->typeuser === 3 || $this->typeuser === 2 || $this->typeuser === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

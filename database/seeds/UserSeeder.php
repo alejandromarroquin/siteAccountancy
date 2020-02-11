@@ -38,5 +38,23 @@ class UserSeeder extends Seeder
           'email'=>'viridiana@gmail.com',
           'password'=>Hash::make("viridiana")
         ]);
+
+        DB::table('users')->insert([
+          'idCompany'=>'1',
+          'typeuser'=>'4',
+          'name'=>'Lety',
+          'lastname'=>'Vargas',
+          'email'=>'letyv@gmail.com',
+          'password'=>Hash::make("letyv")
+        ]);
+
+        DB::table('users')->insert([
+          'idCompany'=>'1',
+          'typeuser'=>'5',
+          'name'=>'Nayelly',
+          'lastname'=>'Ramirez',
+          'email'=>'nayr@gmail.com',
+          'password'=>Hash::make("Nayramirez")
+        ]);
     }
 }
