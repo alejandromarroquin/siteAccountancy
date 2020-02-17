@@ -13,17 +13,19 @@
         <div class="col-lg-8 col-xl-12">
           <form action="" method="" role="form" id="userform">
             {{ csrf_field() }}
-            <div class="row">
-              <div class="col">
-                <label>Empresa:</label>
-                <select class="form-control" name="company" id="company" required/>
-                  <option selected hidden>Selecciona una empresa...</option>
-                  @foreach($businessnames as $businessname)
-                      <option value="{{$businessname->id}}">{{$businessname->businessname}}</option>
-                  @endforeach
-                </select>
+            @if(auth()->user()->idCompany==1)
+              <div class="row">
+                <div class="col">
+                  <label>Empresa:</label>
+                  <select class="form-control" name="company" id="company" required/>
+                    <option selected hidden>Selecciona una empresa...</option>
+                    @foreach($businessnames as $businessname)
+                        <option value="{{$businessname->id}}">{{$businessname->businessname}}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
-            </div>
+            @endif
             <div class="row">
               <div class="col">
                 <label>Nombre:</label>
@@ -49,12 +51,10 @@
                 <label>Tipo de usuario:</label>
                 <select class="form-control" name="typeuser">
                   <option selected hidden>Selecciona uno...</option>
-                  <option value="1">Administrador</option>
-                  <option value="2">Facturador</option>
-                  <option value="3">Contador General</option>
-                  <option value="4">Contador</option>
-                  <option value="5">Subcontador</option>
-                  <option value="6">Asistente</option>
+                  <option value="2">Administrador</option>
+                  <option value="3">Contador</option>
+                  <option value="4">Subcontador</option>
+                  <option value="5">Asistente</option>
                 </select>
               </div>
             </div>

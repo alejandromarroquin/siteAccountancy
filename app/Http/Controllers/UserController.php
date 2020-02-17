@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $businessnames=DB::table('taxinformations')->join('companies','taxinformations.id','=','companies.id')->select('businessname','companies.id')->get();
+        $businessnames=DB::table('taxinformations')->join('companies','taxinformations.id','=','companies.idTaxInformation')->select('businessname','companies.id')->get();
         return view('users.user.create',compact("businessnames"));
     }
 
@@ -44,7 +44,11 @@ class UserController extends Controller
       $user=new User;
       DB::beginTransaction();
       try {
-        $user->idCompany=$request->company;
+        if(auth()->user()->idCompany!=1){
+          $user->idCompany=session('idcompany');
+        }else{
+          $user->idCompany=$request->company;
+        }
         $user->typeuser=$request->typeuser;
         $user->name=$request->name;
         $user->lastname=$request->lastname;
@@ -116,7 +120,7 @@ class UserController extends Controller
         DB::rollBack();
         return 0;
       }
-      
+
     }
 
     /**

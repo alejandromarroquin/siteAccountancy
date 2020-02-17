@@ -16,8 +16,8 @@ class CreateConfigurationTable extends Migration
         Schema::create('configurations', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('idComapny')->unsigned();
-            $table->foreign('idComapny')->references('id')->on('companies')->onDelete('cascade');
+            $table->integer('idCompany')->unsigned();
+            $table->foreign('idCompany')->references('id')->on('companies')->onDelete('cascade');
 
             $table->integer('cfditemplate');
 

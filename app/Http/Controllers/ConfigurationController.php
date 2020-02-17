@@ -22,7 +22,7 @@ class ConfigurationController extends Controller
         }else{
           $url=null;
         }
-        $template=DB::table('configurations')->select('id','cfditemplate')->where('idComapny',session('idcompany'))->get();
+        $template=DB::table('configurations')->select('id','cfditemplate')->where('idCompany',session('idcompany'))->get();
         foreach ($template as $data) {
           $numtemp=$data->cfditemplate;
           $idconfig=$data->id;

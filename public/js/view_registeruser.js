@@ -5,6 +5,22 @@ $(document).ready(function(){
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   });
+
+  $('select[name="company"]').on('change',function(){
+    if ($('select[name="company"]').val()==1) {
+      $('select[name="typeuser"]').empty().append('<option value="1">Administrador interno</option>');
+      $('select[name="typeuser"]').append('<option value="2">Administrador externo</option>');
+      $('select[name="typeuser"]').append('<option value="3">Contador</option>');
+      $('select[name="typeuser"]').append('<option value="4">Subcontador</option>');
+      $('select[name="typeuser"]').append('<option value="5">Asistente</option>');
+    }else{
+      $('select[name="typeuser"]').empty().append('<option value="2">Administrador externo</option>');
+      $('select[name="typeuser"]').append('<option value="3">Contador</option>');
+      $('select[name="typeuser"]').append('<option value="4">Subcontador</option>');
+      $('select[name="typeuser"]').append('<option value="5">Asistente</option>');
+    }
+  });
+
   $("#sendform").on('click', function () {
     var company=$('select[name="company"]').val();
     var name=$('input[name="name"]').val();

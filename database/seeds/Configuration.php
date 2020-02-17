@@ -12,7 +12,7 @@ class Configuration extends Seeder
     public function run()
     {
       DB::table('configurations')->insert([
-        'idComapny'=>'1',
+        'idCompany'=>'1',
         'cfditemplate'=>'1'
       ]);
     }

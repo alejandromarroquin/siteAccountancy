@@ -13,6 +13,7 @@ use App\contactlocation;
 use App\accountancie;
 use App\customers;
 use App\taxregime;
+use App\configuration;
 use Illuminate\Http\Request;
 
 class CompanieController extends Controller
@@ -71,6 +72,8 @@ class CompanieController extends Controller
       $taxinf=new taxinformation;
       $company=new companie;
       $customers=new customers;
+      $configuration=new configuration;
+      $accountancie=new accountancie;
 
       DB::beginTransaction();
       try{
@@ -105,6 +108,16 @@ class CompanieController extends Controller
         $taxinf->businessname=$request->businessname;
         $taxinf->idtaxRegime=$request->taxregime;
         $taxinf->save();
+
+        if (auth()->user()->idCompany==1) {
+          $company->idTaxInformation=$taxinf->id;
+          $company->save();
+          $configuration->idCompany=$company->id;
+          $configuration->cfditemplate=1;
+          $configuration->save();
+          $accountancie->idCompany=$company->id;
+          $accountancie->save();
+        }
 
         $customers->idCompany=session('idcompany');
         $customers->idTaxInformation=$taxinf->id;

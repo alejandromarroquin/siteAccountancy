@@ -230,7 +230,7 @@
               </div>
             </div>
           </div>
-          <input class="btn btn-primary" type="button" value="Generar factura" id="sendform">
+          <input class="btn btn-primary" type="submit" value="Generar factura" >
         </form>
       </div>
     </div>
