@@ -78,6 +78,7 @@ Route::post('/userupdate','UserController@update');
 Route::get('/configuracion','ConfigurationController@index');
 Route::post('/saveconfig','ConfigurationController@store');
 Route::post('/updatetemplate','ConfigurationController@updateTemplate');
+Route::get('/edittemplate','ConfigurationController@editTemplate');
 Route::post('/loadfiles','ConfigurationController@loadfiles');
 Route::post('/loadcommercial','ConfigurationController@loadcommercial');
 

@@ -20,6 +20,10 @@ $(document).ready(function(){
       }
     });
 
+    $('#btn-enviar').on('click',function(){
+      alert($('#txt-content').val());
+    });
+
     $('input[name="commercial"]').on('change',function(){
       if($('input[name="commercial"]').val()!=null){
         if($('input[name="commercial"]').width()!=500 && $('input[name="commercial"]').height()!=180){
