@@ -60,6 +60,10 @@
 </div>
 @endsection
 
+@section('jquery')
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+@endsection
+
 @section('scripts')
   <script src="{{ asset('js/trialbalance.js') }}"></script>
 @endsection

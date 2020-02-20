@@ -171,6 +171,11 @@
   </div>
 </div>
 @endsection
+
+@section('jquery')
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+@endsection
+
 @section('scripts')
   <script src="{{ asset('js/view_budgetedit.js') }}"></script>
 @endsection

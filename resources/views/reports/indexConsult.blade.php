@@ -19,6 +19,10 @@
 </div>
 @endsection
 
+@section('jquery')
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+@endsection
+
 @section('scripts')
 
 @endsection

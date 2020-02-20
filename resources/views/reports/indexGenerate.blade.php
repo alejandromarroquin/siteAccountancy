@@ -92,6 +92,10 @@
 </div>
 @endsection
 
+@section('jquery')
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+@endsection
+
 @section('flaticonautor')
   <div>Icons made by <a href="https://www.flaticon.es/autores/pongsakornred" title="pongsakornRed">pongsakornRed</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
   <div>Iconos diseñados por <a href="https://www.flaticon.es/autores/payungkead" title="Payungkead">Payungkead</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>

@@ -12,7 +12,7 @@
 		$(document).ready(function(){
 			$('#txt-content').Editor();
 
-			$('#txt-content').Editor('setText', ['<p style="color:red;">Hola</p>']);
+			$('#txt-content').Editor('setText', ['<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><img class="img-fluid" src="/storage/Company/DYC160316AT6/Brand/brandDYC160316AT6.png" width="200">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Fecha y hora: $</blockquote><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">&nbsp; No. Factura: $</blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote><table class="table" align="center" border="0" cellspacing="1" cellpadding="1" style="width: 600px;"><tbody><tr><td>&nbsp;Emisor:<br><br></td><td>&nbsp;Cliente:<br><br></td></tr></tbody></table><table class="table" border="1" cellspacing="1" cellpadding="1" style="width: 600px;" align=""><tbody><tr><td>&nbsp;Cve Prod.</td><td>&nbsp;Cantidad</td><td>&nbsp;Unidad</td><td>&nbsp;Descripción</td><td>&nbsp;Precio unit.</td><td>&nbsp;Importe</td></tr></tbody></table><hr id="null"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"></blockquote></blockquote>']);
 
 			$('#btn-enviar').click(function(e){
 				e.preventDefault();
@@ -88,20 +88,96 @@
           </div>
           <div class="row">
       			<div class="col-sm-8">
-      				<form action="prueba.php" method="post" id="frm-test">
+
       					<div class="form-group">
       						<textarea id="txt-content" name="txt-content"></textarea>
       					</div>
-      					<input type="submit" class="btn btn-default" id="btn-enviar" value="Mostrar Resultado">
-      				</form>
+      					<input type="button" class="btn btn-primary" id="btn-enviar" value="Mostrar Resultado">
+
       			</div>
       		</div>
-      		<div class="row">
-      			<div class="col-sm-8">
-      				<div id="texto" style="border:1px solid #000; padding:10px;margin-top:20px;">
+          <div class="col-lg-12 col-xl-12">
+            <h1 class="page-header">Personalizar plantilla:</h1>
+          </div>
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="elements" id="elements" style="  width: 100%; height: 30%; border: 1px solid black;">
+                <div class="row">
+                  <div class="col">
+                    <div id="brand" draggable="true" style="  width:100%;">
+                      <img class="img-fluid" src="{{Storage::disk('local')->url('Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png')}}" width="200" style="margin-left: auto;margin-right: auto;display: block;margin-top:1em;">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="senderinfo" id="senderinfo" draggable="true" style="  width:100%;">
 
-      				</div>
-      			</div>
+                        <input type="text" name="rfcsender" value="" hidden/>
+                        <input type="text" name="businessname" value="" hidden/>
+                        <input type="text" name="cp" value="" hidden/>
+                        <input type="text" name="street" value="" hidden/>
+                        <input type="text" name="numExt" value="" hidden/>
+                        <input type="text" name="colony" value="" hidden/>
+                        <input type="text" name="city" value="" hidden/>
+                        <input type="text" name="state" value="" hidden/>
+                        <strong></strong><br/>
+                        <strong>R.F.C </strong><br/>
+                        Domicilio:  No. <br/>
+                        Colonia:<br/>
+                        , .
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="table" id="table" draggable="true" style="  width:100%;">
+                      <table style="margin-left:auto;margin-right:auto;">
+                        <tr>
+                          <th class="cod">Cve Prod Serv</th>
+                          <th class="cant">Cant.</th>
+                          <th class="unit">Unidad</th>
+                          <th class="descript">Descripción</th>
+                          <th class="price">Precio Unitario</th>
+                          <th class="imp">Importe</th>
+                        </tr>
+                        <tr>
+                          <td class="cod">---</td>
+                          <td class="cant">---</td>
+                          <td class="unit">---</td>
+                          <td class="descript">---</td>
+                          <td class="price">---</td>
+                          <td class="imp">---</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="commercial" id="commercial" draggable="true" style="width: 800px;height: 150px;border: 1px solid black;text-align: center;font-family: Arial;font-size: 40px;color: gray;">
+                      <img src="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="estructura" style="  margin-top: 3em;border: 1px solid black;width: 100%;height:700px;">
+                <div id="section1" style="  border: 1px solid black;width:50%;min-height:200px;float:left;">
+
+                </div>
+                <div id="section2" style="  border: 1px solid black;width:50%;min-height:200px;float:right;">
+
+                </div>
+                <div id="section3" style="  border: 1px solid black;width:100%;min-height:200px;margin-top:14em;">
+
+                </div>
+                <div id="section4" style="  border: 1px solid black;width:100%;min-height:200px;">
+
+                </div>
+              </div>
+
+      		    <input type="button" class="btn btn-primary" id="btn-obtenerhtml" value="Mostrar Resultado">
+            </div>
       		</div>
         </div>
       </div>

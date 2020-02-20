@@ -22,6 +22,11 @@ $(document).ready(function(){
 
     $('#btn-enviar').on('click',function(){
       alert($('#txt-content').val());
+      console.log($('#txt-content').val());
+    });
+
+    $('#btn-obtenerhtml').on('click',function(){
+      alert($('.estructura').html());
     });
 
     $('input[name="commercial"]').on('change',function(){
@@ -155,4 +160,102 @@ function selectTemplate(button){
       $('#template2').attr("disabled", false);
     }
   }
+}
+
+function DragDropBrand(brand,drop){
+  var brand=document.getElementById(brand);
+  var drop=document.getElementById(drop);
+
+  brand.ondragstart=function(e){
+    //Guarda el id del elemento para transferirlo al elemento drop
+    //Content es una clave que permite acceder al valor accinado
+    e.dataTransfer.setData("content",e.target.id);
+  }
+  drop.ondragover=function(e){
+    //Cancelar el evento que impide que podamos soltar el elemento drag
+    e.preventDefault();
+  }
+  drop.ondrop=function(e){
+    //Obtenermos los datos a tráves de la clave content en este caso el id
+    var id=e.dataTransfer.getData("content");
+    e.target.appendChild(document.getElementById(id));
+  }
+
+}
+
+function DragDropSenderInf(senderinfo,drop){
+  var senderinfo=document.getElementById(senderinfo);
+  var drop=document.getElementById(drop);
+
+  senderinfo.ondragstart=function(e){
+    //Guarda el id del elemento para transferirlo al elemento drop
+    //Content es una clave que permite acceder al valor accinado
+    e.dataTransfer.setData("content",e.target.id);
+  }
+  drop.ondragover=function(e){
+    //Cancelar el evento que impide que podamos soltar el elemento drag
+    e.preventDefault();
+  }
+  drop.ondrop=function(e){
+    //Obtenermos los datos a tráves de la clave content en este caso el id
+    var id=e.dataTransfer.getData("content");
+    e.target.appendChild(document.getElementById(id));
+  }
+
+}
+
+function DragDropSenderTable(brand,drop){
+  var brand=document.getElementById(brand);
+  var drop=document.getElementById(drop);
+
+  brand.ondragstart=function(e){
+    //Guarda el id del elemento para transferirlo al elemento drop
+    //Content es una clave que permite acceder al valor accinado
+    e.dataTransfer.setData("content",e.target.id);
+  }
+  drop.ondragover=function(e){
+    //Cancelar el evento que impide que podamos soltar el elemento drag
+    e.preventDefault();
+  }
+  drop.ondrop=function(e){
+    //Obtenermos los datos a tráves de la clave content en este caso el id
+    var id=e.dataTransfer.getData("content");
+    e.target.appendChild(document.getElementById(id));
+  }
+
+}
+
+function DragDropSenderCommercial(brand,drop){
+  var brand=document.getElementById(brand);
+  var drop=document.getElementById(drop);
+
+  brand.ondragstart=function(e){
+    //Guarda el id del elemento para transferirlo al elemento drop
+    //Content es una clave que permite acceder al valor accinado
+    e.dataTransfer.setData("content",e.target.id);
+  }
+  drop.ondragover=function(e){
+    //Cancelar el evento que impide que podamos soltar el elemento drag
+    e.preventDefault();
+  }
+  drop.ondrop=function(e){
+    //Obtenermos los datos a tráves de la clave content en este caso el id
+    var id=e.dataTransfer.getData("content");
+    e.target.appendChild(document.getElementById(id));
+  }
+
+}
+
+
+window.onload=function(){
+  DragDropBrand("brand","section1");
+  DragDropBrand("brand","section2");
+  DragDropBrand("brand","elements");
+  DragDropSenderInf("senderinfo","section1");
+  DragDropSenderInf("senderinfo","section2");
+  DragDropSenderInf("senderinfo","elements");
+  DragDropSenderTable("table","section3");
+  DragDropSenderInf("table","elements");
+  DragDropSenderCommercial("commercial","section3");
+  DragDropSenderCommercial("commercial","elements");
 }

@@ -52,6 +52,10 @@
 </div>
 @endsection
 
+@section('jquery')
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+@endsection
+
 @section('scripts')
   <script src="{{ asset('js/view_edit_user.js')}}"></script>
 @endsection
