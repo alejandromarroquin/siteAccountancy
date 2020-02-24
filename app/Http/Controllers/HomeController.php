@@ -18,7 +18,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Consulta la información básica para almacenarla en variables de session.
      *
      * @return \Illuminate\Http\Response
      */

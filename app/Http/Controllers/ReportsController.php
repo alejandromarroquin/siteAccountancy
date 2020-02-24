@@ -40,7 +40,7 @@ class ReportsController extends Controller
     }
 
     /**
-     * Generate Balancesheet a newly created resource in storage.
+     * Genera el balance general.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -53,24 +53,27 @@ class ReportsController extends Controller
         return view('reports/balancesheet',compact('company'));
     }
 
+    //Descarga el balance general
     public function downloadBalancesheet($initialdate,$finaldate,$businessname){
 
       $pdf = \PDF::loadView('reports.balancesheetPDF');
       return $pdf->download();
 
     }
-
+    //Genera el estado de resultados.
     public function generateStatementresult(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         return view('reports/statementresult',compact('company'));
     }
 
+    //Descarga el estado de resultados
     public function downloadStatementresult(){
       $pdf = \PDF::loadView('reports.statementresultPDF');
       return $pdf->download();
     }
 
+    //Genera la balanza de comprobación.
     public function generateTrialbalance(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
@@ -79,11 +82,13 @@ class ReportsController extends Controller
         return view('reports/trialbalance',compact('company'));
     }
 
+    //Descarga la balanza de comprobaci
     public function downloadTrialbalance(){
       $pdf = \PDF::loadView('reports.trialbalancePDF');
       return $pdf->download();
     }
 
+    //Genera el flujo de efectivo.
     public function generateCashflow(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();

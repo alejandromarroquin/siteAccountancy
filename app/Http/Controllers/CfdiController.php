@@ -34,7 +34,9 @@ class CfdiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Consulta en la base de datos la información requerida para el CFDI
+     * y la envia a la vista la cual se muestra al usuario con toda la información
+     * cargada.
      *
      * @return \Illuminate\Http\Response
      */
@@ -63,7 +65,7 @@ class CfdiController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Consulta los datos del cliente receptor de la factura.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -80,13 +82,17 @@ class CfdiController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra los datos del CFDI en la base de datos y
+     * manda a llamar al método para construir el archivo XML
+     * y posteriormente lo manda a sellar. Una vez sellado se manda
+     * por correo electronico al cliente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+      //Se obtienen los datos enviados desde la vista
       $newcfdi=new cfdi;
       $condicspay=$request->condicspay;
       $subtotal=$request->subtotal;
@@ -109,9 +115,11 @@ class CfdiController extends Controller
       $applyiva=$request->applyiva;
       $numcfdi=$request->numcfdi;
 
+      //Se guarda en una variable de sesión el correo del cliente
       $emailcustomer=$request->emailcustomer;
       session(['emailcustomer'=>$emailcustomer]);
 
+      //Se registra en la base de datos la información de la factura
       $newcfdi->idCompany=session('idcompany');
       $newcfdi->idMethodPayment=$methodpayment;
       $newcfdi->idwaypay=$waypayment;
@@ -124,6 +132,8 @@ class CfdiController extends Controller
       $newcfdi->total=$total;
       $newcfdi->save();
 
+      // Se asigna el folio o numero de factura que aparecera en la
+      // representación impresa
       if(strlen($numcfdi)==1){
         $numcfdi='00000'.$numcfdi;
       }else{
@@ -146,6 +156,7 @@ class CfdiController extends Controller
         }
       }
 
+      // Se asigna la zona horatia de la ciudad de México
       date_default_timezone_set('America/Mexico_City');
       /**
       * Niveles de debug:
@@ -218,6 +229,7 @@ class CfdiController extends Controller
               $filename=substr($comprobante, 71);
               session(['filename'=>$filename]);
             }
+            //Se pasan los datos a la representación impresa
             $temp='cfdi/template'.session('cfditemplate');
             $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request','numcfdi'));
             $pdf->save($comprobante.'.pdf');
@@ -225,6 +237,7 @@ class CfdiController extends Controller
             $data=array(
               'name'=>$filename
             );
+            //Se envia el CFDI y su representación impresa por email
             Mail::send('email/email', $data, function($message)
             {
                 $message->to(session('emailcustomer'), 'ECULTURE')->subject('Envío electrónico de Comprobante Fiscal Digital')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.xml')->attach(public_path().'/storage/Company/'.session('rfc').'/CFDIS/'.session('filename').'.pdf');
@@ -247,7 +260,7 @@ class CfdiController extends Controller
     }
 
     /**
-     * Sellar el comprobante
+     * Sella el archivo XML a tráves de un proveedor de servicios
      * @param  string $cfdi               XML a sellar
      * @param  string $numero_certificado Numero del certificado
      * @param  string $archivo_cer        Ruta del archivo .cer

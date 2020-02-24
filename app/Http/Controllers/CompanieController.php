@@ -19,7 +19,9 @@ use Illuminate\Http\Request;
 class CompanieController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Consulta en la base de datos todos los clientes
+     * de la empresa que ha iniciado sesión y los muestra
+     * en la vista en una tabla.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,7 +32,7 @@ class CompanieController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra la vista para registrar un nuevo cliente.
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,6 +42,7 @@ class CompanieController extends Controller
         return view('users.company.create',compact('taxregimes'));
     }
 
+    //Valida que el RFC sea compatible con el regimen fiscal seleccionado
     public function validateRFC($taxregime){
         $type=taxregime::select('fisica','moral')->where('id',$taxregime)->get();
         foreach ($type as $data) {
@@ -58,7 +61,8 @@ class CompanieController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra en la base de datos la información del cliente y crea las carpetas
+     * necesarias para almacenar los archivos que está genere.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -155,7 +159,7 @@ class CompanieController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Consulta los datos del cliente seleccionado y los envia a la vista.
      *
      * @param  \App\companie  $companie
      * @return \Illuminate\Http\Response
@@ -194,7 +198,7 @@ class CompanieController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza los datos del cliente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\companie  $companie
@@ -246,7 +250,7 @@ class CompanieController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el cliente seleccionado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\companie  $companie

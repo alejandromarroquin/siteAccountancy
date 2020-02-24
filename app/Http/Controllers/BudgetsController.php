@@ -22,7 +22,8 @@ class BudgetsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Consulta el último presupuesto registrado de la empresa que inicio sesión
+     * y muestra la vista para registrar un nuevo presupuesto o consultar el último presupuesto.
      *
      * @return \Illuminate\Http\Response
      */
@@ -49,7 +50,7 @@ class BudgetsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * .
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -64,7 +65,8 @@ class BudgetsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra en la base de datos los costos fijos y variables
+     * y a partir de estos el presupuesto general.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -136,7 +138,8 @@ class BudgetsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Consulta los datos del último presupuesto registrado
+     * y los muestra en la vista.
      *
      * @param  \App\budgets  $budgets
      * @return \Illuminate\Http\Response
@@ -154,7 +157,7 @@ class BudgetsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza los datos del último presupuesto.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\budgets  $budgets

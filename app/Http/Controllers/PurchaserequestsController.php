@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PurchaserequestsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la vista con las solicitudes de compra pendientes.
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,7 +22,7 @@ class PurchaserequestsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Consulta las solicitudes de compra pendientes.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -51,6 +51,7 @@ class PurchaserequestsController extends Controller
       }
     }
 
+    //Consulta la cantidad de presupuesto disponible para la categoria seleccionada
     public function amountCategory($category){
       $amount=expense::select('amount','reserved')->where('id',$category)->get();
       foreach ($amount as $data) {
@@ -62,7 +63,7 @@ class PurchaserequestsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para solicitar una compra.
      *
      * @return \Illuminate\Http\Response
      */
@@ -73,7 +74,7 @@ class PurchaserequestsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra la solicitud de compra.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -131,7 +132,7 @@ class PurchaserequestsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el estatus de la compra (pendiente,aprobada o rechazada).
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\purchaserequests  $purchaserequests

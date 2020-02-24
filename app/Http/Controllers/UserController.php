@@ -12,7 +12,7 @@ use Hash;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la vista con los usuarios de la empresa que inicio sesión.
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,7 +23,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para registrar un usuaro.
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,7 +34,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra en la base de datos la información del usuario registrado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -76,7 +76,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra la vista con los datos del usuario que se desea editar.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -97,7 +97,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la información del usuario seleccionado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -124,7 +124,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el usuario seleccionado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\companie  $companie

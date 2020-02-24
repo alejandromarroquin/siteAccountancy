@@ -22,7 +22,10 @@ class AccountcatalogsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Realiza consulta a la base de datos del catálogo de cuentas
+     * de la empresa que ha iniciado sesión y lo muestra en la vista
+     * junto a las cuentas que puede agregar de acuerdo al catálogo
+     * del SAT
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,7 +37,8 @@ class AccountcatalogsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Consulta las subcuentas que pertenezcan a la cuenta
+     * seleccionada por el usuario.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,7 +53,8 @@ class AccountcatalogsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Recibe el id de la cuenta y lo asocia a el catálogo de cuentas
+     * que ha iniciado sesión.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -112,7 +117,7 @@ class AccountcatalogsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el id de la cuanta seleccionada del catálogo de cuentas.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\accountcatalogs  $accountcatalogs

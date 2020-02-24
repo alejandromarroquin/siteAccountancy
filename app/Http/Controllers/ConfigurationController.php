@@ -11,7 +11,7 @@ use File;
 class ConfigurationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la vista de configuración.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,7 +31,8 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra en la base de datos el número de template seleccionado
+     * para la emisión de CFDI.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -62,7 +63,8 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena los archivos que funcionan como credenciales
+     * para facturación de cada empresa.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -82,7 +84,7 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena la imagen publcitaria en la carpeta correspondiente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -109,7 +111,7 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena el logo.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
