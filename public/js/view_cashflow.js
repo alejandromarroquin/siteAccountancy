@@ -18,6 +18,7 @@ $(document).ready(function(){
   });
 
   $("#sendform").on('click', function () {
+    var typeflow=$('select[name="typeflow"]').val();
     var accountdebit=$('select[name="accountdebit"]').val();
     var accountcredit=$('select[name="accountcredit"]').val();
     var concept=$('input[name="concept"]').val();
@@ -26,7 +27,7 @@ $(document).ready(function(){
       $.ajax({
          type:'POST',
          url:'/movementscreate',
-         data:{accountdebit:accountdebit,accountcredit:accountcredit,concept:concept,amount:amount},
+         data:{typeflow:typeflow,accountdebit:accountdebit,accountcredit:accountcredit,concept:concept,amount:amount},
          success:function(data){
           if(data==1){
             Swal.fire(

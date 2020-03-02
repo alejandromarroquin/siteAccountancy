@@ -72,6 +72,8 @@ class AccountcatalogsController extends Controller
         try {
           $catalog->idAccountancy=session('idaccountancy');
           $catalog->CodeAccount=$idaccount;
+          $catalog->debtor=$request->debtor;
+          $catalog->creditor=$request->creditor;
           if($catalog->save()){
             echo '<tr class="row100 body"><td class="cell100 column1">'.$code.'</td><td class="cell100 column2">'.$accountname.'</td row100 body><td class="cell100 column3"><button type="button" class="btn btn-danger delete" value="'.$code.'">Eliminar</button></td></tr>';
           }

@@ -18,7 +18,7 @@
       </div>
       <div class="row">
         <div class="col-lg-8 col-xl-12">
-          <form action="" method="" role="form">
+          <form action="" method="" role="form" id="accountcatalogform">
             {{ csrf_field() }}
             <div class="row">
               <div class="col">
@@ -37,6 +37,16 @@
                 <select class="form-control" name="subaccount" id="subaccount">
                   <option selected hidden>Selecciona una subcuenta...</option>
                 </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label>Saldo deudor:</label>
+                <input type="text" name="debtor" class="form-control">
+              </div>
+              <div class="col">
+                <label>Saldo acreedor</label>
+                <input type="text" name="creditor" class="form-control">
               </div>
             </div>
             <input class="btn btn-primary" type="button" value="Agregar" id="agregar">

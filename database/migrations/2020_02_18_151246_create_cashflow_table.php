@@ -13,8 +13,19 @@ class CreateCashflowTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashflow', function (Blueprint $table) {
+        Schema::create('cashflows', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idaccountancydebtor')->unsigned();
+            $table->foreign('idaccountancydebtor')->references('id')->on('accountancycatalogs')->onDelete('cascade');
+
+            $table->integer('idaccountancycreditor')->unsigned();
+            $table->foreign('idaccountancycreditor')->references('id')->on('accountancycatalogs')->onDelete('cascade');
+
+            $table->integer('type');//1=deudor 2=acreedor
+
+            $table->string('concept');
+            $table->double('amount');
+
             $table->timestamps();
         });
     }

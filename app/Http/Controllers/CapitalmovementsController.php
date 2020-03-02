@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\capitalmovements;
+use App\cashflow;
 use Illuminate\Http\Request;
 use App\accountancycatalogs;
 use App\debits;
@@ -40,27 +40,19 @@ class CapitalmovementsController extends Controller
      */
     public function store(Request $request)
     {
-        $cashflow=new capitalmovements;
-        $credit=new credits;
-        $debit=new debits;
+        $cashflow=new cashflow;
         DB::beginTransaction();
-        try {
-          $credit->idAccountancyCatalog=$request->accountcredit;
-          $credit->amount=$request->amount;
-          $credit->save();
-
-          $debit->idAccountancyCatalog=$request->accountdebit;
-          $debit->amount=$request->amount;
-          $debit->save();
-
-          $cashflow->idcredit=$credit->id;
-          $cashflow->iddebit=$debit->id;
+        try{
+          $cashflow->idaccountancydebtor=$request->accountdebit;
+          $cashflow->idaccountancycreditor=$request->accountcredit;
+          $cashflow->type=$request->typeflow;
           $cashflow->concept=$request->concept;
+          $cashflow->amount=$request->amount;
           $cashflow->save();
 
           DB::commit();
           return 1;
-        } catch (\PDOException $e) {
+        }catch(\PDOException $e){
           DB::rollBack();
           return 0;
         }

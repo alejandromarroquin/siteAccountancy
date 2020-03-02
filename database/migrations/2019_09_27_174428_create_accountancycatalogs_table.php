@@ -22,6 +22,8 @@ class CreateAccountancycatalogsTable extends Migration
           $table->integer('CodeAccount')->unsigned()->unique();
           $table->foreign('CodeAccount')->references('id')->on('accountcatalogs')->onDelete('cascade');
 
+          $table->double('debtor',10,2);
+          $table->double('creditor',10,2);
           $table->timestamps();
         });
     }

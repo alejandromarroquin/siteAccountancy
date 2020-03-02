@@ -5,7 +5,7 @@
 
 .col-lg-8{
   width: 100%;
-  height: 400px;
+  min-height: 400px;
   border:black 1px solid;
   border-radius: 10px 10px 10px 10px;
   background-color: #B5D9FD;
@@ -32,8 +32,13 @@ th{
 
 .cols{
   text-align: center;
+  height: auto;
+  width: 200px;
 }
 
 .rows{
   line-height: 70px;
+}
+.total{
+  text-align: right;
 }

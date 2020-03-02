@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  jQuery.validator.messages.required = 'Esté campo es requerido.';
   $("#account").on('change', function () {
     $("#account option:selected").each(function () {
       elegido=$(this).val();
@@ -11,24 +12,34 @@ $(document).ready(function(){
   $('#agregar').on('click',function(){
     $("#subaccount option:selected").each(function () {
       elegido=$(this).val();
-      $.get("/accountscreate", { elegido: elegido }, function(data){
-          if(data!=0){
-            jQuery('#tbody').append(data);
-            Swal.fire(
-              'Agregado!',
-              'La cuenta se agregó correctamente.',
-              'success'
-            ).then((result)=>{
-              location.reload();
-            });
-          }else{
-            Swal.fire(
-              'Error!',
-              'Algo salio mal, verifique que la cuenta no haya sido ya registrada.',
-              'error'
-            )
-          }
-      });
+      debtor=$('input[name="debtor"]').val();
+      if(debtor==''){
+        debtor=0;
+      }
+      creditor=$('input[name="creditor"]').val();
+      if(creditor==''){
+        creditor=0;
+      }
+      if($("#accountcatalogform").valid()){
+        $.get("/accountscreate", { elegido: elegido,debtor:debtor,creditor:creditor }, function(data){
+            if(data!=0){
+              jQuery('#tbody').append(data);
+              Swal.fire(
+                'Agregado!',
+                'La cuenta se agregó correctamente.',
+                'success'
+              ).then((result)=>{
+                location.reload();
+              });
+            }else{
+              Swal.fire(
+                'Error!',
+                'Algo salio mal, verifique que la cuenta no haya sido ya registrada.',
+                'error'
+              )
+            }
+        });
+      }
     });
   });
 

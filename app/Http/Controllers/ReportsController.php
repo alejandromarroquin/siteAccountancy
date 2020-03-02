@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\accountancie;
 use App\capitalmovements;
+use App\cashflow;
+use DB;
 
 class ReportsController extends Controller
 {
@@ -78,14 +80,31 @@ class ReportsController extends Controller
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         $cashflow=capitalmovements::join('accountancycatalogs','capitalmovements.idAccountancyCatalog','=','accountancycatalogs.id')->get();
-
-        return view('reports/trialbalance',compact('company'));
+        //$data=cashflow::join('accountancycatalogs','cashflows.idaccountancydebtor','=','accountancycatalogs.id')->join('accountcatalogs','accountancycatalogs.CodeAccount','=','accountcatalogs.id')->get();
+        $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+        $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+        $accountcreds=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+        $arrayaccountd=array();
+        foreach ($accountdebs as $accountdeb) {
+          $arrayaccountd[$accountdeb->accountName]=$accountdeb->sumamount;
+        }
+        $arrayaccountc=array();
+        foreach ($accountcreds as $accountcred) {
+          $arrayaccountc[$accountcred->accountName]=$accountcred->sumcred;
+        }
+        $cont=0;
+        $summd=0;
+        $summa=0;
+        $sumsd=0;
+        $sumsa=0;
+        return view('reports/trialbalance',compact('cont','summd','summa','sumsd','sumsa','company','accountsname','arrayaccountd','arrayaccountc'));
     }
 
-    //Descarga la balanza de comprobaci
-    public function downloadTrialbalance(){
-      $pdf = \PDF::loadView('reports.trialbalancePDF');
-      return $pdf->download();
+  
+    public function downloadTrialbalance(Request $request){
+      return $request->cont;
+      // $pdf = \PDF::loadView('reports.trialbalancePDF');
+      // return $pdf->download();
     }
 
     //Genera el flujo de efectivo.
