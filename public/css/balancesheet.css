@@ -4,6 +4,7 @@
 }
 
 .col-lg-8{
+  min-height: 300px;
   border:black 1px solid;
   border-radius: 10px 10px 10px 10px;
   background-color: #AFF08E;
@@ -18,15 +19,18 @@
 }
 
 .activo{
-  height: 400px;
+  width: 100%;
+  min-height: 400px;
 }
 
 .pasivo{
-  height: 200px;
+  width: 100%;
+  min-height: 200px;
 }
 
 .capital{
-  height: 200px;
+  width: 100%;
+  min-height: 200px;
 }
 
 .title{
@@ -37,4 +41,10 @@
   margin-top: 30px;
   text-align: center;
   font-size: 18px;
+}
+
+
+.accountname{
+  width: 65%;
+  line-height: 2em;
 }

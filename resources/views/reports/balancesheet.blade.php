@@ -39,20 +39,53 @@
               <label class="title">
                 Activo
               </label>
+              <table>
+                <tbody>
+                  @foreach($activos as $activo)
+                    <tr>
+                      <td class="accountname">{{$activo->accountName}}</td>
+                      <td>{{$activo->sumcred}}</td>
+                      <label hidden>{{$sumact=$sumact+$activo->sumcred}}</label>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
             </div>
             <div class="col pasivo-capital">
               <div class="row pasivo">
                 <label class="title">
                   Pasivo
                 </label>
+                <table>
+                  <tbody>
+                    @foreach($pasivos as $pasivo)
+                      <tr>
+                        <td class="accountname">{{$pasivo->accountName}}</td>
+                        <td>{{$pasivo->sumamount}}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
               <div class="row capital">
                 <label class="title">
                   Capital
                 </label>
+                <table>
+                  <tbody>
+                    @foreach($capital as $capital)
+                      <tr>
+                        <td class="accountname">{{$capital->accountName}}</td>
+                        <td>{{$capital->sumamount}}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
             </div>
+
           </div>
+          <label>Total activo: {{$sumact}}</label>
         </div>
       </div>
     </div>
