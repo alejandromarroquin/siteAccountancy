@@ -12,10 +12,10 @@
         <div class="col">
           <h1 class="page-header">Balanza de comprobación:</h1>
         </div>
-        <form class="" action="" method="">
+        <form class="" action="/downloadtrialbalance" method="GET">
+          {{ csrf_field() }}
           <div class="col">
-            <input type="text" name="cont" value="{{$cont}}" hidden>
-            <button type="button" class="btn btn-primary" id="download">Descargar</button>
+            <button type="submit" class="btn btn-primary" id="download">Descargar</button>
           </div>
         </form>
       </div>

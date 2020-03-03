@@ -48,59 +48,90 @@ th{
 </style>
   </head>
   <body>
-    <div class="row margin">
-      <div class="col-lg-8 col-xl-12">
-        <div class="container information">
+    <div id="page-wrapper" class="p-4">
+      <div class="row mt-4">
+        <div class="card-body">
+          <div class="row margin">
+            <div class="col-lg-8 col-xl-12">
+              <div class="container information">
+                @foreach($company as $information)
+                  <label>{{$information->businessName}}</label><br/>
+                @endforeach
+                <label>Balanza de comprobación al </label>
+                <label id="date"></label>
+              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" rowspan="2" class="cols rows">ID</th>
+                    <th scope="col" rowspan="2" class="cols rows">Cuentas</th>
+                    <th scope="col" colspan="2" class="cols">Movimientos</th>
+                    <th scope="col" colspan="2" class="cols">Saldos</th>
+                  </tr>
+                  <tr>
+                    <th scope="col" class="cols">Deudor</th>
+                    <th scope="col" class="cols">Acredor</th>
+                    <th scope="col" class="cols">Deudor</th>
+                    <th scope="col" class="cols">Acredor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($accountsname as $dta)
+                    <tr>
+                      <th scope="row" class="cols">{{$cont=$cont+1}}</th>
+                      <td class="colsname">{{$dta->accountName}}</td>
+                      <td class="cols">
+                        @if(array_key_exists($dta->accountName,$arrayaccountd))
+                          {{$arrayaccountd[$dta->accountName]}}
 
-            <label></label><br/>
+                        @endif
+                      </td>
+                      <td class="cols">
+                        @if(array_key_exists($dta->accountName,$arrayaccountc))
+                          {{$arrayaccountc[$dta->accountName]}}
 
-          <label>Balanza de comprobación al </label>
-          <label id="date"></label>
+                        @endif
+                      </td>
+                      <td class="cols">
+                        @if(array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc))
+                          @if($arrayaccountd[$dta->accountName]>$arrayaccountc[$dta->accountName])
+                            {{$arrayaccountd[$dta->accountName]-$arrayaccountc[$dta->accountName]}}
+
+                          @endif
+                        @else
+                          @if(!array_key_exists($dta->accountName,$arrayaccountc))
+                            {{$arrayaccountd[$dta->accountName]}}
+
+                          @endif
+                        @endif
+                      </td>
+                      <td class="cols">
+                        @if(array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc))
+                          @if($arrayaccountd[$dta->accountName]<$arrayaccountc[$dta->accountName])
+                            {{$arrayaccountc[$dta->accountName]-$arrayaccountd[$dta->accountName]}}
+                          @endif
+                        @else
+                          @if(!array_key_exists($dta->accountName,$arrayaccountd))
+                            {{$arrayaccountc[$dta->accountName]}}
+                          @endif
+                        @endif
+                      </td>
+                    </tr>
+                  @endforeach
+
+                  <tr>
+                    <td></td>
+                    <td class="total">Total</td>
+                    <td class="cols">{{$summd}}</td>
+                    <td class="cols">{{$summa}}</td>
+                    <td class="cols">{{$sumsd}}</td>
+                    <td class="cols">{{$sumsa}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col" rowspan="2" class="cols rows">ID</th>
-              <th scope="col" rowspan="2" class="cols rows">Cuentas</th>
-              <th scope="col" colspan="2" class="cols">Movimientos</th>
-              <th scope="col" colspan="2" class="cols">Saldos</th>
-            </tr>
-            <tr>
-              <th scope="col" class="cols">Deudor</th>
-              <th scope="col" class="cols">Acredor</th>
-              <th scope="col" class="cols">Deudor</th>
-              <th scope="col" class="cols">Acredor</th>
-            </tr>
-          </thead>
-          <tbody>
-
-              <tr>
-                <th scope="row" class="cols"></th>
-                <td class="colsname"></td>
-                <td class="cols">
-
-                </td>
-                <td class="cols">
-
-                </td>
-                <td class="cols">
-
-                </td>
-                <td class="cols">
-
-                </td>
-              </tr>
-
-            <tr>
-              <td></td>
-              <td class="total">Total</td>
-              <td class="cols"></td>
-              <td class="cols"></td>
-              <td class="cols"></td>
-              <td class="cols"></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </body>

@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
     Route::post('/generatestatementresult','ReportsController@generateStatementresult');
     Route::get('/downloadstatementresult','ReportsController@downloadStatementresult');
     Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
-    Route::post('/downloadtrialbalance','ReportsController@downloadTrialbalance');
+    Route::get('/downloadtrialbalance','ReportsController@downloadTrialbalance');
     Route::post('/generatecashflow','ReportsController@generateCashflow');
 
     Route::group(['middleware' => ['Subcontador']], function () {

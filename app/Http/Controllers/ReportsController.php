@@ -100,11 +100,56 @@ class ReportsController extends Controller
         return view('reports/trialbalance',compact('cont','summd','summa','sumsd','sumsa','company','accountsname','arrayaccountd','arrayaccountc'));
     }
 
-  
-    public function downloadTrialbalance(Request $request){
-      return $request->cont;
-      // $pdf = \PDF::loadView('reports.trialbalancePDF');
-      // return $pdf->download();
+
+    public function downloadTrialbalance(){
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $cashflow=capitalmovements::join('accountancycatalogs','capitalmovements.idAccountancyCatalog','=','accountancycatalogs.id')->get();
+      //$data=cashflow::join('accountancycatalogs','cashflows.idaccountancydebtor','=','accountancycatalogs.id')->join('accountcatalogs','accountancycatalogs.CodeAccount','=','accountcatalogs.id')->get();
+      $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+      $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+      $accountcreds=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+      $arrayaccountd=array();
+      foreach ($accountdebs as $accountdeb) {
+        $arrayaccountd[$accountdeb->accountName]=$accountdeb->sumamount;
+      }
+      $arrayaccountc=array();
+      foreach ($accountcreds as $accountcred) {
+        $arrayaccountc[$accountcred->accountName]=$accountcred->sumcred;
+      }
+      $cont=0;
+      $summd=0;
+      $summa=0;
+      $sumsd=0;
+      $sumsa=0;
+      foreach ($accountsname as $dta) {
+        if(array_key_exists($dta->accountName,$arrayaccountd)){
+          $summd=$summd+$arrayaccountd[$dta->accountName];
+        }
+        if(array_key_exists($dta->accountName,$arrayaccountc)){
+          $summa=$summa+$arrayaccountc[$dta->accountName];
+        }
+        if(array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc)){
+          if($arrayaccountd[$dta->accountName]>$arrayaccountc[$dta->accountName]){
+            $sumsd=$sumsd+$arrayaccountd[$dta->accountName]-$arrayaccountc[$dta->accountName];
+          }
+        }else{
+          if(!array_key_exists($dta->accountName,$arrayaccountc)){
+            $sumsd=$sumsd+$arrayaccountd[$dta->accountName];
+          }
+        }
+        if(array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc)){
+          if($arrayaccountd[$dta->accountName]<$arrayaccountc[$dta->accountName]){
+            $sumsa=$sumsa+$arrayaccountc[$dta->accountName]-$arrayaccountd[$dta->accountName];
+          }
+        }else{
+          if(!array_key_exists($dta->accountName,$arrayaccountd)){
+            $sumsa=$sumsa+$arrayaccountc[$dta->accountName];
+          }
+        }
+      }
+
+      $pdf = \PDF::loadView('reports.trialbalancePDF',compact('cont','summd','summa','sumsd','sumsa','company','accountsname','arrayaccountd','arrayaccountc'));
+      return $pdf->download();
     }
 
     //Genera el flujo de efectivo.
