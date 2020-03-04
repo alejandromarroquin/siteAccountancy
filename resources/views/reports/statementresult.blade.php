@@ -38,10 +38,14 @@
               <tr>
                 <th scope="row" class="rows">Ventas</th>
               </tr>
-              <tr>
-                <td scope="row" class="item">La</th>
-                  <td class="cols import">$4424</td>
-              </tr>
+              @foreach($accountnames as $accountname)
+                @if(array_key_exists($accountname->accountName,$arraysales))
+                  <tr>
+                    <td scope="row" class="item">{{$accountname->accountName}}</td>
+                    <td class="cols import">{{$arraysales[$accountname->accountName]}}</td>
+                  </tr>
+                @endif
+              @endforeach
               <tr>
                 <th scope="row" class="rows">Costo de ventas</th>
                 <td class="cols"></td>

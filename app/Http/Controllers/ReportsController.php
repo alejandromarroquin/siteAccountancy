@@ -87,7 +87,14 @@ class ReportsController extends Controller
     public function generateStatementresult(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-        return view('reports/statementresult',compact('company'));
+        $accountnames=DB::select('select DISTINCT accountcatalogs.accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor');
+        $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode=811 OR accounts.groupcode=812 GROUP BY accountName');
+        $costs=DB::select('select accountcatalogs.accountName,sum(amount) as costs from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode>600 AND accounts.groupcode<704 GROUP BY accountName');
+        $arraysales=array();
+        foreach ($sales as $sale) {
+          $arraysales[$sale->accountName]=$sale->sumsales;
+        }
+        return view('reports/statementresult',compact('company','arraysales','accountnames'));
     }
 
     //Descarga el estado de resultados
