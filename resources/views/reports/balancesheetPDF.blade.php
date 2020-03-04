@@ -20,15 +20,15 @@
     }
 
     .activo{
-      height: 400px;
+      height: 100px;
     }
 
     .pasivo{
-      height: 200px;
+      height: 100px;
     }
 
     .capital{
-      height: 200px;
+      height: 100px;
     }
 
     .title{
@@ -41,12 +41,28 @@
       font-size: 18px;
     }
 
+    .accountname{
+      width: 80%;
+    }
+
+    .amount{
+      text-align: right;
+    }
+
+    table{
+      margin-left: 1em;
+      margin-right: 1em;
+      width: 100%;
+    }
     </style>
   </head>
   <body>
     <div class="row margin">
       <div class="col-lg-8 col-xl-12">
         <div class="container information">
+          @foreach($company as $information)
+            <label>{{$information->businessName}}</label><br/>
+          @endforeach
           <label>Balance General al </label>
           <label id="date"></label>
         </div>
@@ -55,17 +71,61 @@
             <label class="title">
               Activo
             </label>
+            <table>
+              <tbody>
+                @foreach($activos as $activo)
+                  <tr>
+                    <td class="accountname">{{$activo->accountName}}</td>
+                    <td class="amount">{{$activo->sumcred}}</td>
+                  </tr>
+                @endforeach
+                <tr>
+                  <td class="accountname"></td>
+                  <td class="amount"><hr>{{$sumact}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <br><br>
           <div class="col pasivo-capital">
             <div class="row pasivo">
               <label class="title">
                 Pasivo
               </label>
+              <table>
+                <tbody>
+                  @foreach($pasivos as $pasivo)
+                    <tr>
+                      <td class="accountname">{{$pasivo->accountName}}</td>
+                      <td class="amount">{{$pasivo->sumamount}}</td>
+                    </tr>
+                  @endforeach
+                  <tr>
+                    <td class="accountname"></td>
+                    <td class="amount"><hr>{{$sumpas}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <br><br>
             <div class="row capital">
               <label class="title">
                 Capital
               </label>
+              <table>
+                <tbody>
+                  @foreach($capital as $cap)
+                  <tr>
+                    <td class="accountname">{{$cap->accountName}}</td>
+                    <td class="amount">{{$cap->sumamount}}</td>
+                  </tr>
+                  @endforeach
+                  <tr>
+                    <td class="accountname"></td>
+                    <td class="amount"><hr>{{$sumcap}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

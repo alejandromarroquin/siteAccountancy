@@ -57,15 +57,31 @@ class ReportsController extends Controller
         $pasivos=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
         $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
         $sumact=0;
-        return view('reports/balancesheet',compact('accountsname','company','activos','pasivos','capital','sumact'));
+        $sumactpas=0;
+        return view('reports/balancesheet',compact('accountsname','company','activos','pasivos','capital','sumact','sumactpas'));
     }
 
     //Descarga el balance general
     public function downloadBalancesheet($initialdate,$finaldate,$businessname){
-
-      $pdf = \PDF::loadView('reports.balancesheetPDF');
+      $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $activos=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+      $pasivos=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
+      $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
+      $sumact=0;
+      $sumpas=0;
+      $sumcap=0;
+      foreach($activos as $activo){
+        $sumact=$sumact+$activo->sumcred;
+      }
+      foreach($pasivos as $pasivo){
+        $sumpas=$sumpas+$pasivo->sumamount;
+      }
+      foreach($capital as $cap){
+       $sumcap=$sumcap+$cap->sumamount;
+      }
+      $pdf = \PDF::loadView('reports.balancesheetPDF',compact('accountsname','company','activos','pasivos','capital','sumact','sumpas','sumcap'));
       return $pdf->download();
-
     }
     //Genera el estado de resultados.
     public function generateStatementresult(Request $request)

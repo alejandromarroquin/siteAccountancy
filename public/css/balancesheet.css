@@ -3,6 +3,10 @@
   padding: 0px;
 }
 
+table{
+  width: 100%;
+}
+
 .col-lg-8{
   min-height: 300px;
   border:black 1px solid;
@@ -20,7 +24,7 @@
 
 .activo{
   width: 100%;
-  min-height: 400px;
+  min-height: 200px;
 }
 
 .pasivo{
@@ -47,4 +51,12 @@
 .accountname{
   width: 65%;
   line-height: 2em;
+}
+
+.totalactivo{
+  width: 65%;
+}
+
+.totalpasivocapital{
+  width: 65%;
 }

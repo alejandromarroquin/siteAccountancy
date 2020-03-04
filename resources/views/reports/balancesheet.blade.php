@@ -62,30 +62,50 @@
                       <tr>
                         <td class="accountname">{{$pasivo->accountName}}</td>
                         <td>{{$pasivo->sumamount}}</td>
+                        <label hidden>{{$sumactpas=$sumactpas+$pasivo->sumamount}}</label>
                       </tr>
                     @endforeach
                   </tbody>
                 </table>
               </div>
+              <label class="title">Capital</label>
               <div class="row capital">
-                <label class="title">
-                  Capital
-                </label>
                 <table>
                   <tbody>
                     @foreach($capital as $capital)
                       <tr>
-                        <td class="accountname">{{$capital->accountName}}</td>
+                        <td class="accountname" style="min-width:280px;max-width:280px;">{{$capital->accountName}}</td>
                         <td>{{$capital->sumamount}}</td>
+                        <label hidden>{{$sumactpas=$sumactpas+$capital->sumamount}}</label>
                       </tr>
                     @endforeach
                   </tbody>
                 </table>
               </div>
             </div>
-
           </div>
-          <label>Total activo: {{$sumact}}</label>
+          <div class="row" style="margin-bottom:3em;">
+            <div class="col">
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="totalactivo">Total activo:</td>
+                    <td>{{$sumact}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col">
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="totalpasivocapital">Total pasivo + capital:</td>
+                    <td>{{$sumactpas}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
