@@ -20,15 +20,15 @@
     }
 
     .activo{
-      height: 100px;
+      min-height: 100px;
     }
 
     .pasivo{
-      height: 100px;
+      min-height: 100px;
     }
 
     .capital{
-      height: 100px;
+      min-height: 100px;
     }
 
     .title{

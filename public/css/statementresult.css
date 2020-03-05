@@ -33,5 +33,9 @@
 }
 
 .import{
-  text-align: center;
+  text-align: right;
+}
+
+hr{
+  background: black;
 }

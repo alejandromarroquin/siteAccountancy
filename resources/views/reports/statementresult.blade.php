@@ -42,32 +42,66 @@
                 @if(array_key_exists($accountname->accountName,$arraysales))
                   <tr>
                     <td scope="row" class="item">{{$accountname->accountName}}</td>
-                    <td class="cols import">{{$arraysales[$accountname->accountName]}}</td>
+                    <td class="cols import">{{$sale=$arraysales[$accountname->accountName]}}</td>
+                    <label hidden>{{$totalsales=$totalsales+$sale}}</label>
                   </tr>
                 @endif
               @endforeach
               <tr>
-                <th scope="row" class="rows">Costo de ventas</th>
-                <td class="cols"></td>
+                <td scope="row" class="item"><strong>Total de ventas:</strong></td>
+                <td class="cols import"><hr>{{$totalsales}}</td>
               </tr>
               <tr>
-                <td scope="row" class="item">La</th>
-                  <td class="cols import">$4424</td>
+                <th scope="row" class="rows">Costo de ventas</th>
+              </tr>
+              <tr>
+                @foreach($accountnames as $accountname)
+                  @if(array_key_exists($accountname->accountName,$arraycosts))
+                    <tr>
+                      <td scope="row" class="item">{{$accountname->accountName}}</td>
+                      <td class="cols import">{{$cost=$arraycosts[$accountname->accountName]}}</td>
+                      <label hidden>{{$totalcosts=$totalcosts+$cost}}</label>
+                    </tr>
+                  @endif
+                @endforeach
+              </tr>
+              <tr>
+                <td scope="row" class="item"><strong>Total de costos:</strong></td>
+                <td class="cols import"><hr>{{$totalcosts}}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="rows">Utilidad bruta</th>
+                <th class="cols import">{{$grossprofit=$totalsales-$totalcosts}}</th>
               </tr>
               <tr>
                 <th scope="row" class="rows">Gastos</th>
-                <td class="cols"></td>
               </tr>
               <tr>
-                <td scope="row" class="item">La</th>
-                  <td class="cols import">$4424</td>
+                @foreach($accountnames as $accountname)
+                  @if(array_key_exists($accountname->accountName,$arrayexpenses))
+                    <tr>
+                      <td scope="row" class="item">{{$accountname->accountName}}</td>
+                      <td class="cols import">{{$arrayexpenses[$accountname->accountName]}}</td>
+                      <label hidden>{{$totalexpenses=$totalexpenses+$arrayexpenses[$accountname->accountName]}}</label>
+                    </tr>
+                  @endif
+                @endforeach
               </tr>
               <tr>
-                <th scope="row" class="rows">Impuestos</th>
+                <td scope="row" class="item"><strong>Total de gastos:</strong></td>
+                <td class="cols import"><hr>{{$totalexpenses}}</td>
               </tr>
               <tr>
-                <td scope="row" class="item">La</th>
-                <td class="cols import">$4424</td>
+                <th scope="row" class="rows">Utilidad antes de impuestos</th>
+                <th class="cols import">{{$utilitybeforetaxes=$grossprofit-$totalexpenses}}</th>
+              </tr>
+              <tr>
+                <th scope="row" class="rows">Impuestos a la utilidad</th>
+                <th class="cols import">{{$incometaxes=$utilitybeforetaxes*.32}}</th>
+              </tr>
+              <tr>
+                <th scope="row" class="rows">Utilidad neta</th>
+                <th class="cols import">{{$netprofit=$utilitybeforetaxes-$incometaxes}}</th>
               </tr>
             </tbody>
           </table>

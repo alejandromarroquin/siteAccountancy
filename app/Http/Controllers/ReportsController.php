@@ -87,14 +87,28 @@ class ReportsController extends Controller
     public function generateStatementresult(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-        $accountnames=DB::select('select DISTINCT accountcatalogs.accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor');
-        $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode=811 OR accounts.groupcode=812 GROUP BY accountName');
-        $costs=DB::select('select accountcatalogs.accountName,sum(amount) as costs from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode>600 AND accounts.groupcode<704 GROUP BY accountName');
+        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+        $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
+        $costs=DB::select('select accountcatalogs.accountName,sum(amount) as sumcosts from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancydebtor where accounts.groupcode>500 AND accounts.groupcode<600 GROUP BY accountName');
+        $expenses=DB::select('select accountcatalogs.accountName,sum(amount) as sumexpenses from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancydebtor where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
+        $taxes=DB::select('select accountcatalogs.accountName,sum(amount) as sumtaxes from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
         $arraysales=array();
         foreach ($sales as $sale) {
           $arraysales[$sale->accountName]=$sale->sumsales;
         }
-        return view('reports/statementresult',compact('company','arraysales','accountnames'));
+        $arraycosts=array();
+        foreach ($costs as $cost) {
+          $arraycosts[$cost->accountName]=$cost->sumcosts;
+        }
+        $arrayexpenses=array();
+        foreach ($expenses as $expense) {
+          $arrayexpenses[$expense->accountName]=$expense->sumexpenses;
+        }
+        $totalsales=0;
+        $totalcosts=0;
+        $grossprofit=0;
+        $totalexpenses=0;
+        return view('reports/statementresult',compact('company','arraysales','arraycosts','arrayexpenses','accountnames','totalsales','totalcosts','grossprofit','totalexpenses'));
     }
 
     //Descarga el estado de resultados
