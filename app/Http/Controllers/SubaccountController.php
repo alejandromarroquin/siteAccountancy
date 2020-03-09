@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\periodpolicies;
+use App\Subaccount;
 use Illuminate\Http\Request;
-use App\accountancycatalogs;
 
-class PeriodpoliciesController extends Controller
+class SubaccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class PeriodpoliciesController extends Controller
      */
     public function index()
     {
-        $accounts=accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->join('accountancies','accountancycatalogs.idAccountancy','=','accountancies.id')->select('accountcatalogs.accountname','accountancycatalogs.id')->where('accountancies.idCompany',session('idcompany'))->get();
-        return view('periodpolicies.create',compact('accounts'));
+        //
     }
 
     /**
@@ -43,10 +41,10 @@ class PeriodpoliciesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\periodpolicies  $periodpolicies
+     * @param  \App\Subaccount  $subaccount
      * @return \Illuminate\Http\Response
      */
-    public function show(periodpolicies $periodpolicies)
+    public function show(Subaccount $subaccount)
     {
         //
     }
@@ -54,10 +52,10 @@ class PeriodpoliciesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\periodpolicies  $periodpolicies
+     * @param  \App\Subaccount  $subaccount
      * @return \Illuminate\Http\Response
      */
-    public function edit(periodpolicies $periodpolicies)
+    public function edit(Subaccount $subaccount)
     {
         //
     }
@@ -66,10 +64,10 @@ class PeriodpoliciesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\periodpolicies  $periodpolicies
+     * @param  \App\Subaccount  $subaccount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, periodpolicies $periodpolicies)
+    public function update(Request $request, Subaccount $subaccount)
     {
         //
     }
@@ -77,10 +75,10 @@ class PeriodpoliciesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\periodpolicies  $periodpolicies
+     * @param  \App\Subaccount  $subaccount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(periodpolicies $periodpolicies)
+    public function destroy(Subaccount $subaccount)
     {
         //
     }

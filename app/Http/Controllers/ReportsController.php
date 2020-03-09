@@ -236,7 +236,13 @@ class ReportsController extends Controller
     public function generateCashflow(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
         return view('reports/cashflow',compact('company'));
+    }
+
+    public function downloadCashflow(){
+      $pdf = \PDF::loadView('reports.trialbalancePDF');
+      return $pdf->download();
     }
 
     /**

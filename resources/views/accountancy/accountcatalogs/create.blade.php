@@ -40,6 +40,18 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-2">
+                <label>ID Subsubcuenta:</label>
+                <input class="form-control" type="text" name="idsubsubaccount">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <label>Nombre Subsubcuenta:</label>
+                <input class="form-control" type="text" name="namesubsubaccount">
+              </div>
+            </div>
+            <!-- <div class="row">
               <div class="col">
                 <label>Saldo deudor:</label>
                 <input type="text" name="debtor" class="form-control">
@@ -48,7 +60,7 @@
                 <label>Saldo acreedor</label>
                 <input type="text" name="creditor" class="form-control">
               </div>
-            </div>
+            </div> -->
             <input class="btn btn-primary" type="button" value="Agregar" id="agregar">
           </form>
         </div>

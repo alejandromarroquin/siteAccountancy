@@ -7,6 +7,7 @@ use DB;
 use App\accounts;
 use App\accountancie;
 use App\accountancycatalogs;
+use App\Subaccount;
 use Illuminate\Http\Request;
 
 class AccountcatalogsController extends Controller
@@ -62,6 +63,7 @@ class AccountcatalogsController extends Controller
     public function store(Request $request)
     {
         $catalog=new accountancycatalogs;
+        $subaccount=new Subaccount;
         $account=accountcatalogs::select('accountcatalogs.id','accountcatalogs.accountName','accountcatalogs.code')->where('code',$request->elegido)->get();
         foreach ($account as $id) {
           $idaccount=$id->id;
@@ -70,13 +72,21 @@ class AccountcatalogsController extends Controller
         }
         DB::beginTransaction();
         try {
+
           $catalog->idAccountancy=session('idaccountancy');
           $catalog->CodeAccount=$idaccount;
-          $catalog->debtor=$request->debtor;
-          $catalog->creditor=$request->creditor;
-          if($catalog->save()){
+          $catalog->debtor=0;
+          $catalog->creditor=0;
+          $catalog->save();
+
+          $subaccount->idaccount=$catalog->id;
+          $subaccount->idsubaccount=$request->idsubsubaccount;
+          $subaccount->namesubaccount=$request->namesubsubaccount;
+
+          if($subaccount->save()){
             echo '<tr class="row100 body"><td class="cell100 column1">'.$code.'</td><td class="cell100 column2">'.$accountname.'</td row100 body><td class="cell100 column3"><button type="button" class="btn btn-danger delete" value="'.$code.'">Eliminar</button></td></tr>';
           }
+
           DB::commit();
         } catch (\PDOException $e) {
           DB::rollBack();

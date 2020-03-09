@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
 
             Route::get('/flujo_capital','CapitalmovementsController@create');
             Route::post('/movementscreate','CapitalmovementsController@store');
+            Route::get('/gettSubaccountdeb','CapitalmovementsController@consultSubaccount');
         });
     });
 });
@@ -81,6 +82,8 @@ Route::post('/updatetemplate','ConfigurationController@updateTemplate');
 Route::get('/edittemplate','ConfigurationController@editTemplate');
 Route::post('/loadfiles','ConfigurationController@loadfiles');
 Route::post('/loadcommercial','ConfigurationController@loadcommercial');
+
+Route::get('/polizas','PeriodpoliciesController@index');
 
 Auth::routes();
 

@@ -13,6 +13,8 @@ $(document).ready(function(){
     $("#subaccount option:selected").each(function () {
       elegido=$(this).val();
       debtor=$('input[name="debtor"]').val();
+      idsubsubaccount=$('input[name="idsubsubaccount"]').val();
+      namesubsubaccount=$('input[name="namesubsubaccount"]').val();
       if(debtor==''){
         debtor=0;
       }
@@ -21,7 +23,7 @@ $(document).ready(function(){
         creditor=0;
       }
       if($("#accountcatalogform").valid()){
-        $.get("/accountscreate", { elegido: elegido,debtor:debtor,creditor:creditor }, function(data){
+        $.get("/accountscreate", { elegido: elegido,debtor:debtor,creditor:creditor,idsubsubaccount:idsubsubaccount,namesubsubaccount:namesubsubaccount }, function(data){
             if(data!=0){
               jQuery('#tbody').append(data);
               Swal.fire(

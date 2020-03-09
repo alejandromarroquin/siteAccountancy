@@ -22,21 +22,20 @@
               <input type="text" value="1" name="flag" readonly hidden/>
               <div class="row">
                 <div class="col-6">
-                  <label>Tipo de movimiento:</label>
-                  <select class="form-control" name="typeflow">
-                    <option value="1">Deudor</option>
-                    <option value="2">Acreedor</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-6">
                   <label>Cuenta deudor:</label>
                   <select class="form-control" name="accountdebit" id="accountdebit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)
                       <option value="{{$account->id}}">{{$account->accountname}}</option>
                     @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label>Subcuenta deudor:</label>
+                  <select class="form-control" name="subaccountdebit">
+                    <option selected hidden>Selecciona uno...</option>
                   </select>
                 </div>
               </div>
@@ -53,8 +52,27 @@
               </div>
               <div class="row">
                 <div class="col-6">
+                  <label>Subcuenta acreedor:</label>
+                  <select class="form-control" name="subaccountcredit">
+                    <option selected hidden>Selecciona uno...</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
                   <label>Concepto:</label>
                   <input class="form-control" name="concept">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label>Actividad:</label>
+                  <select class="form-control" name="activity">
+                    <option>Operación</option>
+                    <option>Inversión</option>
+                    <option>Financiamiento</option>
+                    <option>No aplica</option>
+                  </select>
                 </div>
               </div>
               <div class="row">

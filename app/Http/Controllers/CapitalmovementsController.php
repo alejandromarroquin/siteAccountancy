@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\accountancycatalogs;
 use App\debits;
 use App\credits;
+use App\Subaccount;
 use DB;
 
 class CapitalmovementsController extends Controller
@@ -33,6 +34,22 @@ class CapitalmovementsController extends Controller
     }
 
     /**
+     * Consulta las subcuentas que pertenezcan a la cuenta
+     * seleccionada por el usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function consultSubaccount(Request $request)
+    {
+        $accounts=Subaccount::join('accountancycatalogs','subaccounts.idaccount','=','accountancycatalogs.id')->select('idsubaccount','namesubaccount')->where('accountancycatalogs.id',$request->elegido)->get();
+        echo "<option selected hidden>Selecciona una subcuenta...</option>";
+        foreach($accounts as $account){
+            echo "<option value=".$account->idsubaccount.">".$account->namesubaccount."</option>";
+        }
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -43,9 +60,10 @@ class CapitalmovementsController extends Controller
         $cashflow=new cashflow;
         DB::beginTransaction();
         try{
-          $cashflow->idaccountancydebtor=$request->accountdebit;
-          $cashflow->idaccountancycreditor=$request->accountcredit;
+          $cashflow->idsubaccountdeb=$request->accountdebit;
+          $cashflow->idsubaccountcred=$request->accountcredit;
           $cashflow->type=$request->typeflow;
+          $cashflow->activity=$request->activity;
           $cashflow->concept=$request->concept;
           $cashflow->amount=$request->amount;
           $cashflow->save();
