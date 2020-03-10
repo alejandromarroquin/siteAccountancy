@@ -42,10 +42,10 @@ class CapitalmovementsController extends Controller
      */
     public function consultSubaccount(Request $request)
     {
-        $accounts=Subaccount::join('accountancycatalogs','subaccounts.idaccount','=','accountancycatalogs.id')->select('idsubaccount','namesubaccount')->where('accountancycatalogs.id',$request->elegido)->get();
+        $accounts=Subaccount::join('accountancycatalogs','subaccounts.idaccount','=','accountancycatalogs.id')->select('subaccounts.id','namesubaccount')->where('accountancycatalogs.id',$request->elegido)->get();
         echo "<option selected hidden>Selecciona una subcuenta...</option>";
         foreach($accounts as $account){
-            echo "<option value=".$account->idsubaccount.">".$account->namesubaccount."</option>";
+            echo "<option value=".$account->id.">".$account->namesubaccount."</option>";
         }
     }
 
@@ -62,7 +62,6 @@ class CapitalmovementsController extends Controller
         try{
           $cashflow->idsubaccountdeb=$request->accountdebit;
           $cashflow->idsubaccountcred=$request->accountcredit;
-          $cashflow->type=$request->typeflow;
           $cashflow->activity=$request->activity;
           $cashflow->concept=$request->concept;
           $cashflow->amount=$request->amount;

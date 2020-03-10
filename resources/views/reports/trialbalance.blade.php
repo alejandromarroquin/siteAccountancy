@@ -67,7 +67,7 @@
                         <label hidden>{{$sumsd=$sumsd+$arrayaccountd[$dta->accountName]-$arrayaccountc[$dta->accountName]}}</label>
                       @endif
                     @else
-                      @if(!array_key_exists($dta->accountName,$arrayaccountc))
+                      @if(!array_key_exists($dta->accountName,$arrayaccountc) && array_key_exists($dta->accountName,$arrayaccountd))
                         {{$arrayaccountd[$dta->accountName]}}
                         <label hidden>{{$sumsd=$sumsd+$arrayaccountd[$dta->accountName]}}</label>
                       @endif
@@ -79,7 +79,7 @@
                         {{$sumsa=$sumsa+$arrayaccountc[$dta->accountName]-$arrayaccountd[$dta->accountName]}}
                       @endif
                     @else
-                      @if(!array_key_exists($dta->accountName,$arrayaccountd))
+                      @if(!array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc))
                         {{$sumsa=$sumsa+$arrayaccountc[$dta->accountName]}}
                       @endif
                     @endif

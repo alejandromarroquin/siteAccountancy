@@ -99,7 +99,7 @@ th{
 
                           @endif
                         @else
-                          @if(!array_key_exists($dta->accountName,$arrayaccountc))
+                          @if(!array_key_exists($dta->accountName,$arrayaccountc) && array_key_exists($dta->accountName,$arrayaccountd))
                             {{$arrayaccountd[$dta->accountName]}}
 
                           @endif
@@ -111,7 +111,7 @@ th{
                             {{$arrayaccountc[$dta->accountName]-$arrayaccountd[$dta->accountName]}}
                           @endif
                         @else
-                          @if(!array_key_exists($dta->accountName,$arrayaccountd))
+                          @if(!array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc))
                             {{$arrayaccountc[$dta->accountName]}}
                           @endif
                         @endif

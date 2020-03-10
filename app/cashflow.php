@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class cashflow extends Model
 {
-    protected $fillable=['idaccountancydebtor','idsubaccount','type','concept','amount'];
+    protected $fillable=['idsubaccountdeb','idsubaccountcred','type','activity','concept','amount'];
 }

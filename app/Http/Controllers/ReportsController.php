@@ -53,9 +53,9 @@ class ReportsController extends Controller
         $finaldate=$request->finaldate;
         $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-        $activos=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
-        $pasivos=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
-        $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
+        $activos=DB::select('select accountName,sum(amount) as sumcred from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+        $pasivos=DB::select('select accountName,sum(amount) as sumamount from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
+        $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idsubaccountdeb=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
         $sumact=0;
         $sumactpas=0;
         return view('reports/balancesheet',compact('accountsname','company','activos','pasivos','capital','sumact','sumactpas'));
@@ -65,9 +65,9 @@ class ReportsController extends Controller
     public function downloadBalancesheet($initialdate,$finaldate,$businessname){
       $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-      $activos=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
-      $pasivos=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
-      $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
+      $activos=DB::select('select accountName,sum(amount) as sumcred from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+      $pasivos=DB::select('select accountName,sum(amount) as sumamount from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
+      $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idsubaccountdeb=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
       $sumact=0;
       $sumpas=0;
       $sumcap=0;
@@ -88,10 +88,10 @@ class ReportsController extends Controller
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
-        $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
-        $costs=DB::select('select accountcatalogs.accountName,sum(amount) as sumcosts from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancydebtor where accounts.groupcode>500 AND accounts.groupcode<600 GROUP BY accountName');
-        $expenses=DB::select('select accountcatalogs.accountName,sum(amount) as sumexpenses from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancydebtor where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
-        $taxes=DB::select('select accountcatalogs.accountName,sum(amount) as sumtaxes from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
+        $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountcred where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
+        $costs=DB::select('select accountcatalogs.accountName,sum(amount) as sumcosts from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountdeb where accounts.groupcode>500 AND accounts.groupcode<600 GROUP BY accountName');
+        $expenses=DB::select('select accountcatalogs.accountName,sum(amount) as sumexpenses from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountdeb where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
+        $taxes=DB::select('select accountcatalogs.accountName,sum(amount) as sumtaxes from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountcred where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
         $arraysales=array();
         foreach ($sales as $sale) {
           $arraysales[$sale->accountName]=$sale->sumsales;
@@ -115,10 +115,10 @@ class ReportsController extends Controller
     public function downloadStatementresult(){
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
-      $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
-      $costs=DB::select('select accountcatalogs.accountName,sum(amount) as sumcosts from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancydebtor where accounts.groupcode>500 AND accounts.groupcode<600 GROUP BY accountName');
-      $expenses=DB::select('select accountcatalogs.accountName,sum(amount) as sumexpenses from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancydebtor where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
-      $taxes=DB::select('select accountcatalogs.accountName,sum(amount) as sumtaxes from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join cashflows on accountancycatalogs.id=cashflows.idaccountancycreditor where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
+      $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountcred where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
+      $costs=DB::select('select accountcatalogs.accountName,sum(amount) as sumcosts from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountdeb where accounts.groupcode>500 AND accounts.groupcode<600 GROUP BY accountName');
+      $expenses=DB::select('select accountcatalogs.accountName,sum(amount) as sumexpenses from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountdeb where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
+      $taxes=DB::select('select accountcatalogs.accountName,sum(amount) as sumtaxes from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountcred where accounts.groupcode=602 OR accounts.groupcode=603 OR accounts.groupcode=701 OR accounts.groupcode=703 GROUP BY accountName');
       $arraysales=array();
       foreach ($sales as $sale) {
         $arraysales[$sale->accountName]=$sale->sumsales;
@@ -159,11 +159,9 @@ class ReportsController extends Controller
     public function generateTrialbalance(Request $request)
     {
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-        $cashflow=capitalmovements::join('accountancycatalogs','capitalmovements.idAccountancyCatalog','=','accountancycatalogs.id')->get();
-        //$data=cashflow::join('accountancycatalogs','cashflows.idaccountancydebtor','=','accountancycatalogs.id')->join('accountcatalogs','accountancycatalogs.CodeAccount','=','accountcatalogs.id')->get();
-        $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
-        $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
-        $accountcreds=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+        $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session("idaccountancy"));
+        $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $accountcreds=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
         $arrayaccountd=array();
         foreach ($accountdebs as $accountdeb) {
           $arrayaccountd[$accountdeb->accountName]=$accountdeb->sumamount;
@@ -183,11 +181,9 @@ class ReportsController extends Controller
 
     public function downloadTrialbalance(){
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-      $cashflow=capitalmovements::join('accountancycatalogs','capitalmovements.idAccountancyCatalog','=','accountancycatalogs.id')->get();
-      //$data=cashflow::join('accountancycatalogs','cashflows.idaccountancydebtor','=','accountancycatalogs.id')->join('accountcatalogs','accountancycatalogs.CodeAccount','=','accountcatalogs.id')->get();
-      $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
-      $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancydebtor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
-      $accountcreds=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join cashflows cashdeb on cashdeb.idaccountancycreditor=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
+      $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session("idaccountancy"));
+      $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $accountcreds=DB::select('select accountName,sum(amount) as sumcred from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
       $arrayaccountd=array();
       foreach ($accountdebs as $accountdeb) {
         $arrayaccountd[$accountdeb->accountName]=$accountdeb->sumamount;
@@ -213,7 +209,7 @@ class ReportsController extends Controller
             $sumsd=$sumsd+$arrayaccountd[$dta->accountName]-$arrayaccountc[$dta->accountName];
           }
         }else{
-          if(!array_key_exists($dta->accountName,$arrayaccountc)){
+          if(!array_key_exists($dta->accountName,$arrayaccountc) && array_key_exists($dta->accountName,$arrayaccountd)){
             $sumsd=$sumsd+$arrayaccountd[$dta->accountName];
           }
         }
@@ -222,7 +218,7 @@ class ReportsController extends Controller
             $sumsa=$sumsa+$arrayaccountc[$dta->accountName]-$arrayaccountd[$dta->accountName];
           }
         }else{
-          if(!array_key_exists($dta->accountName,$arrayaccountd)){
+          if(!array_key_exists($dta->accountName,$arrayaccountd) && array_key_exists($dta->accountName,$arrayaccountc)){
             $sumsa=$sumsa+$arrayaccountc[$dta->accountName];
           }
         }

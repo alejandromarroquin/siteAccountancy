@@ -9,7 +9,6 @@ $(document).ready(function(){
   $('select[name="accountdebit"]').on('change',function(){
     $('select[name="accountdebit"] option:selected').each(function () {
       elegido=$(this).val();
-      alert(elegido);
       $.get("/gettSubaccountdeb", { elegido: elegido }, function(data){
           $('select[name="subaccountdebit"]').html(data);
       });
@@ -17,9 +16,8 @@ $(document).ready(function(){
   });
 
   $('select[name="accountcredit"]').on('change',function(){
-    $('select[name="accountdebit"] option:selected').each(function () {
+    $('select[name="accountcredit"] option:selected').each(function () {
       elegido=$(this).val();
-      alert(elegido);
       $.get("/gettSubaccountdeb", { elegido: elegido }, function(data){
           $('select[name="subaccountcredit"]').html(data);
       });
@@ -38,9 +36,8 @@ $(document).ready(function(){
   });
 
   $("#sendform").on('click', function () {
-    var typeflow=$('select[name="typeflow"]').val();
     var accountdebit=$('select[name="subaccountdebit"]').val();
-    var accountcredit=$('select[name="subaccountcredit"]').val()
+    var accountcredit=$('select[name="subaccountcredit"]').val();
     var activity=$('select[name="activity"]').val();
     var concept=$('input[name="concept"]').val();
     var amount=$('input[name="amount"]').val();
@@ -48,7 +45,7 @@ $(document).ready(function(){
       $.ajax({
          type:'POST',
          url:'/movementscreate',
-         data:{typeflow:typeflow,accountdebit:accountdebit,accountcredit:accountcredit,concept:concept,amount:amount,activity:activity},
+         data:{accountdebit:accountdebit,accountcredit:accountcredit,concept:concept,amount:amount,activity:activity},
          success:function(data){
           if(data==1){
             Swal.fire(
