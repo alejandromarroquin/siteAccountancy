@@ -32,10 +32,10 @@
   text-indent: 7em;
 }
 
-.import{
-  text-align: right;
-}
-
 hr{
   background: black;
+}
+
+.import{
+  text-align: right;
 }

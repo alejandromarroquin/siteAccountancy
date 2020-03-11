@@ -14,7 +14,7 @@
             <div class="col">
               <h1 class="page-header">Estado de flujo de efectivo:</h1>
             </div>
-            <form action="/downloadbalancesheet/2019-12-27/2020-11-17/d&c" method="GET">
+            <form action="/downloadcashflow" method="GET">
               <input type="text" name="initialdate" value="" hidden>
               <input type="text" name="finaldate" value="" hidden>
               <div class="col">
@@ -44,25 +44,67 @@
               <tr>
                 <th scope="row" class="rows">Actividades de operación</th>
               </tr>
+              @foreach($actopcred as $actopcred)
+                <label hidden>{{$sumactopcred=$sumactopcred+$actopcred->sumamount}}</label>
+                <tr>
+                  <td scope="row" class="rows">{{$actopcred->accountName}}</td>
+                  <td class="cols import">{{$actopcred->sumamount}}</td>
+                </tr>
+              @endforeach
+              @foreach($actopdeb as $actopdeb)
+                <label hidden>{{$sumactopdeb=$sumactopdeb+$actopdeb->sumamount}}</label>
+                <tr>
+                  <td scope="row" class="rows">{{$actopdeb->accountName}}</td>
+                  <td class="cols import">-{{$actopdeb->sumamount}}</td>
+                </tr>
+              @endforeach
               <tr>
-                <td scope="row" class="item">La</th>
-                <td class="cols import">$4424</td>
+                <td scope="row" class="rows"></td>
+                <td class="cols import"><hr>{{$sumactopcred-$sumactopdeb}}</td>
               </tr>
               <tr>
                 <th scope="row" class="rows">Actividades de inversión</th>
                 <td class="cols"></td>
               </tr>
+              @foreach($actincred as $actincred)
+                <label hidden>{{$sumactincred=$sumactincred+$actincred->sumamount}}</label>
+                <tr>
+                  <td scope="row" class="rows">{{$actincred->accountName}}</td>
+                  <td class="cols import">{{$actincred->sumamount}}</td>
+                </tr>
+              @endforeach
+              @foreach($actindeb as $actindeb)
+              <label hidden>{{$sumactindeb=$sumactindeb+$actindeb->sumamount}}</label>
+                <tr>
+                  <td scope="row" class="rows">{{$actindeb->accountName}}</td>
+                  <td class="cols import">-{{$actindeb->sumamount}}</td>
+                </tr>
+              @endforeach
               <tr>
-                <td scope="row" class="item">La</th>
-                <td class="cols import">$4424</td>
+                <td scope="row" class="rows"></td>
+                <td class="cols import"><hr>{{$sumactincred-$sumactindeb}}</td>
               </tr>
               <tr>
                 <th scope="row" class="rows">Actividades de financiamiento</th>
                 <td class="cols"></td>
               </tr>
+              @foreach($actficred as $actficred)
+                <label hidden>{{$sumactficred=$sumactficred+$actindeb->sumamount}}</label>
+                <tr>
+                  <td scope="row" class="item">{{$actindeb->accountName}}</th>
+                  <td class="cols import">-{{$actindeb->sumamount}}</td>
+                </tr>
+              @endforeach
+              @foreach($actfideb as $actfideb)
+                <label hidden>{{$sumactfideb=$sumactfideb+$actfideb->sumamount}}</label>
+                <tr>
+                  <td scope="row" class="item">{{$actfideb->accountName}}</th>
+                  <td class="cols import">-{{$actfideb->sumamount}}</td>
+                </tr>
+              @endforeach
               <tr>
-                <td scope="row" class="item">La</th>
-                <td class="cols import">$4424</td>
+                <td scope="row" class="item"></td>
+                <td class="cols import"><hr>{{$sumactficred-$sumactfideb}}</td>
               </tr>
             </tbody>
           </table>

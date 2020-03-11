@@ -228,14 +228,6 @@ class ReportsController extends Controller
       return $pdf->download();
     }
 
-    //Genera el flujo de efectivo.
-    public function generateCashflow(Request $request)
-    {
-        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
-        return view('reports/cashflow',compact('company'));
-    }
-
     //Genera la póliza de periodos.
     public function generatePeriodPoliciesincome(Request $request)
     {
@@ -443,8 +435,69 @@ class ReportsController extends Controller
       return $pdf->download();
     }
 
-    public function downloadCashflow(){
+    public function generateAux(){
+      return view('reports.assistant');
+    }
+
+    public function downloadAux(){
       $pdf = \PDF::loadView('reports.trialbalancePDF');
+      return $pdf->download();
+    }
+
+    //Genera el flujo de efectivo.
+    public function generateCashflow(Request $request)
+    {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+        $actopdeb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Operación" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $actopcred=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Operación" and typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $actindeb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Inversión" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $actincred=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Inversión" and typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $actfideb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Financiamiento" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $actficred=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Financiamiento" and typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $sumactopcred=0;
+        $sumactopdeb=0;
+        $sumactincred=0;
+        $sumactindeb=0;
+        $sumactficred=0;
+        $sumactfideb=0;
+        return view('reports/cashflow',compact('company','actopdeb','actopcred','actopdeb','actindeb','actincred','actfideb','actficred','sumactopcred','sumactopdeb','sumactincred','sumactindeb','sumactficred','sumactfideb'));
+    }
+
+    public function downloadCashflow(){
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+      $actopdeb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Operación" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $actopcred=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Operación" and typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $actindeb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Inversión" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $actincred=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Inversión" and typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $actfideb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Financiamiento" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $actficred=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Financiamiento" and typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $sumactopcred=0;
+      $sumactopdeb=0;
+      $sumactincred=0;
+      $sumactindeb=0;
+      $sumactficred=0;
+      $sumactfideb=0;
+      foreach($actopcred as $actopcre){
+        $sumactopcred=$sumactopcred+$actopcre->sumamount;
+      }
+      foreach($actopdeb as $actopde){
+        $sumactopdeb=$sumactopdeb+$actopde->sumamount;
+      }
+      foreach($actincred as $actincre){
+        $sumactincred=$sumactincred+$actincre->sumamount;
+      }
+      foreach($actindeb as $actinde){
+        $sumactindeb=$sumactindeb+$actinde->sumamount;
+      }
+      foreach($actficred as $actficre){
+        $sumactficred=$sumactficred+$actinde->sumamount;
+      }
+      foreach($actfideb as $actfide){
+        $sumactfideb=$sumactfideb+$actfide->sumamount;
+      }
+      $pdf = \PDF::loadView('reports.cashflowPDF',compact('company','actopdeb','actopcred','actopdeb','actindeb','actincred','actfideb','actficred','sumactopcred','sumactopdeb','sumactincred','sumactindeb','sumactficred','sumactfideb'));
       return $pdf->download();
     }
 

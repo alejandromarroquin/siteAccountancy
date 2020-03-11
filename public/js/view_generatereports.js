@@ -33,6 +33,11 @@ $(document).ready(function(){
     var url='/generateperiodpiliciesdaily';
     $('#dates').attr('action', url);
   });
+
+  $('#aux').on('click',function(){
+    var url='/generateaux';
+    $('#dates').attr('action', url);
+  });
 });
 
 $(document).ready(function(){

@@ -74,6 +74,14 @@
                 </a>
               </div>
             </div>
+            <div class="col-2">
+              <div class="div-img">
+                <a href="" class="linkreport" id="aux" data-toggle="modal" data-target="#exampleModalCenter">
+                  <img src="{{asset('img/icondoc4.png')}}" class="img-fluid img">
+                  <label class="namereport">Auxiliares</label>
+                </a>
+              </div>
+            </div>
           </div>
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
