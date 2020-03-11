@@ -28,6 +28,12 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
     Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
     Route::get('/downloadtrialbalance','ReportsController@downloadTrialbalance');
     Route::post('/generatecashflow','ReportsController@generateCashflow');
+    Route::post('/generateperiodpiliciesincome','ReportsController@generatePeriodPoliciesincome');
+    Route::get('/downloadpolicieincome','ReportsController@downloadPeriodpolicieincome');
+    Route::post('/generateperiodpiliciesexpenses','ReportsController@generatePeriodPoliciesexpenses');
+    Route::get('/downloadpolicieexpenses','ReportsController@downloadPeriodpolicieexpenses');
+    Route::post('/generateperiodpiliciesdaily','ReportsController@generatePeriodPoliciesdaily');
+    Route::get('/downloadpoliciedaily','ReportsController@downloadPeriodpoliciedaily');
 
     Route::group(['middleware' => ['Subcontador']], function () {
         Route::get('/cuentas','AccountcatalogsController@create');

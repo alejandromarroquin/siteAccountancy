@@ -27,6 +27,7 @@ class CreateCashflowTable extends Migration
             $table->integer('idsubaccountcred')->unsigned()->nullable();
             $table->foreign('idsubaccountcred')->references('id')->on('subaccounts')->onDelete('cascade');
 
+            $table->string('typeflow');
             $table->string('activity');
             $table->string('concept');
             $table->double('amount');

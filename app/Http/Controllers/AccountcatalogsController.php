@@ -33,7 +33,7 @@ class AccountcatalogsController extends Controller
     public function create()
     {
         $accounts=accounts::select('groupcode','accountname')->get();
-        $catalog=accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->select('code','accountName')->where('accountancycatalogs.idAccountancy',session('idaccountancy'))->get();
+        $catalog=accountancycatalogs::join('subaccounts','accountancycatalogs.id','=','subaccounts.idaccount')->join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->select('idsubaccount as code','namesubaccount as accountName')->where('accountancycatalogs.idAccountancy',session('idaccountancy'))->get();
         return view('accountancy.accountcatalogs.create',compact('accounts','catalog'));
     }
 
@@ -137,7 +137,7 @@ class AccountcatalogsController extends Controller
      */
     public function destroy(Request $request, accountcatalogs $accountcatalogs)
     {
-        if(accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->where('accountcatalogs.code',$request->elegido)->delete()){
+        if(accountancycatalogs::join('subaccounts','accountancycatalogs.id','=','subaccounts.idaccount')->join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->where('subaccounts.idsubaccount',$request->elegido)->delete()){
           return 1;
         }else{
           return 0;

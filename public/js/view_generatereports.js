@@ -18,6 +18,21 @@ $(document).ready(function(){
     var url='/generatecashflow';
     $('#dates').attr('action', url);
   });
+
+  $('#periodpoliciesincome').on('click',function(){
+    var url='/generateperiodpiliciesincome';
+    $('#dates').attr('action', url);
+  });
+
+  $('#periodpoliciesexpenses').on('click',function(){
+    var url='/generateperiodpiliciesexpenses';
+    $('#dates').attr('action', url);
+  });
+
+  $('#periodpoliciesdaily').on('click',function(){
+    var url='/generateperiodpiliciesdaily';
+    $('#dates').attr('action', url);
+  });
 });
 
 $(document).ready(function(){

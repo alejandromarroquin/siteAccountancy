@@ -29,7 +29,7 @@ class CapitalmovementsController extends Controller
      */
     public function create()
     {
-        $accounts=accountancycatalogs::join('accountcatalogs','accountancycatalogs.codeAccount','=','accountcatalogs.id')->join('accountancies','accountancycatalogs.idAccountancy','=','accountancies.id')->select('accountcatalogs.accountname','accountancycatalogs.id')->where('accountancies.idCompany',session('idcompany'))->get();
+        $accounts=DB::select('select Distinct accountName,code from accountancycatalogs inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where accountancycatalogs.idaccountancy='.session('idaccountancy'));
         return view('accountancy.capitalmovements.create',compact('accounts'));
     }
 
@@ -42,7 +42,7 @@ class CapitalmovementsController extends Controller
      */
     public function consultSubaccount(Request $request)
     {
-        $accounts=Subaccount::join('accountancycatalogs','subaccounts.idaccount','=','accountancycatalogs.id')->select('subaccounts.id','namesubaccount')->where('accountancycatalogs.id',$request->elegido)->get();
+        $accounts=Subaccount::join('accountancycatalogs','subaccounts.idaccount','=','accountancycatalogs.id')->join('accountcatalogs','accountancycatalogs.CodeAccount','=','accountcatalogs.id')->select('subaccounts.id','namesubaccount')->where('accountcatalogs.code',$request->elegido)->get();
         echo "<option selected hidden>Selecciona una subcuenta...</option>";
         foreach($accounts as $account){
             echo "<option value=".$account->id.">".$account->namesubaccount."</option>";
@@ -62,6 +62,7 @@ class CapitalmovementsController extends Controller
         try{
           $cashflow->idsubaccountdeb=$request->accountdebit;
           $cashflow->idsubaccountcred=$request->accountcredit;
+          $cashflow->typeflow=$request->typeflow;
           $cashflow->activity=$request->activity;
           $cashflow->concept=$request->concept;
           $cashflow->amount=$request->amount;

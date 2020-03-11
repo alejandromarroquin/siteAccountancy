@@ -236,6 +236,213 @@ class ReportsController extends Controller
         return view('reports/cashflow',compact('company'));
     }
 
+    //Genera la póliza de periodos.
+    public function generatePeriodPoliciesincome(Request $request)
+    {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+        $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+        $sumdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $policiescred=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+        $sumcreds=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $policiesperioddeb=array();
+        foreach ($policiesdeb as $policiedeb) {
+          $policiesperioddeb[$policiedeb->namesubaccount]=$policiedeb->accountName;
+        }
+        $policiesperiodcred=array();
+        foreach ($policiescred as $policiecred) {
+          $policiesperiodcred[$policiecred->namesubaccount]=$policiecred->accountName;
+        }
+        $arraysumcreds=array();
+        foreach ($sumcreds as $sumcred) {
+          $arraysumcreds[$sumcred->accountName]=$sumcred->sumamount;
+        }
+        $arraysumdebs=array();
+        foreach ($sumdebs as $sumdeb) {
+          $arraysumdebs[$sumdeb->accountName]=$sumdeb->sumamount;
+        }
+        $sumd=0;
+        foreach ($sumdebs as $sumdeb) {
+          $sumd=$sumd+$sumdeb->sumamount;
+        }
+        $accountname='';
+        $subaccountname='';
+        $sum=0;
+        return view('reports.periodpoliciesincome',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
+    }
+
+    public function downloadPeriodpolicieincome(){
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+      $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+      $sumdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $policiescred=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+      $sumcreds=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $policiesperioddeb=array();
+      foreach ($policiesdeb as $policiedeb) {
+        $policiesperioddeb[$policiedeb->namesubaccount]=$policiedeb->accountName;
+      }
+      $policiesperiodcred=array();
+      foreach ($policiescred as $policiecred) {
+        $policiesperiodcred[$policiecred->namesubaccount]=$policiecred->accountName;
+      }
+      $arraysumcreds=array();
+      foreach ($sumcreds as $sumcred) {
+        $arraysumcreds[$sumcred->accountName]=$sumcred->sumamount;
+      }
+      $arraysumdebs=array();
+      foreach ($sumdebs as $sumdeb) {
+        $arraysumdebs[$sumdeb->accountName]=$sumdeb->sumamount;
+      }
+      $sumd=0;
+      foreach ($sumdebs as $sumdeb) {
+        $sumd=$sumd+$sumdeb->sumamount;
+      }
+      $accountname='';
+      $subaccountname='';
+      $sum=0;
+      $pdf = \PDF::loadView('reports.periodpoliciesincomePDF',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
+      return $pdf->download();
+    }
+
+    //Genera la póliza de periodos.
+    public function generatePeriodPoliciesexpenses(Request $request)
+    {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+        $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+        $sumdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $policiescred=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+        $sumcreds=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $policiesperioddeb=array();
+        foreach ($policiesdeb as $policiedeb) {
+          $policiesperioddeb[$policiedeb->namesubaccount]=$policiedeb->accountName;
+        }
+        $policiesperiodcred=array();
+        foreach ($policiescred as $policiecred) {
+          $policiesperiodcred[$policiecred->namesubaccount]=$policiecred->accountName;
+        }
+        $arraysumcreds=array();
+        foreach ($sumcreds as $sumcred) {
+          $arraysumcreds[$sumcred->accountName]=$sumcred->sumamount;
+        }
+        $arraysumdebs=array();
+        foreach ($sumdebs as $sumdeb) {
+          $arraysumdebs[$sumdeb->accountName]=$sumdeb->sumamount;
+        }
+        $sumd=0;
+        foreach ($sumdebs as $sumdeb) {
+          $sumd=$sumd+$sumdeb->sumamount;
+        }
+        $accountname='';
+        $subaccountname='';
+        $sum=0;
+        return view('reports.periodpoliciesexpenses',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
+    }
+
+    public function downloadPeriodpolicieexpenses(){
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+      $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+      $sumdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $policiescred=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+      $sumcreds=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $policiesperioddeb=array();
+      foreach ($policiesdeb as $policiedeb) {
+        $policiesperioddeb[$policiedeb->namesubaccount]=$policiedeb->accountName;
+      }
+      $policiesperiodcred=array();
+      foreach ($policiescred as $policiecred) {
+        $policiesperiodcred[$policiecred->namesubaccount]=$policiecred->accountName;
+      }
+      $arraysumcreds=array();
+      foreach ($sumcreds as $sumcred) {
+        $arraysumcreds[$sumcred->accountName]=$sumcred->sumamount;
+      }
+      $arraysumdebs=array();
+      foreach ($sumdebs as $sumdeb) {
+        $arraysumdebs[$sumdeb->accountName]=$sumdeb->sumamount;
+      }
+      $sumd=0;
+      foreach ($sumdebs as $sumdeb) {
+        $sumd=$sumd+$sumdeb->sumamount;
+      }
+      $accountname='';
+      $subaccountname='';
+      $sum=0;
+      $pdf = \PDF::loadView('reports.periodpoliciesexpensesPDF',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
+      return $pdf->download();
+    }
+
+    //Genera la póliza de periodos.
+    public function generatePeriodPoliciesdaily(Request $request)
+    {
+        $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+        $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+        $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+        $sumdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $policiescred=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+        $sumcreds=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+        $policiesperioddeb=array();
+        foreach ($policiesdeb as $policiedeb) {
+          $policiesperioddeb[$policiedeb->namesubaccount]=$policiedeb->accountName;
+        }
+        $policiesperiodcred=array();
+        foreach ($policiescred as $policiecred) {
+          $policiesperiodcred[$policiecred->namesubaccount]=$policiecred->accountName;
+        }
+        $arraysumcreds=array();
+        foreach ($sumcreds as $sumcred) {
+          $arraysumcreds[$sumcred->accountName]=$sumcred->sumamount;
+        }
+        $arraysumdebs=array();
+        foreach ($sumdebs as $sumdeb) {
+          $arraysumdebs[$sumdeb->accountName]=$sumdeb->sumamount;
+        }
+        $sumd=0;
+        foreach ($sumdebs as $sumdeb) {
+          $sumd=$sumd+$sumdeb->sumamount;
+        }
+        $accountname='';
+        $subaccountname='';
+        $sum=0;
+        return view('reports.periodpoliciesdaily',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
+    }
+
+    public function downloadPeriodpoliciedaily(){
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
+      $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+      $sumdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $policiescred=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
+      $sumcreds=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashcred on cashcred.idsubaccountcred=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
+      $policiesperioddeb=array();
+      foreach ($policiesdeb as $policiedeb) {
+        $policiesperioddeb[$policiedeb->namesubaccount]=$policiedeb->accountName;
+      }
+      $policiesperiodcred=array();
+      foreach ($policiescred as $policiecred) {
+        $policiesperiodcred[$policiecred->namesubaccount]=$policiecred->accountName;
+      }
+      $arraysumcreds=array();
+      foreach ($sumcreds as $sumcred) {
+        $arraysumcreds[$sumcred->accountName]=$sumcred->sumamount;
+      }
+      $arraysumdebs=array();
+      foreach ($sumdebs as $sumdeb) {
+        $arraysumdebs[$sumdeb->accountName]=$sumdeb->sumamount;
+      }
+      $sumd=0;
+      foreach ($sumdebs as $sumdeb) {
+        $sumd=$sumd+$sumdeb->sumamount;
+      }
+      $accountname='';
+      $subaccountname='';
+      $sum=0;
+      $pdf = \PDF::loadView('reports.periodpoliciesdailyPDF',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
+      return $pdf->download();
+    }
+
     public function downloadCashflow(){
       $pdf = \PDF::loadView('reports.trialbalancePDF');
       return $pdf->download();

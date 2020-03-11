@@ -26,7 +26,7 @@
                   <select class="form-control" name="accountdebit" id="accountdebit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)
-                      <option value="{{$account->id}}">{{$account->accountname}}</option>
+                      <option value="{{$account->code}}">{{$account->accountName}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -45,7 +45,7 @@
                   <select class="form-control" name="accountcredit" id="accountcredit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)
-                      <option value="{{$account->id}}">{{$account->accountname}}</option>
+                      <option value="{{$account->code}}">{{$account->accountName}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -60,8 +60,13 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label>Concepto:</label>
-                  <input class="form-control" name="concept">
+                <label>Tipo de flujo:</label>
+                  <select name="typeflow" class="form-control">
+                    <option>Ingreso</option>
+                    <option>Egreso</option>
+                    <option>No ingreso y no egreso</option>
+                    <option>Ingreso por cheque</option>
+                  </select>
                 </div>
               </div>
               <div class="row">
@@ -73,6 +78,12 @@
                     <option>Financiamiento</option>
                     <option>No aplica</option>
                   </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label>Concepto:</label>
+                  <input class="form-control" name="concept">
                 </div>
               </div>
               <div class="row">

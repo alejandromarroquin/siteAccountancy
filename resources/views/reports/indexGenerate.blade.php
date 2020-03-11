@@ -48,6 +48,32 @@
                 </a>
               </div>
             </div>
+            <div class="col-2">
+              <div class="div-img">
+                <a href="" class="linkreport" id="periodpoliciesincome" data-toggle="modal" data-target="#exampleModalCenter">
+                  <img src="{{asset('img/icondoc3.png')}}" class="img-fluid img">
+                  <label class="namereport">Pólizas de ingresos</label>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
+              <div class="div-img">
+                <a href="" class="linkreport" id="periodpoliciesexpenses" data-toggle="modal" data-target="#exampleModalCenter">
+                  <img src="{{asset('img/icondoc3.png')}}" class="img-fluid img">
+                  <label class="namereport">Pólizas de egresos</label>
+                </a>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="div-img">
+                <a href="" class="linkreport" id="periodpoliciesdaily" data-toggle="modal" data-target="#exampleModalCenter">
+                  <img src="{{asset('img/icondoc3.png')}}" class="img-fluid img">
+                  <label class="namereport">Pólizas de diario</label>
+                </a>
+              </div>
+            </div>
           </div>
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
