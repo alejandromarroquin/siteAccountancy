@@ -6,6 +6,10 @@ $(document).ready(function(){
     }
   });
 
+  $('input[name="date"]').on('change',function(){
+    alert($('input[name="date"]').val());
+  });
+
   $('select[name="accountdebit"]').on('change',function(){
     $('select[name="accountdebit"] option:selected').each(function () {
       elegido=$(this).val();
@@ -68,3 +72,16 @@ $(document).ready(function(){
     }
   });
 });
+
+function diaSemana() {
+  var x = document.getElementById("fecha");
+  let date = new Date(x.value.replace(/-+/g, '/'));
+
+  let options = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  };
+  console.log(date.toLocaleDateString('es-MX', options));
+
+}

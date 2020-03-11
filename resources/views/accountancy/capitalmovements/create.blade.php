@@ -21,6 +21,13 @@
             {{ csrf_field() }}
               <input type="text" value="1" name="flag" readonly hidden/>
               <div class="row">
+                <div class="col-4">
+                  <label>Fecha:</label>
+                  <input type="date" name="date">
+                  <input class="form-control" type="text" name="date" readonly>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-6">
                   <label>Cuenta deudor:</label>
                   <select class="form-control" name="accountdebit" id="accountdebit">

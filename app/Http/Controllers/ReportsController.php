@@ -436,7 +436,8 @@ class ReportsController extends Controller
     }
 
     public function generateAux(){
-      return view('reports.assistant');
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      return view('reports.assistant',compact('company'));
     }
 
     public function downloadAux(){
