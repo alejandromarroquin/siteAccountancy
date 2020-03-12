@@ -64,7 +64,7 @@
               <tr><th class="date">{{$flowsc->date}}</th><th class="reference">Referencia</th><th>{{$flowsc->concept}}</th><th></th><th>{{$flowsc->amount}}</th></tr>
             @endif
           @endforeach
-          <tr><th class="date"></th><th class="reference"></th><th>Detalle</th><th>Saldo</th><th>{{$saldo}}</th></tr>
+          <tr><th class="date"></th><th class="reference"></th><th></th><th>Saldo</th><th>{{$saldo}}</th></tr>
         </table>
       </div>
     </div>

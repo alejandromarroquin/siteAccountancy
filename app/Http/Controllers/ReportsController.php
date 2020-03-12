@@ -66,7 +66,7 @@ class ReportsController extends Controller
             }
           }
         }
-        echo '<tr><th class="date"></th><th class="reference"></th><th>Detalle</th><th>Saldo</th><th>'.$saldo.'</th></tr>';
+        echo '<tr><th class="date"></th><th class="reference"></th><th></th><th>Saldo</th><th>'.$saldo.'</th></tr>';
     }
 
     /**

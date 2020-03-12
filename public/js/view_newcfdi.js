@@ -195,7 +195,6 @@ $(document).ready(function(){
            url:'/cfdicreate',
            data:{numcfdi:numcfdi,customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva,emailcustomer:emailcustomer},
            success:function(data){
-             alert(data);
             if(data==1){
               Swal.fire(
                 'Facturado!',

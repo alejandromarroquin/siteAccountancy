@@ -258,7 +258,7 @@ class CompanieController extends Controller
      */
     public function destroy(Request $request,companie $companie)
     {
-      if(customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
+      if(customers::join('companies','customers.idCompany','=','companies.id')->join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
         Storage::disk('local')->deleteDirectory($request->elegido);
         return 1;
       }else{

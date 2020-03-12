@@ -19,8 +19,9 @@
                   <label>Empresa:</label>
                   <select class="form-control" name="company" id="company" required/>
                     <option selected hidden>Selecciona una empresa...</option>
+                    <option value="1">D&C Tech Development and Consulting S.A. de C.V.</option>
                     @foreach($businessnames as $businessname)
-                        <option value="{{$businessname->id}}">{{$businessname->businessname}}</option>
+                        <option value="{{$businessname->idCompany}}">{{$businessname->businessname}}</option>
                     @endforeach
                   </select>
                 </div>

@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $businessnames=DB::table('taxinformations')->join('companies','taxinformations.id','=','companies.idTaxInformation')->select('businessname','companies.id')->get();
+        $businessnames=DB::table('companies')->join('customers','companies.id','=','customers.idCompany')->join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->select('businessname','customers.idCompany')->get();
         return view('users.user.create',compact("businessnames"));
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user=User::join('companies','users.id','=','companies.id')->join('taxinformations','companies.id','=','taxinformations.id')->select('taxinformations.businessName','users.idCompany as idcompany','users.id as iduser','users.name','users.lastname','users.email','users.password')->where('users.email',$id)->get();
+        $user=User::join('companies','users.idcompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName','users.idCompany as idcompany','users.id as iduser','users.name','users.lastname','users.email','users.password')->where('users.email',$id)->get();
         foreach ($user as $data) {
           $idcompany=$data->idcompany;
           $iduser=$data->iduser;

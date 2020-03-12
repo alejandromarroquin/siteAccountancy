@@ -53,13 +53,14 @@ $(document).ready(function(){
             url:'/budgetupdate',
             data:{idbudget:idbudget,idexpensefix:idexpensefix,idexpensevar:idexpensevar,typebudget:typebudget,start:start,end:end,conceptfix:conceptfix,conceptvar:conceptvar,amountfix:amountfix,amountvar:amountvar,categoryfix:categoryfix,categoryvar:categoryvar,purchasesfix:purchasesfix,purchasesvar:purchasesvar,total:total,cont:cont},
             success:function(data){
-              alert(data);
               if(data==1){
                 Swal.fire(
                   'Actualizado!',
                   'El usuario se actualizó correctamente.',
                   'success'
-                )
+                ).then((result)=>{
+                  $(location).attr('href','/budget');
+                });
               }else{
                 Swal.fire(
                   'Error!',
