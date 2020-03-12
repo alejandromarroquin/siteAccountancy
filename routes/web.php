@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
     Route::get('/downloadpoliciedaily','ReportsController@downloadPeriodpoliciedaily');
     Route::post('/generateaux','ReportsController@generateAux');
     Route::get('/downloadaux','ReportsController@downloadAux');
+    Route::get('/getflows','ReportsController@consultFlows');
 
     Route::group(['middleware' => ['Subcontador']], function () {
         Route::get('/cuentas','AccountcatalogsController@create');

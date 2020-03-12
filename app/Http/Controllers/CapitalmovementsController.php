@@ -62,6 +62,7 @@ class CapitalmovementsController extends Controller
         try{
           $cashflow->idsubaccountdeb=$request->accountdebit;
           $cashflow->idsubaccountcred=$request->accountcredit;
+          $cashflow->date=$request->date;
           $cashflow->typeflow=$request->typeflow;
           $cashflow->activity=$request->activity;
           $cashflow->concept=$request->concept;

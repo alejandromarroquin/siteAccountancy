@@ -16,7 +16,8 @@
             <div class="row">
               <div class="col-2">
                 <label>Fecha:</label>
-                <input type="text" class="form-control" name="date" id="datetype2" readonly required/>
+                <input type="text" id="datetype2">
+                <input type="text" class="form-control" name="date" readonly required/>
               </div>
             </div>
             <div class="row">

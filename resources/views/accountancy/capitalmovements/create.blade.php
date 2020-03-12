@@ -23,8 +23,8 @@
               <div class="row">
                 <div class="col-4">
                   <label>Fecha:</label>
-                  <input type="date" name="date">
-                  <input class="form-control" type="text" name="date" readonly>
+                  <input class="form-control" type="text" name="date" hidden id="datetype2">
+                  <input class="form-control" type="text" name="stringdate" readonly>
                 </div>
               </div>
               <div class="row">

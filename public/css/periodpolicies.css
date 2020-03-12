@@ -1,6 +1,7 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  margin-top: 2em;
 }
 
 table, td, th {
@@ -11,4 +12,12 @@ table, td, th {
   margin-top: 30px;
   text-align: center;
   font-size: 18px;
+}
+
+.reference{
+  width: 12%;
+}
+
+.date{
+  width: 12%;
 }

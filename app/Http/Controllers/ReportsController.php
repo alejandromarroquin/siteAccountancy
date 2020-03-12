@@ -32,6 +32,44 @@ class ReportsController extends Controller
     }
 
     /**
+     * Consulta los flujos que pertenezcan a la cuenta
+     * seleccionada por el usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function consultFlows(Request $request)
+    {
+        $saldo=0;
+        $flowsd=DB::select('select typeflow,date,concept,amount from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id where namesubaccount="'.$request->elegido.'"');
+        $flowsc=DB::select('select typeflow,date,concept,amount from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id where namesubaccount="'.$request->elegido.'"');
+        echo '<tr><th class="date">Fecha</th><th class="reference">Referencia</th><th>Detalle</th><th>Débito</th><th>Crédito</th></tr>';
+        foreach($flowsd as $flowsd){
+          if ($flowsd->typeflow=="Ingreso") {
+            $saldo=$flowsd->amount+$saldo;
+            echo '<tr><th class="date">'.$flowsd->date.'</th><th class="reference">Referencia</th><th>'.$flowsd->concept.'</th><th>'.$flowsd->amount.'</th><th></th></tr>';
+          }else{
+            if($flowsd->typeflow=="Egreso"){
+              $saldo=$saldo-$flowsd->amount;
+              echo '<tr><th class="date">'.$flowsd->date.'</th><th class="reference">Referencia</th><th>'.$flowsd->concept.'</th><th></th><th>'.$flowsd->amount.'</th></tr>';
+            }
+          }
+        }
+        foreach($flowsc as $flowsc){
+          if ($flowsc->typeflow=="Ingreso") {
+            $saldo=$flowsc->amount+$saldo;
+            echo '<tr><th class="date">'.$flowsc->date.'</th><th class="reference">Referencia</th><th>'.$flowsc->concept.'</th><th>'.$flowsc->amount.'</th><th></th></tr>';
+          }else{
+            if($flowsc->typeflow=="Egreso"){
+              $saldo=$saldo-$flowsc->amount;
+              echo '<tr><th class="date">'.$flowsc->date.'</th><th class="reference">Referencia</th><th>'.$flowsc->concept.'</th><th></th><th>'.$flowsc->amount.'</th></tr>';
+            }
+          }
+        }
+        echo '<tr><th class="date"></th><th class="reference"></th><th>Detalle</th><th>Saldo</th><th>'.$saldo.'</th></tr>';
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -436,12 +474,36 @@ class ReportsController extends Controller
     }
 
     public function generateAux(){
+      $accounts=DB::select('select namesubaccount from subaccounts inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id where idAccountancy='.session('idaccountancy'));
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
-      return view('reports.assistant',compact('company'));
+      return view('reports.assistant',compact('company','accounts'));
     }
 
-    public function downloadAux(){
-      $pdf = \PDF::loadView('reports.trialbalancePDF');
+    public function downloadAux(Request $request){
+      $account=$request->nameaccount;
+      $saldo=0;
+      $flowsd=DB::select('select typeflow,date,concept,amount from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id where namesubaccount="'.$account.'"');
+      $flowsc=DB::select('select typeflow,date,concept,amount from cashflows inner join subaccounts on cashflows.idsubaccountcred=subaccounts.id where namesubaccount="'.$account.'"');
+      foreach($flowsd as $flowsde){
+        if ($flowsde->typeflow=="Ingreso") {
+          $saldo=$flowsde->amount+$saldo;
+        }else{
+          if($flowsde->typeflow=="Egreso"){
+            $saldo=$saldo-$flowsde->amount;
+          }
+        }
+      }
+      foreach($flowsc as $flowscr){
+        if ($flowscr->typeflow=="Ingreso") {
+          $saldo=$flowscr->amount+$saldo;
+        }else{
+          if($flowscr->typeflow=="Egreso"){
+            $saldo=$saldo-$flowscr->amount;
+          }
+        }
+      }
+      $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
+      $pdf = \PDF::loadView('reports.assistantPDF',compact('company','flowsd','flowsc','saldo','account'));
       return $pdf->download();
     }
 

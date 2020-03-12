@@ -12,8 +12,9 @@
         <div class="col">
           <h1 class="page-header">Auxiliares</h1>
         </div>
-        <form action="/" method="GET">
+        <form action="/downloadaux" method="GET">
           <div class="col">
+            <input type="text" name="nameaccount" hidden>
             <button type="submit" class="btn btn-primary" id="download">Descargar</button>
           </div>
         </form>
@@ -27,14 +28,24 @@
             <label>Auxiliares al</label>
             <label id="date"></label>
           </div>
-          <table>
+          <div class="row">
+            <div class="col-4">
+              <label>Cuenta:</label>
+              <select class="form-control" name="account">
+                <option selected hidden>Selecciona una cuenta...</option>
+                @foreach($accounts as $accounts)
+                  <option>{{$accounts->namesubaccount}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          <table id="table">
             <tr>
-              <th>Fecha</th>
-              <th>Referencia</th>
-              <th>Proveedor</th>
+              <th class="date">Fecha</th>
+              <th class="reference">Referencia</th>
+              <th>Detalle</th>
               <th>Débito</th>
               <th>Crédito</th>
-              <th>Saldo</th>
             </tr>
           </table>
         </div>
@@ -49,5 +60,5 @@
 @endsection
 
 @section('scripts')
-  <script src="{{ asset('js/statementresult.js') }}"></script>
+  <script src="{{ asset('js/view_assistant.js') }}"></script>
 @endsection

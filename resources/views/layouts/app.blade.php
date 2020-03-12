@@ -137,12 +137,6 @@
                             <li class="list-group-item">
                                 <a href="/flujo_capital">Flujo de capital</a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="/polizas">Pólizas de periodo</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">Auxiliares</a>
-                            </li>
                         </ul>
                     </li>
 
