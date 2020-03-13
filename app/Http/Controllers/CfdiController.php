@@ -11,6 +11,7 @@ use App\customers;
 use App\unitmeasurements;
 use App\methodpayment;
 use App\waytopay;
+use App\product;
 use DB;
 use PDF;
 use Mail;
@@ -82,6 +83,18 @@ class CfdiController extends Controller
     }
 
     /**
+     * Consulta los datos del cliente receptor de la factura.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getProduct(Request $request)
+    {
+        $product=product::select('code','description','unitprice','iva')->where('code',$request->elegido)->get();
+        return json_encode($product);
+    }
+
+    /**
      * Registra los datos del CFDI en la base de datos y
      * manda a llamar al método para construir el archivo XML
      * y posteriormente lo manda a sellar. Una vez sellado se manda
@@ -94,6 +107,14 @@ class CfdiController extends Controller
     {
       //Se obtienen los datos enviados desde la vista
       $newcfdi=new cfdi;
+      $cont=0;
+      $cantproducts=count($request->quantity);
+      $quantity=$request->quantity;
+      $unit=$request->unit;
+      $codeproduct=$request->codeproduct;
+      $concept=$request->concept;
+      $unitprice=$request->unitprice;
+      $import=$request->importe;
       $condicspay=$request->condicspay;
       $subtotal=$request->subtotal;
       $currency=$request->currency;
@@ -231,7 +252,7 @@ class CfdiController extends Controller
             }
             //Se pasan los datos a la representación impresa
             $temp='cfdi/template'.session('cfditemplate');
-            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request','numcfdi'));
+            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request','numcfdi','cantproducts','quantity','cont','unit','codeproduct','unitprice','concept','import'));
             $pdf->save($comprobante.'.pdf');
             file_put_contents($comprobante.".xml", $cliente->xml);
             $data=array(

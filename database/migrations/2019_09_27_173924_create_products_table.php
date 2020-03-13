@@ -16,21 +16,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
           $table->increments('id');
 
-            $table->string('name',191);
-            $table->string('barcode',191);
-            $table->string('idCode',6);
-            $table->string('idCodeExt',191);
-            $table->integer('status');
-            $table->string('description',45);
-            $table->double('sale',10,2);
-            $table->integer('stock');
-            $table->double('discount',10,2);
-            $table->integer('stockMax');
-            $table->integer('stockMin');
-            $table->string('size',191);
-            $table->integer('cantUnit');
-            $table->integer('stockTransit');
-            $table->integer('reserved');
+          $table->integer('idCompany')->unsigned();
+          $table->foreign('idCompany')->references('id')->on('companies')->onDelete('cascade');
+            $table->string('code');
+            $table->string('description');
+            $table->double('unitprice');
+            $table->double('iva');
+            $table->double('discount');
 
             $table->timestamps();
         });

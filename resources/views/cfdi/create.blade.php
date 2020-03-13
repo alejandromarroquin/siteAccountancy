@@ -142,15 +142,6 @@
                   <div class="col">
                     <label>Cod. Producto</label>
                   </div>
-                  <div class="col">
-                    <label>Descripción</label>
-                  </div>
-                  <div class="col">
-                    <label>Precio unitario</label>
-                  </div>
-                  <div class="col">
-                    <label>Importe</label>
-                  </div>
                 </div>
                 <div class="row" id="inputs">
                   <input type="text" name="cont" value="2" id="cont" hidden/>
@@ -168,6 +159,26 @@
                     <input class="form-control" name="codeproduct[]" id="codeproduct1" required/>
                     <a href="http://pys.sat.gob.mx/PyS/catPyS.aspx"  target="blank" class="codesat">Consultar catálogo</a>
                   </div>
+
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label>Código int. Prod.</label>
+                  </div>
+                  <div class="col">
+                    <label>Descripción</label>
+                  </div>
+                  <div class="col">
+                    <label>Precio unitario</label>
+                  </div>
+                  <div class="col">
+                    <label>Importe</label>
+                  </div>
+                </div>
+                <div class="row" id="inputs">
+                  <div class="col">
+                    <input class="form-control" type="text" name="codintprod[]" id="codintprod1" onchange="culsultProduct(this);" required>
+                  </div>
                   <div class="col">
                     <input class="form-control" name="concept[]" id="concept1" required/>
                   </div>
@@ -178,6 +189,7 @@
                     <input class="form-control" name="importe[]" id="importe1" onchange="addDecimal(this);" readonly/>
                   </div>
                 </div>
+                <br><br>
               </div>
               <div class="row">
                 <div class="col">

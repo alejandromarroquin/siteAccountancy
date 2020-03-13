@@ -157,6 +157,9 @@
               font-size: 11px;
               line-height: 15px;
             }
+            .hidden{
+              color:white;
+            }
         </style>
     </head>
     <body>
@@ -213,38 +216,16 @@
               <th class="price">Precio Unitario</th>
               <th class="imp">Importe</th>
             </tr>
+            @for($cont;$cont<$cantproducts;$cont++)
             <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
+              <td class="cod">{{$codeproduct[$cont]}}</td>
+              <td class="cant">{{$quantity[$cont]}}</td>
+              <td class="unit">{{$unit[$cont]}}</td>
+              <td class="descript">{{$concept[$cont]}}</td>
+              <td class="price">{{$unitprice[$cont]}}</td>
+              <td class="imp">{{$import[$cont]}}</td>
             </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
+            @endfor
           </table>
           <div class="balances">
             <label class="amounts">Subtotal: {{$request->subtotal}}</label>

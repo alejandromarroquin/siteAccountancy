@@ -14,10 +14,55 @@ $(document).ready(function(){
 
   $('.add').on('click',function(event){
     var cont=$('#cont').val();
-    var divrow=$('<div/>',{
+    var divrow1=$('<div/>',{
       'class':'row',
       'id':'inputs'
     });
+    var divrow2=$('<div/>',{
+      'class':'row',
+      'id':'inputs'
+    });
+    var divrow3=$('<div/>',{
+      'class':'row',
+      'id':'row'
+    });
+    var divrow4=$('<div/>',{
+      'class':'row',
+      'id':'row'
+    });
+    var divcol01=$('<div/>',{
+      'class':'col-2'
+    });
+    var divcol02=$('<div/>',{
+      'class':'col-1'
+    });
+    var divcol03=$('<div/>',{
+      'class':'col'
+    });
+    var divcol04=$('<div/>',{
+      'class':'col'
+    });
+    var divcol05=$('<div/>',{
+      'class':'col'
+    });
+    var divcol06=$('<div/>',{
+      'class':'col'
+    });
+    var divcol07=$('<div/>',{
+      'class':'col'
+    });
+    var divcol08=$('<div/>',{
+      'class':'col'
+    });
+    var label1=$('<label/>');
+    var label2=$('<label/>');
+    var label3=$('<label/>');
+    var label4=$('<label/>');
+    var label5=$('<label/>');
+    var label6=$('<label/>');
+    var label7=$('<label/>');
+    var label8=$('<label/>');
+
     var divcol1=$('<div/>',{
       'class':'col-2'
     });
@@ -39,9 +84,12 @@ $(document).ready(function(){
     var divcol7=$('<div/>',{
       'class':'col'
     });
+    var divcol8=$('<div/>',{
+      'class':'col'
+    });
     var quantity=$('<input/>',{
       'class': 'form-control',
-      'name':'name="quantity[]',
+      'name':'quantity[]',
       'onchange':'inputChange(this);setSubtotal(this);setTotal();',
       'onkeypress':'return soloNumeros(event);',
       'required':'true',
@@ -55,7 +103,7 @@ $(document).ready(function(){
     });
     var unit=$('<input/>',{
       'class': 'form-control',
-      'name':'name="unit[]',
+      'name':'unit[]',
       'required':'true',
       'id':'unit'+cont
     });
@@ -66,7 +114,7 @@ $(document).ready(function(){
     });
     var codeproduct=$('<input/>',{
       'class': 'form-control',
-      'name':'name="codeproduct[]',
+      'name':'codeproduct[]',
       'required':'true',
       'id':'codeproduct'+cont
     });
@@ -75,15 +123,22 @@ $(document).ready(function(){
       'target':'blank',
       'class':'codesat'
     });
+    var codintprod=$('<input/>',{
+      'class': 'form-control',
+      'name':'codintprod[]',
+      'required':'true',
+      'onchange':'culsultProduct(this);',
+      'id':'codintprod'+cont
+    });
     var concept=$('<input/>',{
       'class': 'form-control',
-      'name':'name="concept[]',
+      'name':'concept[]',
       'required':'true',
       'id':'concept'+cont
     });
     var unitprice=$('<input/>',{
       'class': 'form-control',
-      'name':'name="unitprice[]',
+      'name':'unitprice[]',
       'onchange':'inputChange(this);addDecimal(this);setSubtotal(this);setTotal();',
       'onkeypress':'return filterFloat(event,this);',
       'required':'true',
@@ -91,19 +146,34 @@ $(document).ready(function(){
     });
     var importe=$('<input/>',{
       'class': 'form-control',
-      'name':'name="importe[]',
+      'name':'importe[]',
       'readonly':'',
       'id':'importe'+cont
     });
     $('#cont').val(parseInt(cont)+1);
-    $('.table').append(divrow);
-    divrow.append(divcol1);
-    divrow.append(divcol2);
-    divrow.append(divcol3);
-    divrow.append(divcol4);
-    divrow.append(divcol5);
-    divrow.append(divcol6);
-    divrow.append(divcol7);
+
+    $('.table').append(divrow3);
+    divrow3.append(divcol01);
+    divrow3.append(divcol02);
+    divrow3.append(divcol03);
+    divrow3.append(divcol04);
+
+    divcol01.append(label1);
+    divcol02.append(label2);
+    divcol03.append(label3);
+    divcol04.append(label4);
+
+    label1.text('Cantidad');
+    label2.text('IVA');
+    label3.text('U. Medida');
+    label4.text('Cod. Producto');
+
+    $('.table').append(divrow1);
+    divrow1.append(divcol1);
+    divrow1.append(divcol2);
+    divrow1.append(divcol3);
+    divrow1.append(divcol4);
+
     divcol1.append(quantity);
     divcol2.append(iva);
     divcol3.append(unit);
@@ -112,9 +182,34 @@ $(document).ready(function(){
     divcol4.append(codeproduct);
     catalogcodeproducts.text('Consultar catálogo');
     divcol4.append(catalogcodeproducts);
-    divcol5.append(concept);
-    divcol6.append(unitprice);
-    divcol7.append(importe);
+
+    $('.table').append(divrow4);
+    divrow4.append(divcol05);
+    divrow4.append(divcol06);
+    divrow4.append(divcol07);
+    divrow4.append(divcol08);
+
+    divcol05.append(label5);
+    divcol06.append(label6);
+    divcol07.append(label7);
+    divcol08.append(label8);
+
+    label5.text('Código int. Prod.');
+    label6.text('Descripción');
+    label7.text('Precio unitario');
+    label8.text('Importe');
+
+    $('.table').append(divrow2);
+    divrow2.append(divcol5);
+    divrow2.append(divcol6);
+    divrow2.append(divcol7);
+    divrow2.append(divcol8);
+
+    divcol5.append(codintprod);
+    divcol6.append(concept);
+    divcol7.append(unitprice);
+    divcol8.append(importe);
+    $('.table').append('<br><br>');
   });
 
   $("#customer").on('change', function () {
@@ -195,7 +290,9 @@ $(document).ready(function(){
            url:'/cfdicreate',
            data:{numcfdi:numcfdi,customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva,emailcustomer:emailcustomer},
            success:function(data){
+             alert(data);
             if(data==1){
+
               Swal.fire(
                 'Facturado!',
                 'El CFDI se envío al correo electrónico del cliente.',
@@ -244,9 +341,13 @@ function setIVA(checkbox){
   if($('#'+id).prop('checked')){
     var iva=parseFloat($('#importe'+num).val())*0.16;
     if($('input[name="iva"]').val()!=''){
-      $('input[name="iva"]').val(round(parseFloat($('input[name="iva"]').val())+iva,2));
+      if(!isNaN(iva)){
+          $('input[name="iva"]').val(round(parseFloat($('input[name="iva"]').val())+iva,2));
+      }
     }else{
-      $('input[name="iva"]').val(round(iva,2));
+      if(!isNaN(iva)){
+        $('input[name="iva"]').val(round(iva,2));
+      }
     }
   }else{
     if($('input[name="iva"]').val()!=''){
@@ -260,16 +361,24 @@ function setTotal(){
   if($('input[name="iva"]').val()!=''){
     total=parseFloat($('input[name="iva"]').val())+parseFloat($('input[name="subtotal"]').val());
     if(total.toString().indexOf('.',0)<0){
-      $('input[name="total"]').val(total+'.00');
+      if(!isNaN(total)){
+        $('input[name="total"]').val(total+'.00');
+      }
     }else{
-      $('input[name="total"]').val(total);
+      if(!isNaN(total)){
+        $('input[name="total"]').val(round(total,2));
+      }
     }
   }else{
     total=parseFloat($('input[name="subtotal"]').val());
     if(total.toString().indexOf('.',0)<0){
-      $('input[name="total"]').val(total+'.00');
+      if(!isNaN(total)){
+        $('input[name="total"]').val(total+'.00');
+      }
     }else{
-      $('input[name="total"]').val(total);
+      if(!isNaN(total)){
+        $('input[name="total"]').val(round(total,2));
+      }
     }
   }
 }
@@ -287,6 +396,22 @@ function inputChange(input){
       $('#importe'+cont).val(round(quantity*unitprice,2));
     }
   }
+}
+
+function culsultProduct(input){
+  elegido=input.value.trim();
+  id=$(input).attr("id");
+  num=id.substr(-1);
+  $.get("/getproduct", { elegido: elegido }, function(data){
+      var datos = JSON.parse(data);
+      if(datos.length==0){
+        alert('El producto no existe en la base de datos!')
+      }else{
+        $('#concept'+num).val(datos[0].description);
+        $('#unitprice'+num).val(datos[0].unitprice);
+        $('#unitprice'+num).trigger("change");
+      }
+  });
 }
 
 function round(num, decimales ) {

@@ -28,7 +28,6 @@ $(document).ready(function(){
     var businessname=$('input[name="businessname"]').val();
     var rfc=$('input[name="rfc"]').val();
     var taxregime=$('select[name="taxregime"]').val();
-    alert(taxregime);
     var phoneoffice=$('input[name="phoneoffice"]').val();
     var extension=$('input[name="extension"]').val();
     var cellphone=$('input[name="cellphone"]').val();

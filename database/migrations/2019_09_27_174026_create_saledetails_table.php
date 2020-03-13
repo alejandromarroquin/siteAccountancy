@@ -16,17 +16,17 @@ class CreateSaledetailsTable extends Migration
         Schema::create('saledetails', function (Blueprint $table) {
           $table->increments('id');
 
-          $table->integer('idSale')->unsigned();
-          $table->foreign('idSale')->references('id')->on('sales')->onDelete('cascade');
-
-          $table->integer('idProduct')->unsigned();
-          $table->foreign('idProduct')->references('id')->on('products')->onDelete('cascade');
-
-          $table->integer('quantity');
-          $table->string('description',100);
-          $table->double('unitValue',10,2);
-          $table->double('total',10,2);
-          $table->double('discountProducts',10,2);
+          // $table->integer('idSale')->unsigned();
+          // $table->foreign('idSale')->references('id')->on('sales')->onDelete('cascade');
+          //
+          // $table->integer('idProduct')->unsigned();
+          // $table->foreign('idProduct')->references('id')->on('products')->onDelete('cascade');
+          //
+          // $table->integer('quantity');
+          // $table->string('description',100);
+          // $table->double('unitValue',10,2);
+          // $table->double('total',10,2);
+          // $table->double('discountProducts',10,2);
 
           $table->timestamps();
         });

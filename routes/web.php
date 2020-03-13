@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
         Route::get('/factura','CfdiController@create');
         Route::post('/cfdicreate','CfdiController@store');
         Route::get('/getcustomer','CfdiController@getCustomer');
+        Route::get('/getproduct','CfdiController@getProduct');
 
         Route::group(['middleware' => ['ContadorGeneral']], function () {
             Route::get('/budget','BudgetsController@create');
