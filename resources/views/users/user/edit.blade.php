@@ -17,7 +17,7 @@
               <div class="col">
                 <input name="idcompany" value="{{$idcompany}}" hidden/>
                 <input name="iduser" value="{{$iduser}}" hidden/>
-                <label>Empresa:</label>
+                <label>Empresa: <label class="required">*</label></label>
                 <select class="form-control" name="company" id="company" readonly>
                   <option selected>{{$company}}</option>
                 </select>
@@ -25,22 +25,22 @@
             </div>
             <div class="row">
               <div class="col">
-                <label>Nombre:</label>
+                <label>Nombre: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="name" name="name" value="{{$name}}" onkeypress="return soloLetras(event);" required/>
               </div>
               <div class="col">
-                <label>Apellido:</label>
+                <label>Apellido: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="lastname" name="lastname" value="{{$lastname}}" onkeypress="return soloLetras(event);" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <label>Correo:</label>
+                <label>Correo: <label class="required">*</label></label>
                 <input type="email" class="form-control" id="email" name="email" value="{{$email}}" required/>
               </div>
               <div class="col">
-                <label>Nueva Contrseña:</label>
-                <input type="text" class="form-control" id="password" name="password" placeholder="Ingresa una nueva contraseña"/>
+                <label>Nueva Contrseña: <label class="required">*</label></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa una nueva contraseña"/>
               </div>
             </div>
             <input class="btn btn-primary" type="button" value="Actualizar" id="updateform">

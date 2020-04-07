@@ -28,6 +28,8 @@ class AccountcatalogsController extends Controller
      * junto a las cuentas que puede agregar de acuerdo al catálogo
      * del SAT
      *
+     * Entradas: No recibe parametros
+     * Salidas: Retorna uns vista con las cuentas y subcuentas del cátalogo de cuentas
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -40,6 +42,9 @@ class AccountcatalogsController extends Controller
     /**
      * Consulta las subcuentas que pertenezcan a la cuenta
      * seleccionada por el usuario.
+     * 
+     * Entradas: Recibe a tráves del request la cuenta seleccionada
+     * Salidas: Retorna código HTML con las opciones derivadas de la consulta
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -54,8 +59,11 @@ class AccountcatalogsController extends Controller
     }
 
     /**
-     * Recibe el id de la cuenta y lo asocia a el catálogo de cuentas
-     * que ha iniciado sesión.
+     * Asocia el id de la subcuenta que se esta registrando y registra la subsubcuenta ingresada 
+     * por el usuario.
+     * 
+     * Entradas: Request con el id de la subcuenta asociada, nombre e identificador de la subsubcuenta
+     * Salidas: Código HTML que se agrega a la tabla del cátalogo de cuentas de la vista
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -130,6 +138,9 @@ class AccountcatalogsController extends Controller
 
     /**
      * Elimina el id de la cuanta seleccionada del catálogo de cuentas.
+     * 
+     * Entradas: Recibe el id de la cuenta
+     * Salidas: 1 (eliminado), 0 (no eliminado)
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\accountcatalogs  $accountcatalogs

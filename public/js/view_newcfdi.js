@@ -258,7 +258,14 @@ $(document).ready(function(){
     var total=$('input[name="total"]').val();
     var rfccust=$('input[name="rfccust"]').val();
     var emailcustomer=$('input[name="emailcustomer"]').val();
-    var quantity=$('input[name="quantity[]"]').val();
+    var quantity=$('input[name="quantity[]"]');
+    quantity=quantity.size();
+    var quantitys=$('input[name="quantity[]"]').map(function(){return $(this).val();}).get();
+    var codeproduct=$('input[name="codeproduct[]"]').map(function(){return $(this).val();}).get();
+    var unit=$('input[name="unit[]"]').map(function(){return $(this).val();}).get();
+    var unitprice=$('input[name="unitprice[]"]').map(function(){return $(this).val();}).get();
+    var concept=$('input[name="concept[]"]').map(function(){return $(this).val();}).get();
+    var importe=$('input[name="importe[]"]').map(function(){return $(this).val();}).get();
     var applyiva=$('input[name="applyiva[]"]').val();
     var waypayment=$('select[name="waypayment"]').val();
     if($("#cfdiform").valid()){
@@ -288,7 +295,7 @@ $(document).ready(function(){
           $.ajax({
            type:'POST',
            url:'/cfdicreate',
-           data:{numcfdi:numcfdi,customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,applyiva:applyiva,emailcustomer:emailcustomer},
+           data:{numcfdi:numcfdi,customer:customer,rfcsender:rfcsender,businessname:businessname,taxregime:taxregime,street:street,numExt:numExt,colony:colony,city:city,state:state,cp:cp,condicspay:condicspay,waypayment:waypayment,methodpayment:methodpayment,currency:currency,subtotal:subtotal,iva:iva,total:total,rfccust:rfccust,quantity:quantity,quantitys:quantitys,applyiva:applyiva,emailcustomer:emailcustomer,codeproduct:codeproduct,unit:unit,unitprice:unitprice,concept:concept,importe:importe},
            success:function(data){
              alert(data);
             if(data==1){
@@ -398,6 +405,8 @@ function inputChange(input){
   }
 }
 
+//Consulta los datos del producto a tráves del código ingresado
+//Entradas: Recibe como parámetro el objeto input
 function culsultProduct(input){
   elegido=input.value.trim();
   id=$(input).attr("id");

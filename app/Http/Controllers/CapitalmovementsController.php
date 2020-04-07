@@ -36,6 +36,9 @@ class CapitalmovementsController extends Controller
     /**
      * Consulta las subcuentas que pertenezcan a la cuenta
      * seleccionada por el usuario.
+     * 
+     * Entradas: Request con el código de la cuenta
+     * Salidas: Código HTML de opciones resultantes de la consulta
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -50,7 +53,10 @@ class CapitalmovementsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registra el flujo de capital.
+     * 
+     * Entradas: Request con los datos del flujo de efectivo capturado
+     * Salidas: 1 (registrado), 0 (no registrado)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

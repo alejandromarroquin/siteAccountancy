@@ -15,6 +15,7 @@
         <form class="" action="/downloadtrialbalance" method="GET">
           {{ csrf_field() }}
           <div class="col">
+            <input type="text" name="datetoday" hidden>
             <button type="submit" class="btn btn-primary" id="download">Descargar</button>
           </div>
         </form>

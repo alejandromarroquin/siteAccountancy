@@ -57,7 +57,7 @@ th{
                 @foreach($company as $information)
                   <label>{{$information->businessName}}</label><br/>
                 @endforeach
-                <label>Balanza de comprobación al </label>
+                <label>Balanza de comprobación al {{$datetoday}}</label>
                 <label id="date"></label>
               </div>
               <table class="table">

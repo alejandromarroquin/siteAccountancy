@@ -21,12 +21,56 @@ $(document).ready(function(){
     });
 
     $('#btn-enviar').on('click',function(){
-      alert($('#txt-content').val());
-      console.log($('#txt-content').val());
+      cadena=$('#txt-content').val();
+      $.get("/createtemplate", { cadena: cadena },function(data){
+        alert(data);
+        
+      });
     });
 
     $('#btn-obtenerhtml').on('click',function(){
-      alert($('.estructura').html());
+      
+      Swal.fire({
+        title: 'Está seguro de generar el CFDI?',
+        type: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Confirmar',
+        showCancelButton: true,
+        reverseButtons: true,
+        cancelButtonColor: '#929292'
+      }).then((result)=>{
+        if(result.value){
+          $('.brandtemplate').attr("src", "{{'storage/Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png'}}");
+          $('.commercialtemplate').attr("src", "{{'storage/Company/'.session('rfc').'/Commercial/commercial'.session('rfc').'.png'}}");
+          $('.lrfc').append('{{$rfc_emisor}}');
+          $('.lbusinessname').append('{{$businessname}}');
+          $('.lstreet').append('{{$street}}');
+          $('.lconony').append('No.{{$numext}} {{$colony}}');
+          $('.lcity').append('{{$city}}, {{$state}}. {{$cp}}');
+          $('.tab').append('<tr><td>@for($cont;$cont<$cantproducts;$cont++)</td></tr></tr><tr><td class="cod">{{$codeproduct[$cont]}}</td><td class="cant">{{$quantity[$cont]}}</td><td class="unit">{{$unit[$cont]}}</td><td class="descript">{{$concept[$cont]}}</td><td class="price">{{$unitprice[$cont]}}</td><td class="imp">{{$import[$cont]}}</td></tr><tr><td>@endfor</td></tr>');
+          cadena=$('.estructura').html();
+          console.log(cadena);
+          idconfig=$('input[name="idconfig"]').val();
+          $.get("/createtemplate", { cadena: cadena,idconfig:idconfig },function(data){
+            if(data==1){
+              Swal.fire(
+                'Actualizado!',
+                'La plantilla se actualizó correctamente.',
+                'success'
+              )
+              location.reload();
+            }else{
+              Swal.fire(
+                'Error!',
+                'Algo salio mal, intente más tarde.',
+                'error'
+              ).then((result)=>{
+                location.reload();
+              });
+            }
+          });
+        }
+      });
     });
 
     $('input[name="commercial"]').on('change',function(){
@@ -225,11 +269,11 @@ function DragDropSenderTable(brand,drop){
 
 }
 
-function DragDropSenderCommercial(brand,drop){
-  var brand=document.getElementById(brand);
+function DragDropSenderCommercial(commercial,drop){
+  var commercial=document.getElementById(commercial);
   var drop=document.getElementById(drop);
 
-  brand.ondragstart=function(e){
+  commercial.ondragstart=function(e){
     //Guarda el id del elemento para transferirlo al elemento drop
     //Content es una clave que permite acceder al valor accinado
     e.dataTransfer.setData("content",e.target.id);
@@ -256,6 +300,6 @@ window.onload=function(){
   DragDropSenderInf("senderinfo","elements");
   DragDropSenderTable("table","section3");
   DragDropSenderInf("table","elements");
-  DragDropSenderCommercial("commercial","section3");
+  DragDropSenderCommercial("commercial","section4");
   DragDropSenderCommercial("commercial","elements");
 }

@@ -14,6 +14,7 @@ $(document).ready(function(){
     }).then((result) => {
       if (result.value) {
         $.get("/empresadelete", { elegido: elegido },function(data){
+          alert(data);
           if(data==1){
             Swal.fire(
               'Eliminado!',

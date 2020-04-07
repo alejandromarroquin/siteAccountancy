@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
     Route::get('/generar_reportes','ReportsController@indexGenerateReports');
     Route::get('/consultar_reportes','ReportsController@indexConsultReports');
     Route::post('/generatebalancesheet','ReportsController@generateBalancesheet');
-    Route::get('/downloadbalancesheet/{initialdate}/{finaldate}/{businessname}','ReportsController@downloadBalancesheet');
+    Route::get('/downloadbalancesheet','ReportsController@downloadBalancesheet');
     Route::post('/generatestatementresult','ReportsController@generateStatementresult');
     Route::get('/downloadstatementresult','ReportsController@downloadStatementresult');
     Route::post('/generatetrialbalance','ReportsController@generateTrialbalance');
@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
             Route::get('/getamount','BudgetsController@consultAmount');
             Route::get('/budgetedit/{date}','BudgetsController@edit');
             Route::post('/budgetupdate','BudgetsController@update');
+            Route::get('/budgetdelete','BudgetsController@destroy');
 
             Route::get('/flujo_capital','CapitalmovementsController@create');
             Route::post('/movementscreate','CapitalmovementsController@store');
@@ -93,6 +94,7 @@ Route::post('/updatetemplate','ConfigurationController@updateTemplate');
 Route::get('/edittemplate','ConfigurationController@editTemplate');
 Route::post('/loadfiles','ConfigurationController@loadfiles');
 Route::post('/loadcommercial','ConfigurationController@loadcommercial');
+Route::get('/createtemplate','ConfigurationController@createTemplate');
 
 Route::get('/polizas','PeriodpoliciesController@index');
 

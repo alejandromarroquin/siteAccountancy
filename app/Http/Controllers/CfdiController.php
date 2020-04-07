@@ -38,6 +38,9 @@ class CfdiController extends Controller
      * Consulta en la base de datos la información requerida para el CFDI
      * y la envia a la vista la cual se muestra al usuario con toda la información
      * cargada.
+     * 
+     * Entradas: No recibe parámetros
+     * Salidas: Retorna vista 
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +50,7 @@ class CfdiController extends Controller
         $customers=customers::join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessname')->where('customers.idCompany',session('idcompany'))->get();
         $methodspayment=methodpayment::all();
         $wayspayment=waytopay::all();
-        $units=unitmeasurements::all();
+
         $numcfdi=DB::select('select max(numcfdi) as dd from companies inner join cfdis on companies.id=cfdis.idCompany where companies.id='.session('idcompany'));
         foreach ($numcfdi as $data) {
           $numcfd=$data->dd;
@@ -99,6 +102,9 @@ class CfdiController extends Controller
      * manda a llamar al método para construir el archivo XML
      * y posteriormente lo manda a sellar. Una vez sellado se manda
      * por correo electronico al cliente.
+     * 
+     * Entradas: Request con la información para facturar
+     * Salidas: 1 (facturado), 0 (no facturado)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -107,9 +113,9 @@ class CfdiController extends Controller
     {
       //Se obtienen los datos enviados desde la vista
       $newcfdi=new cfdi;
-      $cont=0;
-      $cantproducts=count($request->quantity);
-      $quantity=$request->quantity;
+      
+      $cantproducts=$request->quantity;
+      $quantity=$request->quantitys;
       $unit=$request->unit;
       $codeproduct=$request->codeproduct;
       $concept=$request->concept;
@@ -141,18 +147,25 @@ class CfdiController extends Controller
       session(['emailcustomer'=>$emailcustomer]);
 
       //Se registra en la base de datos la información de la factura
-      $newcfdi->idCompany=session('idcompany');
-      $newcfdi->idMethodPayment=$methodpayment;
-      $newcfdi->idwaypay=$waypayment;
-      $newcfdi->numcfdi=$numcfdi;
-      $newcfdi->customer=$customer;
-      $newcfdi->currency=$currency;
-      $newcfdi->condicspay=$condicspay;
-      $newcfdi->subtotal=$subtotal;
-      $newcfdi->iva=$iva;
-      $newcfdi->total=$total;
-      $newcfdi->save();
+      DB::beginTransaction();
+      try{
+        $newcfdi->idCompany=session('idcompany');
+        $newcfdi->idMethodPayment=$methodpayment;
+        $newcfdi->idwaypay=$waypayment;
+        $newcfdi->numcfdi=$numcfdi;
+        $newcfdi->customer=$customer;
+        $newcfdi->currency=$currency;
+        $newcfdi->condicspay=$condicspay;
+        $newcfdi->subtotal=$subtotal;
+        $newcfdi->iva=$iva;
+        $newcfdi->total=$total;
+        $newcfdi->save();
+        DB::commit();
+      }catch(\PDOException $e){
+        DB::rollBack();
+      }
 
+      
       // Se asigna el folio o numero de factura que aparecera en la
       // representación impresa
       if(strlen($numcfdi)==1){
@@ -177,6 +190,7 @@ class CfdiController extends Controller
         }
       }
 
+      
       // Se asigna la zona horatia de la ciudad de México
       date_default_timezone_set('America/Mexico_City');
       /**
@@ -234,10 +248,11 @@ class CfdiController extends Controller
       */
       $opciones['generarTXT'] = false;
 
-
+    
       $cliente = new FacturacionModerna($url_timbrado, $parametros, $debug);
-
+      
       if($cliente->timbrar($cfdi, $opciones)){
+        
           // Almacenanos en la raíz del proyecto los archivos generados.
           $comprobante = getcwd().'/storage/Company/'.session('rfc').'/CFDIS/'.$cliente->UUID;
 
@@ -250,9 +265,16 @@ class CfdiController extends Controller
               $filename=substr($comprobante, 71);
               session(['filename'=>$filename]);
             }
+
+            $cadenaqr="https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx".$numcfdi.$rfc_emisor.$rfccust.$request->total."&fe=XSFnNXM=";
             //Se pasan los datos a la representación impresa
-            $temp='cfdi/template'.session('cfditemplate');
-            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request','numcfdi','cantproducts','quantity','cont','unit','codeproduct','unitprice','concept','import'));
+            if(session('cfditemplate')!=4){
+              $temp='cfdi/template'.session('cfditemplate');
+            }else{
+              $temp='cfdi/'.session('rfc').'template'.session('cfditemplate');
+            }
+            $cont=0;
+            $pdf = \PDF::loadView($temp,compact('rfc_emisor','condicspay','subtotal','currency','total','methodpayment','street','numext','colony','city','state','cp','businessname','taxregime','rfccust','request','numcfdi','cantproducts','quantity','cont','unit','codeproduct','unitprice','concept','import','cadenaqr'));
             $pdf->save($comprobante.'.pdf');
             file_put_contents($comprobante.".xml", $cliente->xml);
             $data=array(
@@ -286,7 +308,7 @@ class CfdiController extends Controller
      * @param  string $numero_certificado Numero del certificado
      * @param  string $archivo_cer        Ruta del archivo .cer
      * @param  string $archivo_pem        Ruta del archivo .pem
-     * @return string                     XML sellado
+     * @return string Retorno             XML sellado
      */
     function sellarXML($cfdi, $numero_certificado, $archivo_cer, $archivo_pem) {
         $private = openssl_pkey_get_private(file_get_contents($archivo_pem));
@@ -317,6 +339,10 @@ class CfdiController extends Controller
 
     /**
      * Generar el xml basico para el trimbrado
+     * 
+     * Entradas: rfc emisor, condiciones de pago, subtotal, moneda, total, metodo de pago, codigo postal, razon social, regimen fiscal, rfc cliente
+     * Salidas: Cadena XML
+     * 
      * @param  string $rfc_emisor RFC del emisor
      * @return string XML valido
      */

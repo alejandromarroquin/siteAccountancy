@@ -14,6 +14,7 @@
         </div>
         <form action="/downloadpolicieincome" method="GET">
           <div class="col">
+            <input type="text" name="datetoday" hidden>
             <button type="submit" class="btn btn-primary" id="download">Descargar</button>
           </div>
         </form>

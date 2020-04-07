@@ -81,26 +81,30 @@ class ReportsController extends Controller
 
     /**
      * Genera el balance general.
+     * 
+     * Entradas: Request con la fecha inicio y fin
+     * Salidas: Retorna vista
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function generateBalancesheet(Request $request)
     {
-        $inititaldate=$request->initaldate;
-        $finaldate=$request->finaldate;
         $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         $activos=DB::select('select accountName,sum(amount) as sumcred from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountcred=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
-        $pasivos=DB::select('select accountName,sum(amount) as sumamount from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept!="Aportación a capital" GROUP BY accountName');
-        $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idsubaccountdeb=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where concept="Aportación a capital" GROUP BY accountName');
+        $pasivos=DB::select('select accountName,sum(amount) as sumamount from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity!="Inversión" GROUP BY accountName');
+        $capital=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join cashflows cashdeb on cashdeb.idsubaccountdeb=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Inversión" GROUP BY accountName');
         $sumact=0;
         $sumactpas=0;
         return view('reports/balancesheet',compact('accountsname','company','activos','pasivos','capital','sumact','sumactpas'));
     }
 
     //Descarga el balance general
-    public function downloadBalancesheet($initialdate,$finaldate,$businessname){
+    //Entradas: Fecha inicio, fecha fin y razon social
+    //Salidas: Descarga de PDF
+    public function downloadBalancesheet(Request $request){
+      $datetoday=$request->datetoday;
       $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $activos=DB::select('select accountName,sum(amount) as sumcred from subaccounts inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id GROUP BY accountName');
@@ -118,12 +122,14 @@ class ReportsController extends Controller
       foreach($capital as $cap){
        $sumcap=$sumcap+$cap->sumamount;
       }
-      $pdf = \PDF::loadView('reports.balancesheetPDF',compact('accountsname','company','activos','pasivos','capital','sumact','sumpas','sumcap'));
+      $pdf = \PDF::loadView('reports.balancesheetPDF',compact('accountsname','company','activos','pasivos','capital','sumact','sumpas','sumcap','datetoday'));
       return $pdf->download();
     }
     //Genera el estado de resultados.
     public function generateStatementresult(Request $request)
     {
+        $initaldate=$request->initaldate;
+        $finaldate=$request->finaldate;
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
         $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountcred where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
@@ -146,11 +152,13 @@ class ReportsController extends Controller
         $totalcosts=0;
         $grossprofit=0;
         $totalexpenses=0;
-        return view('reports/statementresult',compact('company','arraysales','arraycosts','arrayexpenses','accountnames','totalsales','totalcosts','grossprofit','totalexpenses'));
+        return view('reports/statementresult',compact('company','arraysales','arraycosts','arrayexpenses','accountnames','totalsales','totalcosts','grossprofit','totalexpenses','initaldate','finaldate'));
     }
 
     //Descarga el estado de resultados
-    public function downloadStatementresult(){
+    public function downloadStatementresult(Request $request){
+      $initaldate=$request->initaldate;
+      $finaldate=$request->finaldate;
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $sales=DB::select('select accountcatalogs.accountName,sum(amount) as sumsales from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id inner join accounts on accountcatalogs.idgrouperaccount=accounts.groupcode inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows on subaccounts.id=cashflows.idsubaccountcred where accounts.groupcode>400 AND accounts.groupcode<500 GROUP BY accountName');
@@ -189,7 +197,7 @@ class ReportsController extends Controller
       $utilitybeforetaxes=$grossprofit-$totalexpenses;
       $incometaxes=$utilitybeforetaxes*.32;
       $netprofit=$utilitybeforetaxes-$incometaxes;
-      $pdf = \PDF::loadView('reports.statementresultPDF',compact('company','arraysales','arraycosts','arrayexpenses','accountnames','totalsales','totalcosts','grossprofit','totalexpenses','utilitybeforetaxes','incometaxes','netprofit'));
+      $pdf = \PDF::loadView('reports.statementresultPDF',compact('company','arraysales','arraycosts','arrayexpenses','accountnames','totalsales','totalcosts','grossprofit','totalexpenses','utilitybeforetaxes','incometaxes','netprofit','initaldate','finaldate'));
       return $pdf->download();
     }
 
@@ -217,7 +225,8 @@ class ReportsController extends Controller
     }
 
 
-    public function downloadTrialbalance(){
+    public function downloadTrialbalance(Request $request){
+      $datetoday=$request->datetoday;
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountsname=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session("idaccountancy"));
       $accountdebs=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
@@ -262,7 +271,7 @@ class ReportsController extends Controller
         }
       }
 
-      $pdf = \PDF::loadView('reports.trialbalancePDF',compact('cont','summd','summa','sumsd','sumsa','company','accountsname','arrayaccountd','arrayaccountc'));
+      $pdf = \PDF::loadView('reports.trialbalancePDF',compact('cont','summd','summa','sumsd','sumsa','company','accountsname','arrayaccountd','arrayaccountc','datetoday'));
       return $pdf->download();
     }
 
@@ -301,7 +310,8 @@ class ReportsController extends Controller
         return view('reports.periodpoliciesincome',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
     }
 
-    public function downloadPeriodpolicieincome(){
+    public function downloadPeriodpolicieincome(Request $request){
+      $datetoday=$request->datetoday;
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Ingreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
@@ -370,7 +380,8 @@ class ReportsController extends Controller
         return view('reports.periodpoliciesexpenses',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
     }
 
-    public function downloadPeriodpolicieexpenses(){
+    public function downloadPeriodpolicieexpenses(Request $request){
+      $datetoday=$request->datetoday;
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
@@ -439,7 +450,8 @@ class ReportsController extends Controller
         return view('reports.periodpoliciesdaily',compact('company','policiesdeb','policiescred','accountnames','policiesperioddeb','policiesperiodcred','accountname','subaccountname','sum','sumd','arraysumcreds','arraysumdebs'));
     }
 
-    public function downloadPeriodpoliciedaily(){
+    public function downloadPeriodpoliciedaily(Request $request){
+      $datetoday=$request->datetoday;
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $policiesdeb=DB::select('select cashflows.amount,subaccounts.idsubaccount,subaccounts.namesubaccount,accountcatalogs.code,accountcatalogs.accountName from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id inner join accountancycatalogs on subaccounts.idaccount=accountancycatalogs.id inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id where typeflow="No ingreso y no egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy'));
@@ -480,6 +492,7 @@ class ReportsController extends Controller
     }
 
     public function downloadAux(Request $request){
+      $datetoday=$request->datetoday;
       $account=$request->nameaccount;
       $saldo=0;
       $flowsd=DB::select('select typeflow,date,concept,amount from cashflows inner join subaccounts on cashflows.idsubaccountdeb=subaccounts.id where namesubaccount="'.$account.'"');
@@ -510,6 +523,8 @@ class ReportsController extends Controller
     //Genera el flujo de efectivo.
     public function generateCashflow(Request $request)
     {
+        $initaldate=$request->initaldate;
+        $finaldate=$request->finaldate;
         $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
         $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
         $actopdeb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Operación" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
@@ -524,10 +539,12 @@ class ReportsController extends Controller
         $sumactindeb=0;
         $sumactficred=0;
         $sumactfideb=0;
-        return view('reports/cashflow',compact('company','actopdeb','actopcred','actopdeb','actindeb','actincred','actfideb','actficred','sumactopcred','sumactopdeb','sumactincred','sumactindeb','sumactficred','sumactfideb'));
+        return view('reports/cashflow',compact('company','actopdeb','actopcred','actopdeb','actindeb','actincred','actfideb','actficred','sumactopcred','sumactopdeb','sumactincred','sumactindeb','sumactficred','sumactfideb','initaldate','finaldate'));
     }
 
-    public function downloadCashflow(){
+    public function downloadCashflow(Request $request){
+      $initaldate=$request->initaldate;
+      $finaldate=$request->finaldate;
       $company=User::join('companies','users.idCompany','=','companies.id')->join('taxinformations','companies.idTaxInformation','=','taxinformations.id')->select('taxinformations.businessName')->where('users.id',auth()->user()->id)->get();
       $accountnames=DB::select('select DISTINCT accountName from accountancycatalogs inner join accountcatalogs on accountancycatalogs.CodeAccount=accountcatalogs.id');
       $actopdeb=DB::select('select accountName,sum(amount) as sumamount from accountancycatalogs inner join subaccounts on accountancycatalogs.id=subaccounts.idaccount inner join cashflows cashdeb on cashdeb.idsubaccountdeb=subaccounts.id inner join accountcatalogs on accountancycatalogs.codeAccount=accountcatalogs.id where activity="Operación" and typeflow="Egreso" and accountancycatalogs.idAccountancy='.session('idaccountancy').' GROUP BY accountName');
@@ -560,7 +577,7 @@ class ReportsController extends Controller
       foreach($actfideb as $actfide){
         $sumactfideb=$sumactfideb+$actfide->sumamount;
       }
-      $pdf = \PDF::loadView('reports.cashflowPDF',compact('company','actopdeb','actopcred','actopdeb','actindeb','actincred','actfideb','actficred','sumactopcred','sumactopdeb','sumactincred','sumactindeb','sumactficred','sumactfideb'));
+      $pdf = \PDF::loadView('reports.cashflowPDF',compact('company','actopdeb','actopcred','actopdeb','actindeb','actincred','actfideb','actficred','sumactopcred','sumactopdeb','sumactincred','sumactindeb','sumactficred','sumactfideb','initaldate','finaldate'));
       return $pdf->download();
     }
 

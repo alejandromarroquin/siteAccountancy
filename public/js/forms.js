@@ -3,6 +3,7 @@ $(document).ready(function(){
     var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     var date=new Date();
     $('#date').text(date.getDate() + " de " + meses[date.getMonth()] + " de " + date.getFullYear());
+    $('input[name="datetoday"]').val(date.getDate() + " de " + meses[date.getMonth()] + " de " + date.getFullYear());
   }
 
   if($('#datetype2')){

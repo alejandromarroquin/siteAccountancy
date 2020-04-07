@@ -14,6 +14,9 @@
         </div>
         <form action="/downloadstatementresult" method="GET">
           <div class="col">
+            <input type="text" name="datetoday" hidden>
+            <input type="text" name="initaldate" value="{{$initaldate}}" hidden>
+            <input type="text" name="finaldate" value="{{$finaldate}}" hidden>
             <button type="submit" class="btn btn-primary" id="download">Descargar</button>
           </div>
         </form>
@@ -24,8 +27,7 @@
             @foreach($company as $information)
               <label>{{$information->businessName}}</label><br/>
             @endforeach
-            <label>Estado de resultados al</label>
-            <label id="date"></label>
+            <label>Estado de resultados del {{$initaldate}} al {{$finaldate}} </label>
           </div>
           <table class="table">
             <thead>

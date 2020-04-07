@@ -16,7 +16,7 @@
             @if(auth()->user()->idCompany==1)
               <div class="row">
                 <div class="col">
-                  <label>Empresa:</label>
+                  <label>Empresa: <label class="required">*</label></label>
                   <select class="form-control" name="company" id="company" required/>
                     <option selected hidden>Selecciona una empresa...</option>
                     <option value="1">D&C Tech Development and Consulting S.A. de C.V.</option>
@@ -29,22 +29,22 @@
             @endif
             <div class="row">
               <div class="col">
-                <label>Nombre:</label>
+                <label>Nombre: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="name" name="name" onkeypress="return soloLetras(event);" required/>
               </div>
               <div class="col">
-                <label>Apellido:</label>
+                <label>Apellido: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="lastname" name="lastname" onkeypress="return soloLetras(event);" required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <label>Correo:</label>
+                <label>Correo: <label class="required">*</label></label>
                 <input type="email" class="form-control" id="email" name="email" required/>
               </div>
               <div class="col">
-                <label>Contraseña:</label>
-                <input type="text" class="form-control" id="password" name="password" required/>
+                <label>Contraseña: <label class="required">*</label></label>
+                <input type="password" class="form-control" id="password" name="password" required/>
               </div>
             </div>
             <div class="row">

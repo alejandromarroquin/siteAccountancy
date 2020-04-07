@@ -69,7 +69,7 @@
           @foreach($company as $information)
             <label>{{$information->businessName}}</label><br/>
           @endforeach
-          <label>Estado de resultados al</label>
+          <label>Estado de resultados del {{$initaldate}} al {{$finaldate}}</label>
           <label id="date"></label>
         </div>
         <table>

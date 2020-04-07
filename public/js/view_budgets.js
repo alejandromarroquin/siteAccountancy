@@ -7,9 +7,9 @@ $(document).ready(function(){
   });
 
   if($('input[name="totalhidd"]').val().indexOf('.',0)<0){
-    $('input[name="total"]').val($('input[name="totalhidd"]').val()+'.00');
+    $('input[name="totalbudget"]').val($('input[name="totalhidd"]').val()+'.00');
   }else{
-    $('input[name="total"]').val($('input[name="totalhidd"]').val());
+    $('input[name="totalbudget"]').val($('input[name="totalhidd"]').val());
   }
 
   if($('input[name="reservedhidd"]').val().indexOf('.',0)<0){
@@ -24,6 +24,7 @@ $(document).ready(function(){
     $('input[name="available"]').val($('input[name="availablehidd"]').val());
   }
 
+  //Función para agregar filas dinamicamente a las tablas de gastos fijos y variables
   $('.addfixed').on('click',function(event){
     var cont=$('input[name="contfix"]').val();
     var newcont=(parseInt(cont)+1);
@@ -261,6 +262,41 @@ $(document).ready(function(){
          }
       });
     }
+  });
+
+  $('.delete').on('click',function(){
+    event.preventDefault();
+    elegido=$(this).val();
+    Swal.fire({
+      title: 'Está seguro de eliminar el presupuesto?',
+      text: "No se podrán revertir los cambios!",
+      type: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Confirmar',
+      showCancelButton: true,
+      reverseButtons: true,
+      cancelButtonColor: '#929292'
+    }).then((result) => {
+      if (result.value) {
+        $.get("/budgetdelete", { elegido: elegido },function(data){
+          alert(data);
+          if(data==1){
+            Swal.fire(
+              'Eliminado!',
+              'El presupuesto se eliminó correctamente.',
+              'success'
+            )
+          }else{
+            Swal.fire(
+              'Error!',
+              'Algo salio mal, intente más tarde.',
+              'error'
+            )
+          }
+        });
+        $(this).closest('tr').remove();
+      }
+    });
   });
 
   $('#alert').hide();

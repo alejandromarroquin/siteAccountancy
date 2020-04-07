@@ -63,7 +63,7 @@
           @foreach($company as $information)
             <label>{{$information->businessName}}</label><br/>
           @endforeach
-          <label>Balance General al </label>
+          <label>Balance General al {{$datetoday}}</label>
           <label id="date"></label>
         </div>
         <div class="row content">

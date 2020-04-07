@@ -14,13 +14,13 @@
         </div>
       </div>
       <div class="row margin">
-        <form action="" method="" role="form" id="cfdiform">
+        <form action="/cfdicreate" method="POST" role="form" id="cfdiform">
           {{ csrf_field() }}
           <input type="text" name="numcfdi" value="{{$numcfd}}" hidden>
           <div class="row">
             <div class="col-6">
               <input type="text" name="taxregime" value="@foreach($senderdata as $data){{$data->code}}@endforeach" hidden/>
-              <label>Cliente:</label>
+              <label>Cliente: <label class="required">*</label></label>
               <select class="form-control" name="customer" id="customer" required/>
                 <option value="null" selected hidden>Selecciona un cliente...</option>
                 @foreach($customers as $customer)
@@ -28,10 +28,37 @@
                 @endforeach
               </select>
             </div>
+            <div class="col">
+              <label>Uso de CFDI: <label class="required">*</label></label>
+              <select name="usecfdi" class="form-control">
+                <option value="G01">Adquisición de mercancias</option>
+                <option value="G02">Devoluciones, descuentos o bonificaciones</option>
+                <option value="G03">Gastos en general</option>
+                <option value="I01">Construcciones</option>
+                <option value="I02">Mobilario y equipo de oficina por inversiones</option>
+                <option value="I03">Equipo de transporte</option>
+                <option value="I04">Equipo de computo y accesorios</option>
+                <option value="I05">Dados, troqueles, moldes, matrices y herramental</option>
+                <option value="I06">Comunicaciones telefónicas</option>
+                <option value="I07">Comunicaciones satelitales</option>
+                <option value="I08">Otra maquinaria y equipo</option>
+                <option value="D01">Honorarios médicos, dentales y gastos hospitalarios</option>
+                <option value="D02">Gastos médicos por incapacidad o discapacidad</option>
+                <option value="D03">Gastos funerales</option>
+                <option value="D04">Donativos</option>
+                <option value="D05">Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación)</option>
+                <option value="D06">Aportaciones voluntarias al SAR</option>
+                <option value="D07">Primas por seguros de gastos médicos</option>
+                <option value="D08">Gastos de transportación escolar obligatoria</option>
+                <option value="D09">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
+                <option value="D10">Pagos por servicios educativos (colegiaturas)</option>
+                <option value="P01">Por definir</option>
+              </select>
+            </div>
           </div>
           <div class="row">
             <div class="col">
-              <label>Método de pago:</label>
+              <label>Método de pago: <label class="required">*</label></label>
               <select class="form-control" name="methodpayment" id="methodpayment">
                 <option selected hidden>Selecciona un método de pago...</option>
                 @foreach($methodspayment as $methodpayment)
@@ -40,7 +67,7 @@
               </select>
             </div>
             <div class="col">
-              <label>Forma de pago</label>
+              <label>Forma de pago: <label class="required">*</label></label>
               <select class="form-control" name="waypayment" id="waypayment">
                 <option selected hidden>Selecciona una forma de pago...</option>
                 @foreach($wayspayment as $waypayment)
@@ -51,7 +78,7 @@
           </div>
           <div class="row">
             <div class="col-2">
-              <label>Moneda</label>
+              <label>Moneda: <label class="required">*</label></label>
               <select class="form-control" name="currency">
                 <option>MXN</option>
               </select>

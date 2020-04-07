@@ -32,13 +32,13 @@
             </div>
             <div class="row">
               <div class="col">
-                <label>Razón social:</label>
+                <label>Razón social:< <label class="required">*</label>/label>
                 <input type="text" class="form-control" name="businessname" value="{{$businessName}}" placeholder="Ej. Empresa S.A. DE C.V." required/>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <label>RCF:</label>
+                <label>RCF: <label class="required">*</label></label>
                 <input type="text" name="rfcoriginal" value="{{$rfc}}" hidden>
                 <input type="text" class="form-control" id="rfc" name="rfc" value="{{$rfc}}" onInput="aMayusculas(this.value,this.id)" minlength="12" maxlength="13" required/>
               </div>
@@ -55,7 +55,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <label>Télefono de oficina:</label>
+                <label>Télefono de oficina: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="phoneoffice" name="phoneoffice" value="{{$office}}" minlength="10" maxlength="10" placeholder="10 digitos" onkeypress="return soloNumeros(event);" required/>
               </div>
               <div class="col">
@@ -69,7 +69,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <label>Email:</label>
+                <label>Email: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="email" name="email" value="{{$email}}" placeholder="Ej. nombre@tuempresa.com" required/>
               </div>
               <div class="col">
@@ -79,11 +79,11 @@
             </div>
             <div class="row">
               <div class="col">
-                <label>Cóigo postal:</label>
+                <label>Cóigo postal: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{$postalCode}}" minlength="5" maxlength="5" onkeypress="return soloNumeros(event);" required/>
               </div>
               <div class="col">
-                <label>Calle:</label>
+                <label>Calle: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="street" name="street" value="{{$street}}" required/>
               </div>
             </div>
@@ -97,7 +97,7 @@
                 <input type="text" class="form-control" id="numext" name="numext" value="{{$numExt}}" maxlength="4" required/>
               </div>
               <div class="col">
-                <label>Colonia:</label>
+                <label>Colonia: <label class="required">*</label></label>
                 <select class="form-control" name="colony" id="colony">
                   <option selected hidden>{{$colony}}</option>
                 </select>
@@ -105,15 +105,15 @@
             </div>
             <div class="row">
               <div class="col">
-                <label>Municipio:</label>
+                <label>Municipio: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="city" name="city" value="{{$city}}" readonly/>
               </div>
               <div class="col">
-                <label>Estado:</label>
+                <label>Estado: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="estate" name="estate" value="{{$street}}" readonly/>
               </div>
               <div class="col">
-                <label>Pais:</label>
+                <label>Pais: <label class="required">*</label></label>
                 <input type="text" class="form-control" id="contry" name="contry" value="{{$country}}" readonly/>
               </div>
             </div>

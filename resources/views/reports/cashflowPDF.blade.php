@@ -30,7 +30,7 @@
           @foreach($company as $information)
             <label>{{$information->businessName}}</label><br/>
           @endforeach
-          <label>Póliza de Diario</label>
+          <label>Estado de flujo de efectivo del {{$initaldate}} al {{$finaldate}}</label>
           <label id="date"></label>
         </div>
         <table>

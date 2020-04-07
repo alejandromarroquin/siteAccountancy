@@ -20,7 +20,7 @@ $(document).ready(function(){
       $.get(url).done(function( data ) {
         if(data==1){
            $('input[name="typetaxregime"]').val();
-           if($('input[name="rfc"]').val().length==12){
+           if($('input[name="rfc"]').val().length==13){
              Swal.fire(
                'RFC no valido!',
                'La longitud del RFC no es correcta.',
@@ -31,7 +31,7 @@ $(document).ready(function(){
            }
          }else{
            if(data==2){
-             if($('input[name="rfc"]').val().length==13){
+             if($('input[name="rfc"]').val().length==12){
                Swal.fire(
                    'RFC no valido!',
                    'La longitud del RFC no es correcta.',
@@ -54,7 +54,7 @@ $(document).ready(function(){
       $.get(url).done(function( data ) {
         if(data==1){
            $('input[name="typetaxregime"]').val();
-           if($('input[name="rfc"]').val().length==12){
+           if($('input[name="rfc"]').val().length==13){
              Swal.fire(
                'RFC no valido!',
                'La longitud del RFC no es correcta.',
@@ -65,7 +65,7 @@ $(document).ready(function(){
            }
          }else{
            if(data==2){
-             if($('input[name="rfc"]').val().length==13){
+             if($('input[name="rfc"]').val().length==12){
                Swal.fire(
                    'RFC no valido!',
                    'La longitud del RFC no es correcta.',
@@ -132,32 +132,32 @@ $(document).ready(function(){
               'Registrado!',
               'El cliente se registro correctamente.',
               'success'
-            )
-            $('input[name="responsible"]').val(null);
-            $('input[name="positionresponsible"]').val(null);
-            $('input[name="businessname"]').val(null);
-            $('input[name="rfc"]').val(null);
-            $('input[name="taxregime"]').val(null);
-            $('input[name="phoneoffice"]').val(null);
-            $('input[name="extension"]').val(null);
-            $('input[name="cellphone"]').val(null);
-            $('input[name="email"]').val(null);
-            $('input[name="web"]').val(null);
-            $('input[name="street"]').val(null);
-            $('input[name="numint"]').val(null);
-            $('input[name="numext"]').val(null);
-
-            $('input[name="city"]').val(null);
-            $('input[name="estate"]').val(null);
-            $('input[name="postalcode"]').val(null);
+            ).then((result)=>{
+              $('input[name="responsible"]').val(null);
+              $('input[name="positionresponsible"]').val(null);
+              $('input[name="businessname"]').val(null);
+              $('input[name="rfc"]').val(null);
+              $('input[name="taxregime"]').val(null);
+              $('input[name="phoneoffice"]').val(null);
+              $('input[name="extension"]').val(null);
+              $('input[name="cellphone"]').val(null);
+              $('input[name="email"]').val(null);
+              $('input[name="web"]').val(null);
+              $('input[name="street"]').val(null);
+              $('input[name="numint"]').val(null);
+              $('input[name="numext"]').val(null);
+              $('input[name="city"]').val(null);
+              $('input[name="estate"]').val(null);
+              $('input[name="postalcode"]').val(null);
+            })
           }else{
-              Swal.fire(
-                'Error!',
-                'Algo salio mal, intentelo más tarde.',
-                'error'
-              )
-            }
+            Swal.fire(
+              'Error!',
+              'Algo salio mal, intentelo más tarde.',
+              'error'
+            )
           }
+        }
       });
     }
   });

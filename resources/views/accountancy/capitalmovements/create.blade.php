@@ -29,7 +29,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label>Cuenta deudor:</label>
+                  <label>Cuenta origen:</label>
                   <select class="form-control" name="accountdebit" id="accountdebit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)
@@ -40,7 +40,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label>Subcuenta deudor:</label>
+                  <label>Subcuenta origen:</label>
                   <select class="form-control" name="subaccountdebit">
                     <option selected hidden>Selecciona uno...</option>
                   </select>
@@ -48,7 +48,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label>Cuenta acreedor:</label>
+                  <label>Cuenta destino:</label>
                   <select class="form-control" name="accountcredit" id="accountcredit">
                     <option selected hidden>Selecciona una cuenta...</option>
                     @foreach($accounts as $account)
@@ -59,7 +59,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label>Subcuenta acreedor:</label>
+                  <label>Subcuenta destino:</label>
                   <select class="form-control" name="subaccountcredit">
                     <option selected hidden>Selecciona uno...</option>
                   </select>

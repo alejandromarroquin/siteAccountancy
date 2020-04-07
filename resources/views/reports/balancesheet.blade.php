@@ -14,9 +14,8 @@
             <div class="col">
               <h1 class="page-header">Balance general:</h1>
             </div>
-            <form action="/downloadbalancesheet/2019-12-27/2020-11-17/d&c" method="GET">
-              <input type="text" name="initialdate" value="" hidden>
-              <input type="text" name="finaldate" value="" hidden>
+            <form action="/downloadbalancesheet" method="GET">
+              <input type="text" name="datetoday" hidden>
               <div class="col">
                 <button type="submit" class="btn btn-primary" id="download">Descargar</button>
               </div>

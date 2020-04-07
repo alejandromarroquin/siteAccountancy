@@ -24,6 +24,9 @@ class BudgetsController extends Controller
     /**
      * Consulta el último presupuesto registrado de la empresa que inicio sesión
      * y muestra la vista para registrar un nuevo presupuesto o consultar el último presupuesto.
+     * 
+     * Entradas: No recibe parametros
+     * Salidas: Retorna vista de presupuestos
      *
      * @return \Illuminate\Http\Response
      */
@@ -67,6 +70,9 @@ class BudgetsController extends Controller
     /**
      * Registra en la base de datos los costos fijos y variables
      * y a partir de estos el presupuesto general.
+     * 
+     * Entradas: Request con los gastos fijos y variables
+     * Salidas: 1 (registrado), 0 (no registrado)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -140,6 +146,9 @@ class BudgetsController extends Controller
     /**
      * Consulta los datos del último presupuesto registrado
      * y los muestra en la vista.
+     * 
+     * Entradas: Recibe como parametro el id del presupuesto
+     * Salidas: Retorna la vista con los datos del presupuesto que se desea editar
      *
      * @param  \App\budgets  $budgets
      * @return \Illuminate\Http\Response
@@ -158,6 +167,9 @@ class BudgetsController extends Controller
 
     /**
      * Actualiza los datos del último presupuesto.
+     * 
+     * Entradas: Request datos de gastos fijos y variables
+     * Salidas: 1 (actualizado), 0 (no actualizado)
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\budgets  $budgets
@@ -244,6 +256,6 @@ class BudgetsController extends Controller
      */
     public function destroy(budgets $budgets)
     {
-        //
+        return 1;
     }
 }

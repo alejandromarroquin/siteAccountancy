@@ -15,8 +15,8 @@
               <h1 class="page-header">Estado de flujo de efectivo:</h1>
             </div>
             <form action="/downloadcashflow" method="GET">
-              <input type="text" name="initialdate" value="" hidden>
-              <input type="text" name="finaldate" value="" hidden>
+              <input type="text" name="initaldate" value="{{$initaldate}}" hidden>
+              <input type="text" name="finaldate" value="{{$finaldate}}" hidden>
               <div class="col">
                 <button type="submit" class="btn btn-primary" id="download">Descargar</button>
               </div>
@@ -30,8 +30,7 @@
             @foreach($company as $information)
               <label>{{$information->businessName}}</label><br/>
             @endforeach
-            <label>Estado de resultados al</label>
-            <label id="date"></label>
+            <label>Estado de resultados del {{$initaldate}} al {{$finaldate}}</label>
           </div>
           <table class="table">
             <thead>

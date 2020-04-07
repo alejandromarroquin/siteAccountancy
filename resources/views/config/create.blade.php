@@ -92,7 +92,7 @@
       					<div class="form-group">
       						<textarea id="txt-content" name="txt-content"></textarea>
       					</div>
-      					<input type="button" class="btn btn-primary" id="btn-enviar" value="Mostrar Resultado">
+      					<input type="button" class="btn btn-primary" id="btn-enviar" value="Guardar">
 
       			</div>
       		</div>
@@ -105,25 +105,16 @@
                 <div class="row">
                   <div class="col">
                     <div id="brand" draggable="true" style="  width:100%;">
-                      <img class="img-fluid" src="{{Storage::disk('local')->url('Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png')}}" width="200" style="margin-left: auto;margin-right: auto;display: block;margin-top:1em;">
+                      <img id="brand" draggable="true" class="img-fluid brandtemplate" src="{{Storage::disk('local')->url('Company/'.session('rfc').'/Brand/'.'brand'.session('rfc').'.png')}}" width="200" style="margin-left: auto;margin-right: auto;display: block;margin-top:1em;">
                     </div>
                   </div>
                   <div class="col">
                     <div class="senderinfo" id="senderinfo" draggable="true" style="  width:100%;">
-
-                        <input type="text" name="rfcsender" value="" hidden/>
-                        <input type="text" name="businessname" value="" hidden/>
-                        <input type="text" name="cp" value="" hidden/>
-                        <input type="text" name="street" value="" hidden/>
-                        <input type="text" name="numExt" value="" hidden/>
-                        <input type="text" name="colony" value="" hidden/>
-                        <input type="text" name="city" value="" hidden/>
-                        <input type="text" name="state" value="" hidden/>
-                        <strong></strong><br/>
-                        <strong>R.F.C </strong><br/>
-                        Domicilio:  No. <br/>
-                        Colonia:<br/>
-                        , .
+                      <label class="lbusinessname"></label>                        
+                      <label class="lrfc"><strong>R.F.C:</strong></label><br/> 
+                      <label class="address lstreet"></label>
+                      <label class="address lconony"></label>
+                      <label class="address lcity"></label>
 
                     </div>
                   </div>
@@ -131,7 +122,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="table" id="table" draggable="true" style="  width:100%;">
-                      <table style="margin-left:auto;margin-right:auto;">
+                      <table class="tab" style="margin-left:auto;margin-right:auto;">
                         <tr>
                           <th class="cod">Cve Prod Serv</th>
                           <th class="cant">Cant.</th>
@@ -140,14 +131,7 @@
                           <th class="price">Precio Unitario</th>
                           <th class="imp">Importe</th>
                         </tr>
-                        <tr>
-                          <td class="cod">---</td>
-                          <td class="cant">---</td>
-                          <td class="unit">---</td>
-                          <td class="descript">---</td>
-                          <td class="price">---</td>
-                          <td class="imp">---</td>
-                        </tr>
+                        
                       </table>
                     </div>
                   </div>
@@ -155,7 +139,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="commercial" id="commercial" draggable="true" style="width: 800px;height: 150px;border: 1px solid black;text-align: center;font-family: Arial;font-size: 40px;color: gray;">
-                      <img src="">
+                      <img class="img-fluid commercialtemplate" id="commercial" draggable="true" src="{{Storage::disk('local')->url('Company/'.session('rfc').'/Commercial/commercial'.session('rfc').'.png')}}">
                     </div>
                   </div>
                 </div>

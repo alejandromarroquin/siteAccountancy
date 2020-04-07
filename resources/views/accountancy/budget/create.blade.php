@@ -177,7 +177,7 @@
                   <div class="col-3">
                     <label>Presupuesto general:</label>
                     <input type="text" name="totalhidd" value="{{$total}}" hidden/>
-                    <input class="form-control" type="text" name="total" onkeypress="return filterFloat(event,this);" required readonly/>
+                    <input class="form-control" type="text" name="totalbudget" onkeypress="return filterFloat(event,this);" required readonly/>
                   </div>
                   <div class="col-3">
                     <label>Reservado:</label>
@@ -263,6 +263,7 @@
                     </div>
                   </div>
                   <a href="/budgetedit/{{$start}}" class="btn btn-warning">Editar</a>
+                  <button type="button" class="btn btn-danger delete" value="{{$idbudget}}">Eliminar</button>
                 </form>
               </div>
             </div>

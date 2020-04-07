@@ -15,7 +15,7 @@ $(document).ready(function(){
     var password=$('input[name="password"]').val();
     if($("#userform").valid()){
       Swal.fire({
-        title: 'Está seguro de actualizar la empresa?',
+        title: 'Está seguro de actualizar el usuario?',
         type: 'warning',
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Confirmar',

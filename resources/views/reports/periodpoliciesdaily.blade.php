@@ -15,6 +15,7 @@
         <form action="/downloadpoliciedaily" method="GET">
           <div class="col">
             <button type="submit" class="btn btn-primary" id="download">Descargar</button>
+            <input type="text" name="datetoday" hidden>
           </div>
         </form>
       </div>

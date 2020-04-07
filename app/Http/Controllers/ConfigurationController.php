@@ -27,7 +27,29 @@ class ConfigurationController extends Controller
           $numtemp=$data->cfditemplate;
           $idconfig=$data->id;
         }
-        return view('config/create',compact('url','numtemp','idconfig'));
+        $rfc_emisor=null;
+        return view('config/create',compact('url','numtemp','idconfig','rfc_emisor'));
+    }
+
+    public function createTemplate(Request $request){
+      $cadena=$request->cadena;
+      $http=dirname(__DIR__);
+      $app=dirname($http);
+      $raiz=dirname($app);
+      if(file_exists($raiz.'/resources/views/cfdi/'.session('rfc').'template4.blade.php')){
+        unlink($raiz.'/resources/views/cfdi/'.session('rfc').'template4.blade.php');
+      }
+      if($fh = fopen($raiz.'/resources/views/cfdi/'.session('rfc').'template4.blade.php', 'w')){
+        fwrite($fh, $cadena) or die("No se pudo escribir en el archivo");
+        fclose($fh);
+        $config=configuration::find($request->idconfig);
+        $config->cfditemplate=4;
+        $config->save();
+        session(['cfditemplate'=>4]);
+        return 1;
+      }else{
+        return 0;
+      }     
     }
 
     /**

@@ -63,6 +63,9 @@ class CompanieController extends Controller
     /**
      * Registra en la base de datos la información del cliente y crea las carpetas
      * necesarias para almacenar los archivos que está genere.
+     * 
+     * Entradas: Request con los datos del cliente
+     * Salidas: 1 (registrado), 0 (no registrado)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -127,7 +130,7 @@ class CompanieController extends Controller
         $customers->idTaxInformation=$taxinf->id;
         $customers->save();
 
-
+        //Se crea la carpeta con las subcarpetas necesarias para cada empresa
           $path = public_path().'/storage/Company/'.$request->rfc;
           File::makeDirectory($path, $mode = 0777, true, true);
           $pathbrand=$path.'/Brand';
@@ -258,12 +261,18 @@ class CompanieController extends Controller
      */
     public function destroy(Request $request,companie $companie)
     {
-      if(customers::join('companies','customers.idCompany','=','companies.id')->join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
-        Storage::disk('local')->deleteDirectory($request->elegido);
+      if (auth()->user()->idCompany==1) {
+        taxinformation::join('companies','companies.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete();
+        
         return 1;
       }else{
-        return 0;
+        if(customers::join('companies','customers.idCompany','=','companies.id')->join('taxinformations','customers.idTaxInformation','=','taxinformations.id')->where('taxinformations.rfc',$request->elegido)->delete()){
+          return 1;
+        }else{
+          return 0;
+        }
       }
+      
 
     }
 }
