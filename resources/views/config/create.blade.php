@@ -24,8 +24,7 @@
 @endsection
 
 @section('content')
-<div id="page-wrapper" class="p-4">
-  <div class="row mt-4" style="margin-left:20rem;">
+
     <div class="card-body">
       <div class="row">
         <div class="col-lg-12 col-xl-12">
@@ -122,23 +121,32 @@
                 <div class="row">
                   <div class="col">
                     <div class="table" id="table" draggable="true" style="  width:100%;">
-                      <table class="tab" style="margin-left:auto;margin-right:auto;">
-                        <tr>
-                          <th class="cod">Cve Prod Serv</th>
-                          <th class="cant">Cant.</th>
-                          <th class="unit">Unidad</th>
-                          <th class="descript">Descripción</th>
-                          <th class="price">Precio Unitario</th>
-                          <th class="imp">Importe</th>
-                        </tr>
-                        
-                      </table>
+                      <div style="width:100%; display:flex;justify-content: space-between;">
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Cve Prod Serv</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Cant.</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Unidad</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Descripción</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Precio Unitario</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Importe</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <div class="commercial" id="commercial" draggable="true" style="width: 800px;height: 150px;border: 1px solid black;text-align: center;font-family: Arial;font-size: 40px;color: gray;">
+                    <div class="commercial" id="commercial" draggable="true" style="width: 700px;height: 130px;border: 1px solid black;text-align: center;font-family: Arial;font-size: 40px;color: gray;">
                       <img class="img-fluid commercialtemplate" id="commercial" draggable="true" src="{{Storage::disk('local')->url('Company/'.session('rfc').'/Commercial/commercial'.session('rfc').'.png')}}">
                     </div>
                   </div>
@@ -166,8 +174,7 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+
 @endsection
 
 @section('scripts')

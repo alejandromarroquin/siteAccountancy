@@ -16,20 +16,29 @@
                 <div id="section3" style="  border: 1px solid black;width:100%;min-height:200px;margin-top:14em;">
 
                 <div class="table" id="table" draggable="true" style="  width:100%;">
-                      <table class="tab" style="margin-left:auto;margin-right:auto;">
-                        <tbody><tr>
-                          <th class="cod">Cve Prod Serv</th>
-                          <th class="cant">Cant.</th>
-                          <th class="unit">Unidad</th>
-                          <th class="descript">Descripción</th>
-                          <th class="price">Precio Unitario</th>
-                          <th class="imp">Importe</th>
-                        </tr>
-                        
-                      <tr><td>@for($cont;$cont&lt;$cantproducts;$cont++)</td></tr><tr><td class="cod">{{$codeproduct[$cont]}}</td><td class="cant">{{$quantity[$cont]}}</td><td class="unit">{{$unit[$cont]}}</td><td class="descript">{{$concept[$cont]}}</td><td class="price">{{$unitprice[$cont]}}</td><td class="imp">{{$import[$cont]}}</td></tr><tr><td>@endfor</td></tr></tbody></table>
-                    </div></div>
+                      <div style="width:100%; display:flex;justify-content: space-between;">
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Cve Prod Serv</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Cant.</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Unidad</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Descripción</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Precio Unitario</div>
+                        </div>
+                        <div style="width:16.6%;">
+                          <div style="width:100%; display:flex;justify-content: center;">Importe</div>
+                        </div>
+                      </div>
+                    @for($cont;$cont<$cantproducts;$cont++)<div style="width:100%; display:flex;justify-content: space-between;"><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$codeproduct[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$quantity[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$unit[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$concept[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$unitprice[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$import[$cont]}}</div></div></div>@endfor</div></div>
                 <div id="section4" style="  border: 1px solid black;width:100%;min-height:200px;">
 
-                <div class="commercial" id="commercial" draggable="true" style="width: 800px;height: 150px;border: 1px solid black;text-align: center;font-family: Arial;font-size: 40px;color: gray;">
+                <div class="commercial" id="commercial" draggable="true" style="width: 700px;height: 130px;border: 1px solid black;text-align: center;font-family: Arial;font-size: 40px;color: gray;">
                       <img class="img-fluid commercialtemplate" id="commercial" draggable="true" src="{{'storage/Company/'.session('rfc').'/Commercial/commercial'.session('rfc').'.png'}}">
                     </div></div>

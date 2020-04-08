@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="page-wrapper" class="p-4">
-  <div class="row mt-4" style="margin-left:20rem;">
+
     <div class="card-body">
       <div class="row">
         <div class="col-lg-12 col-xl-12">
@@ -96,13 +95,13 @@
               <div class="row">
                 <div class="col-6">
                   <label>Cantidad monetaria:</label>
-                  <input class="form-control" name="amount" id="amount">
+                  <input class="form-control" name="amount" id="amount" onkeypress="return filterFloat(event,this);">
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
                   <label>Confirmar cantidad monetaria:</label>
-                  <input class="form-control" name="confirmamount" id="confirmamount">
+                  <input class="form-control" name="confirmamount" id="confirmamount" onkeypress="return filterFloat(event,this);">
                 </div>
               </div>
               <input class="btn btn-primary" type="button" value="Registrar" id="sendform">
@@ -110,8 +109,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+
 @endsection
 
 @section('jquery')

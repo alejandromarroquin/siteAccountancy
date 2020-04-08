@@ -279,13 +279,14 @@ $(document).ready(function(){
     }).then((result) => {
       if (result.value) {
         $.get("/budgetdelete", { elegido: elegido },function(data){
-          alert(data);
           if(data==1){
             Swal.fire(
               'Eliminado!',
               'El presupuesto se eliminó correctamente.',
               'success'
-            )
+            ).then((result)=>{
+              location.reload();
+            });
           }else{
             Swal.fire(
               'Error!',

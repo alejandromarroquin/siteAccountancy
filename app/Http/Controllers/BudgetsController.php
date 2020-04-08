@@ -41,7 +41,7 @@ class BudgetsController extends Controller
         $idbudget=0;
         if(!empty($budget)){
           foreach ($budget as $data) {
-            $idbudget=$data->id;
+            $idbudget=$data->idBudget;
             $start=$data->start;
             $end=$data->end;
             $total=$data->total;
@@ -254,8 +254,12 @@ class BudgetsController extends Controller
      * @param  \App\budgets  $budgets
      * @return \Illuminate\Http\Response
      */
-    public function destroy(budgets $budgets)
+    public function destroy(Request $request,budgets $budgets)
     {
+      if(budgets::where('id',$request->elegido)->delete()){
         return 1;
+      }else{
+        return 0;
+      }
     }
 }
