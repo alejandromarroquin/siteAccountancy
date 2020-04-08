@@ -1,11 +1,38 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('login')
-<div class="container">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Contabilidad</title>
+
+    <!-- icon -->
+    <link rel="icon" type="image/png" href="{{asset('img/icon.png')}}" />
+
+		<link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+        <link href="{{ asset('css/forms.css')}}" rel="stylesheet">
+        @yield('styles')
+
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+     
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5">
+
+        <main>
+        <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header" style="text-align:center;">{{ __('Inicio de sesión') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
@@ -39,17 +66,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <!-- <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> -->
-
-                                    <!-- <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label> -->
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4" style="margin-left:auto;margint-right:auto;">
@@ -68,4 +84,25 @@
         </div>
     </div>
 </div>
-@endsection
+        </main>
+      </div>
+	</div>
+    @yield('jquery')
+    <script src="{{ asset('vendor/jquery/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/metisMenu/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('vendor/datatables-responsive/dataTables.responsive.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/datatables-responsive/responsive.bootstrap4.js')}}"type="text/javascript"></script>
+    <script src="{{ asset('dist/js/sb-admin-2.js') }}"></script>
+    <script src="{{ asset('dist/js/select2.js') }}"></script>
+    <script src="{{ asset('dist/js/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/forms.js') }}"></script>
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    @yield('scripts')
+  </body>
+</html>

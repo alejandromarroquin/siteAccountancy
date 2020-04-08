@@ -95,7 +95,6 @@ Route::get('/edittemplate','ConfigurationController@editTemplate');
 Route::post('/loadfiles','ConfigurationController@loadfiles');
 Route::post('/loadcommercial','ConfigurationController@loadcommercial');
 Route::get('/createtemplate','ConfigurationController@createTemplate');
-
 Route::get('/polizas','PeriodpoliciesController@index');
 
 Auth::routes();
