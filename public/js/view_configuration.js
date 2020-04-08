@@ -47,7 +47,7 @@ $(document).ready(function(){
           $('.lstreet').append('{{$street}}');
           $('.lconony').append('No.{{$numext}} {{$colony}}');
           $('.lcity').append('{{$city}}, {{$state}}. {{$cp}}');
-          $('.tab').append('<tr><td>@for($cont;$cont<$cantproducts;$cont++)</td></tr></tr><tr><td class="cod">{{$codeproduct[$cont]}}</td><td class="cant">{{$quantity[$cont]}}</td><td class="unit">{{$unit[$cont]}}</td><td class="descript">{{$concept[$cont]}}</td><td class="price">{{$unitprice[$cont]}}</td><td class="imp">{{$import[$cont]}}</td></tr><tr><td>@endfor</td></tr>');
+          $('.table').append('@for($cont;$cont<$cantproducts;$cont++)<div style="width:100%; display:flex;justify-content: space-between;"><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$codeproduct[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$quantity[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$unit[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$concept[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$unitprice[$cont]}}</div></div><div style="width:16.6%;"><div style="width:100%; display:flex;justify-content: center;">{{$import[$cont]}}</div></div></div>@endfor');
           cadena=$('.estructura').html();
           console.log(cadena);
           idconfig=$('input[name="idconfig"]').val();

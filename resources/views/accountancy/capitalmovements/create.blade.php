@@ -95,13 +95,13 @@
               <div class="row">
                 <div class="col-6">
                   <label>Cantidad monetaria:</label>
-                  <input class="form-control" name="amount" id="amount">
+                  <input class="form-control" name="amount" id="amount" onkeypress="return filterFloat(event,this);">
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
                   <label>Confirmar cantidad monetaria:</label>
-                  <input class="form-control" name="confirmamount" id="confirmamount">
+                  <input class="form-control" name="confirmamount" id="confirmamount" onkeypress="return filterFloat(event,this);">
                 </div>
               </div>
               <input class="btn btn-primary" type="button" value="Registrar" id="sendform">

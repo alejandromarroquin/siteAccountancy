@@ -267,7 +267,6 @@ $(document).ready(function(){
   $('.delete').on('click',function(){
     event.preventDefault();
     elegido=$(this).val();
-    alert(elegido);
     Swal.fire({
       title: 'Está seguro de eliminar el presupuesto?',
       text: "No se podrán revertir los cambios!",
@@ -280,7 +279,6 @@ $(document).ready(function(){
     }).then((result) => {
       if (result.value) {
         $.get("/budgetdelete", { elegido: elegido },function(data){
-          alert(data);
           if(data==1){
             Swal.fire(
               'Eliminado!',

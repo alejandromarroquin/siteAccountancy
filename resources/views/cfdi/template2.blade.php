@@ -184,38 +184,16 @@
               <th class="price">Precio Unitario</th>
               <th class="imp">Importe</th>
             </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
-            <tr>
-              <td class="cod">---</td>
-              <td class="cant">---</td>
-              <td class="unit">---</td>
-              <td class="descript">---</td>
-              <td class="price">---</td>
-              <td class="imp">---</td>
-            </tr>
+            @for($cont;$cont<$cantproducts;$cont++)
+              <tr>
+                <td class="cod">{{$codeproduct[$cont]}}</td>
+                <td class="cant">{{$quantity[$cont]}}</td>
+                <td class="unit">{{$unit[$cont]}}</td>
+                <td class="descript">{{$concept[$cont]}}</td>
+                <td class="price">{{$unitprice[$cont]}}</td>
+                <td class="imp">{{$import[$cont]}}</td>
+              </tr>
+            @endfor
           </table>
           <div class="balances">
             <label class="amounts">Subtotal: {{$request->subtotal}}</label>
@@ -228,7 +206,7 @@
           <div class="stamps">
             <div class="codeqr">
               <div class="code">
-                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate('Make me into an QrCode!')) }} ">
+                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate($cadenaqr)) }} ">
               </div>
             </div>
             <div class="stampsinf">
