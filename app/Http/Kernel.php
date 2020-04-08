@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'Asistente' => \App\Http\Middleware\MiddlewareTypeAsistente::class,
         'Subcontador' => \App\Http\Middleware\MiddlewareTypeSubcontador::class,
         'ContadorGeneral' => \App\Http\Middleware\MiddlewareTypeContadorGeneral::class,
+        'PreventBackButton' => \App\Http\Middleware\PreventBackButton::class,
     ];
 }

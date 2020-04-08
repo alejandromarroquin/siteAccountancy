@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col-2">
               <div class="div-img">
-                <a class="linkreport" id="balancesheet" data-toggle="modal" data-target="#exampleModalCenter">
+                <a href="" class="linkreport" id="balancesheet" data-toggle="modal" data-target="#exampleModalCenter">
                   <img src="{{asset('img/icondoc1.png')}}" class="img-fluid img">
                   <label class="namereport">Balance general</label>
                 </a>

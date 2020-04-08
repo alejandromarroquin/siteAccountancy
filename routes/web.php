@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth','Asistente']], function () {
     });
 });
 
+Auth::routes();
+Route::group(['middleware' => ['PreventBackButton','auth']], function(){
 
 Route::get('/empresas_consultar','CompanieController@index');
 Route::get('/empresa_registrar','CompanieController@create');
@@ -97,6 +99,5 @@ Route::post('/loadcommercial','ConfigurationController@loadcommercial');
 Route::get('/createtemplate','ConfigurationController@createTemplate');
 Route::get('/polizas','PeriodpoliciesController@index');
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+});
